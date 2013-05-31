@@ -1,0 +1,17 @@
+
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html;charset=gbk">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+    <title>title失效</title>
+</head>
+<body>
+<div id="content">
+    <h2>Invalid Session</h2>
+    title失效
+    <p>
+        Your session appears to have timed out.
+    </p>
+</div>
+</body>
+</html>
