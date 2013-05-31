@@ -27,23 +27,19 @@ iframe#main { margin:0; padding:0; }
 					<h2 id="pageTitle">用户账号管理</h2>
 
                     <form action="/admin/alterAccount/queryAccount" method="post">
-                        <table>
-                            <tbody>
-                            <tr>
                              请输入用户名，如(example@sogou.com)或手机号：
                                 <input type="text" name="username"/>
-                                <input type="submit" value="提交"/>
+                                <span class="button button-main">
+                                  <input type="submit" value="提交" class="button"/>
+                                </span>
                                 <c:if test="${exist==false}">
-                                    <div id="hasuser">账号不存在</div>
+                                    <div style="color:#ff0000">账号不存在</div>
                                 </c:if>
-                            </tr>
-                            </tbody>
-                        </table>
                     </form>
 
                     <br/>
                     <br/>
-
+                    <hr>
                     <form id="accountForm" action="" method="post">
                         <c:if test ="${account != null}">
                             <table>
