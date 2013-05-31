@@ -37,8 +37,7 @@ iframe#main { margin:0; padding:0; }
                                 </c:if>
                     </form>
 
-                    <br/>
-                    <br/>
+
                     <hr>
                     <form id="accountForm" action="" method="post">
                         <c:if test ="${account != null}">
@@ -46,8 +45,8 @@ iframe#main { margin:0; padding:0; }
                                 <tbody>
                                 <input type="hidden" id="passportId" name="passportId" value="${account.passportId}"/>
                                 <input type="hidden" id="newState" name="newState" value="${account.status}"/>
-                                <tr><td>ID</td><td>用户名</td><td>密码</td><td>绑定手机</td><td>注册时间</td><td>注册IP</td>
-                                    <td>版本</td><td>账号类型</td><td>封/解禁</td><td>重置密码</td></tr>
+                                <tr><td style="color: #005AA0">ID</td><td style="color: #005AA0">用户名</td><td style="color: #005AA0">密码</td><td style="color: #005AA0">绑定手机</td><td style="color: #005AA0">注册时间</td><td style="color: #005AA0">注册IP</td>
+                                    <td style="color: #005AA0">版本</td><td style="color: #005AA0">账号类型</td><td style="color: #005AA0">封/解禁</td><td style="color: #005AA0">重置密码</td></tr>
                                 <tr>
                                     <td>${account.id}</td><td>${account.passportId}</td>
                                     <td><input type="text" id="oldPasswd" value="${account.passwd}" disabled="false"/>
@@ -98,6 +97,11 @@ iframe#main { margin:0; padding:0; }
             document.getElementById('newPasswdBtn').style.display = "block";
         }
         function savePassword() {
+            if(document.getElementById('newPasswd').value == ""){
+                alert("请输入新密码！");
+                return;
+            }
+
             document.getElementById('accountForm').action = '/admin/alterAccount/resetPassword';
             document.getElementById('accountForm').submit();
         }
