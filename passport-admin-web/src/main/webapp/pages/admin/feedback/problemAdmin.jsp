@@ -25,18 +25,7 @@ iframe#main { margin:0; padding:0; }
 						当前位置：<strong>后台管理</strong>
                         <span class="step">&gt;</span><strong>用户账号管理</strong>
                     </div>
-					<h2 id="pageTitle">用户账号管理</h2>
-
-                    <form action="/admin/alterAccount/queryAccount" method="post">
-                             请输入用户名，如(example@sogou.com)或手机号：
-                                <input type="text" name="username"/>
-                                <span class="button button-main">
-                                  <input type="submit" value="提交" class="button"/>
-                                </span>
-                                <c:if test="${exist==false}">
-                                    <div style="color:#ff0000">账号不存在</div>
-                                </c:if>
-                    </form>
+					<h2 id="pageTitle">用户反馈管理</h2>
 
 
                     <hr>
