@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  * Created with IntelliJ IDEA. User: chenjiameng Date: 13-5-27 Time: 下午7:37 To change this template
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/admin")
+@SessionAttributes("account")
 public class AccountAdminController extends BaseController {
   private static final Logger logger = LoggerFactory.getLogger(AccountAdminController.class);
 
@@ -50,8 +53,7 @@ public class AccountAdminController extends BaseController {
   解/封禁
   */
   @RequestMapping(value ="/alterAccount/updateState", method = RequestMethod.POST)
-  public String updateState(@RequestParam("passportId") String passportId,@RequestParam("newState") int newState,Model model) throws Exception {
-    Account account =  accountManager.queryAccountByPassportId(passportId);
+  public String updateState(@ModelAttribute("account")  Account account,@RequestParam("newState") int newState,Model model) throws Exception {
     if (account == null){
       model.addAttribute("exist", false);
       return "/pages/admin/account/accountAdmin.jsp";
@@ -62,7 +64,6 @@ public class AccountAdminController extends BaseController {
     }else {
       model.addAttribute("msg", "解/封禁失败！");
     }
-    model.addAttribute("account", account);
     return "/pages/admin/account/accountAdmin.jsp";
   }
 
@@ -70,19 +71,17 @@ public class AccountAdminController extends BaseController {
    重置密码
   */
   @RequestMapping(value ="/alterAccount/resetPassword", method = RequestMethod.POST)
-  public String resetPassword(@RequestParam("passportId") String passportId,@RequestParam("newPasswd") String newPasswd,Model model) throws Exception {
-    Account account =  accountManager.queryAccountByPassportId(passportId);
+  public String resetPassword(@ModelAttribute("account")  Account account,@RequestParam("newPasswd") String newPasswd,Model model) throws Exception {
     if (account == null){
       model.addAttribute("exist", false);
       return "/pages/admin/account/accountAdmin.jsp";
     }
-    boolean result = accountManager.resetPassword(account,newPasswd,true);
+    boolean result = accountManager.resetPassword(account,newPasswd,false);
     if (result){
       model.addAttribute("msg", "重置密码成功！");
     }else {
       model.addAttribute("msg", "重置密码失败！");
     }
-    model.addAttribute("account", account);
     return "/pages/admin/account/accountAdmin.jsp";
   }
 }
