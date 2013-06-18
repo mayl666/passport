@@ -156,45 +156,7 @@ iframe#main { margin:0; padding:0; }
 	</div><!-- page End -->
 
     <script type="text/javascript">
-        var xmlHttp;
 
-        function createXMLHttpRequest(){
-            try{
-                xmlHttp=new XMLHttpRequest();
-            }catch (e){
-                try{
-                    xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
-                }catch (e){
-                    xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-                }
-            }
-            return xmlHttp;
-        }
-
-        function doAjaxPost(form){
-            createXMLHttpRequest();
-            if(xmlHttp==null){
-                window.status="你的浏览器不支持AJAX!";
-                return;
-            }
-            xmlHttp.onreadystatechange=checkCallBack;
-            xmlHttp.open("post",url,true);
-            var SendContent="r_Content="+escape(document.getElementById("r_Content").value);
-            xmlhttp.send(SendContent);
-            xmlHttp.send(url);
-        }
-
-        function checkCallBack(){
-            if(xmlHttp.readyState==4){
-                var obj=xmlHttp.responseText;
-                alert(obj);
-                var doc = eval('(' + obj + ')');
-                //alert(doc.result);
-                //alert(doc.userName);
-                //alert(doc.userId);
-                //alert(doc.failType);
-            }
-        }
         function onQueryProblemSubmit(){
             if(document.getElementById('ckStatus0').checked == true){
                 document.getElementById('status').value = 0;
