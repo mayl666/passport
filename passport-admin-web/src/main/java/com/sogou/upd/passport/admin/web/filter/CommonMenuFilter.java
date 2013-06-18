@@ -136,6 +136,8 @@ public class CommonMenuFilter implements Filter {
     httpRequest.setAttribute("UserMenuHtml", userMenuHtml);
     // 设置用户名
     httpRequest.setAttribute("UserName", getJsonType.getUserName());
+    //设置用户邮箱
+    httpRequest.setAttribute("UserPassportId", userEmail);
     // 其他系统菜单
     httpRequest.setAttribute("MenuTypeList", getJsonType.getMenuTypeList());
 

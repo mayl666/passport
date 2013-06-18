@@ -103,7 +103,7 @@ iframe#main { margin:0; padding:0; }
                 alert("«Î ‰»Î–¬√‹¬Î£°");
                 return;
             }
-            newpasswdstr = $.md5(newpasswdstr);
+//            newpasswdstr = $.md5(newpasswdstr);
             document.getElementById('newPasswd').value =   newpasswdstr;
             document.getElementById('accountForm').action = '/admin/alterAccount/resetPassword';
             document.getElementById('accountForm').submit();

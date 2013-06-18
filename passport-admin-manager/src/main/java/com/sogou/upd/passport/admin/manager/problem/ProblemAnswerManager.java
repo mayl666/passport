@@ -19,7 +19,7 @@ public interface ProblemAnswerManager {
      * @return
      * @throws Exception
      */
-    public Result insertProblemAnswer(ProblemAnswer problemAnswer, String ip) throws Exception;
+    public Result addProblemAnswer(ProblemAnswer problemAnswer, String mail) throws Exception;
 
     /**
      * @param id

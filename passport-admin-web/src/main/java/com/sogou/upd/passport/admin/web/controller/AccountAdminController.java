@@ -64,7 +64,7 @@ public class AccountAdminController extends BaseController {
       model.addAttribute("exist", false);
       return "/pages/admin/account/accountAdmin.jsp";
     }
-    boolean result = accountAdminManager.resetPassword(account,newPasswd,false);
+    boolean result = accountAdminManager.resetPassword(account,newPasswd,true);
     if (result){
       model.addAttribute("msg", "重置密码成功！");
     }else {

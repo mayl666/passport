@@ -1,7 +1,9 @@
 package com.sogou.upd.passport.admin.web.controller;
 
 
+import com.google.common.base.Strings;
 import com.sogou.upd.passport.admin.manager.ProblemVO.ProblemVOManager;
+import com.sogou.upd.passport.admin.manager.form.ProblemQueryParam;
 import com.sogou.upd.passport.admin.manager.problem.ProblemAnswerManager;
 import com.sogou.upd.passport.admin.model.problem.ProblemAnswer;
 import com.sogou.upd.passport.admin.model.problemVO.ProblemVO;
@@ -10,6 +12,8 @@ import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.DateUtil;
 
 import com.sogou.upd.passport.manager.problem.ProblemManager;
+import com.sogou.upd.passport.manager.problem.ProblemTypeManager;
+import com.sogou.upd.passport.model.problem.ProblemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,65 +47,86 @@ public class ProblemAdminController extends BaseController {
 
     @Autowired
     private ProblemManager problemManager;
+
+    @Autowired
+    private ProblemTypeManager problemTypeManager;
+
+    @RequestMapping(value = "/adminProblem/index", method = {RequestMethod.GET,RequestMethod.POST})
+    public String addProblem(HttpServletRequest request, Model model)
+            throws Exception {
+
+        //获取问题类型列表
+        List<ProblemType> typeList = problemTypeManager.getProblemTypeList();
+        model.addAttribute("typeList", typeList);
+
+        return "/pages/admin/feedback/problemAdmin.jsp";
+    }
+
+
+
     /*
      反馈查询页面
     */
-    @RequestMapping(value = "/adminProblem/queryProblem", method = RequestMethod.GET)
-    public String queryProblem(@RequestParam("status") int status, @RequestParam("clientId") int clientId, @RequestParam("typeId") int typeId,
-                               @RequestParam("startDateStr") String startDateStr, @RequestParam("endDateStr") String endDateStr,
-                               @RequestParam("content") String content, @RequestParam("pageNum") int pageNum, Model model) throws Exception {
+    @RequestMapping(value = "/adminProblem/queryProblem", method = RequestMethod.POST)
+    public String queryProblem(ProblemQueryParam problemQueryParam,Model model) throws Exception {
         Integer queryStatus = null, queryClientId = null, queryTypeId = null, queryStart = null, queryEnd = null;
         Date startDate = null, endDate = null;
-        String queryContent = null;
-        if (status > 0) {
-            queryStatus = status;
+        String queryTitle=null,queryContent = null;
+        if (problemQueryParam.getStatus() > 0) {
+            queryStatus = problemQueryParam.getStatus() ;
         }
-        if (clientId > 0) {
-            queryClientId = clientId;
+        if (problemQueryParam.getClientId() > 0) {
+            queryClientId = problemQueryParam.getClientId();
         }
-        if (typeId > 0) {
-            queryTypeId = typeId;
+        if (problemQueryParam.getTypeId() > 0) {
+            queryTypeId = problemQueryParam.getTypeId();
         }
 
-        if ((!startDateStr.equals("-1")) && (!endDateStr.equals("-1"))) {
-            startDate = DateUtil.parse(startDateStr, DateUtil.DATE_FMT_3);
-            endDate = DateUtil.parse(endDateStr, DateUtil.DATE_FMT_3);
+        if ((!Strings.isNullOrEmpty(problemQueryParam.getStartDateStr())
+                && (!Strings.isNullOrEmpty(problemQueryParam.getEndDateStr())))) {
+            startDate = DateUtil.parse(problemQueryParam.getStartDateStr(), DateUtil.DATE_FMT_3);
+            endDate = DateUtil.parse(problemQueryParam.getEndDateStr(), DateUtil.DATE_FMT_3);
         }
-        if (!content.equals("-1")) {
-            queryContent = content;
+        if (!Strings.isNullOrEmpty(problemQueryParam.getContent())) {
+            queryContent = problemQueryParam.getContent();
         }
-        if (pageNum > 1) {
-            queryStart = (pageNum - 1) * PAGE_SIZE + 1;
-            queryEnd = pageNum * PAGE_SIZE;
+        if (!!Strings.isNullOrEmpty(problemQueryParam.getTitle())) {
+            queryTitle = problemQueryParam.getTitle();
+        }
+        if (problemQueryParam.getPageNum() > 1) {
+            queryStart = (problemQueryParam.getPageNum() - 1) * PAGE_SIZE + 1;
+            queryEnd = problemQueryParam.getPageNum() * PAGE_SIZE;
         } else {
             queryStart = 0;
             queryEnd = PAGE_SIZE;
         }
 
         List<ProblemVO> problemVOList = problemVOManager.queryProblemVOList(queryStatus, queryClientId, queryTypeId,
-                startDate, endDate, queryContent, queryStart, queryEnd);
+                startDate, endDate,queryTitle, queryContent, queryStart, queryEnd);
 
 
-        model.addAttribute("problemList", problemVOList);
-        return "/pages/admin/account/accountAdmin.jsp";
+        model.addAttribute("problemVOList", problemVOList);
+        return "forward:/admin/adminProblem/index";
     }
 
-    @RequestMapping(value = "/adminProblem/addProblemAnswer", method = RequestMethod.GET)
+    @RequestMapping(value = "/adminProblem/addProblemAnswer", method = RequestMethod.POST)
     @ResponseBody
-    public Object addProblemAnswer(HttpServletRequest request,@RequestParam("problemId") int problemId, @RequestParam("ansPassportId") String ansPassportId, @RequestParam("ansContent") String ansContent) throws Exception{
+    public Object addProblemAnswer(HttpServletRequest request,@RequestParam("_problemId") int _problemId,
+                                   @RequestParam("_email") String _email,@RequestParam("_ansPassportId") String _ansPassportId, @RequestParam("_ansContent") String _ansContent) throws Exception{
         ProblemAnswer problemAnswer = new ProblemAnswer();
-        problemAnswer.setProblemId(problemId);
-        problemAnswer.setAnsPassportId(ansPassportId);
-        problemAnswer.setAnsContent(ansContent);
+        problemAnswer.setProblemId(_problemId);
+        problemAnswer.setAnsPassportId(_ansPassportId);
+        problemAnswer.setAnsContent(_ansContent);
         problemAnswer.setAnsTime(new Date());
-        Result result = problemAnswerManager.insertProblemAnswer(problemAnswer,getIp(request));
+        Result result = problemAnswerManager.addProblemAnswer(problemAnswer,_email);
         return result.toString();
     }
 
     @RequestMapping(value = "/adminProblem/updateProblemStatus", method = RequestMethod.GET)
     @ResponseBody
     public Object updateProblemStatus(@RequestParam("problemId") int problemId, @RequestParam("status") int status) throws Exception{
-        return problemManager.updateStatusById(problemId,status);
+        Result result = problemManager.updateStatusById(problemId,status);
+        return  result.toString();
     }
 
 }

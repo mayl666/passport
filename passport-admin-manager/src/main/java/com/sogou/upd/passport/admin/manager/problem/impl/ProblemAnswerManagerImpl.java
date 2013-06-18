@@ -5,9 +5,11 @@ import com.sogou.upd.passport.admin.manager.problem.ProblemAnswerManager;
 import com.sogou.upd.passport.admin.model.problem.ProblemAnswer;
 import com.sogou.upd.passport.admin.model.problemVO.ProblemAnswerVO;
 import com.sogou.upd.passport.admin.service.problem.ProblemAnswerService;
+import com.sogou.upd.passport.common.model.ActiveEmail;
 import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.ErrorUtil;
+import com.sogou.upd.passport.common.utils.MailUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +34,29 @@ public class ProblemAnswerManagerImpl implements ProblemAnswerManager {
     private static final int ADMIN_ANSWER_TYPE = 1;
     @Autowired
     private ProblemAnswerService problemAnswerService;
-
+    @Autowired
+    private MailUtils mailUtils;
 
     @Override
-    public Result insertProblemAnswer(ProblemAnswer problemAnswer,String ip) throws Exception {
+    public Result addProblemAnswer(ProblemAnswer problemAnswer,String mail) throws Exception {
         Result result = new APIResultSupport(false);
         try {
-            //TODO 插入反馈评论次数限制
-            //TODO IP passport检查限制
+            ActiveEmail activeEmail = new ActiveEmail();
+            //模版中参数替换
+            Map<String, Object> map = Maps.newHashMap();
+            map.put("problemAnswer", problemAnswer.getAnsContent());
+            activeEmail.setMap(map);
+            activeEmail.setTemplateFile("problemAnswerEmail.vm");
+            activeEmail.setSubject("搜狗通行证反馈回复");
+            activeEmail.setCategory("feedback");
+            activeEmail.setToEmail(mail);
+            mailUtils.sendEmail(activeEmail);
+
             int row = problemAnswerService.insertProblemAnswer(problemAnswer);
             if(row >0){
                 result.setMessage("添加成功!");
                 result.setSuccess(true);
+
             }else {
                 result.setCode(ErrorUtil.ERR_CODE_PROBLEMANSWER_INSERT_FAILED);
             }
