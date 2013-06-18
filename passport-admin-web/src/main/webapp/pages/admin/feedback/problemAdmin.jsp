@@ -218,21 +218,37 @@ iframe#main { margin:0; padding:0; }
                 draggable: false,
                 resizable : false,
                 //position: ['top','right'],
-                width: 430,
-                height:370,
-                close: function(){
+                width: 500,
+                height:200
+                /*close: function(){
                     window.location.reload();
-                }
+                }*/
             });
         }
-        function answerFormSubmit(form) {
+        function answerFormSubmit() {
             var form =  document.getElementById('answerForm');
-            if (form.content.value == "") {
+            var _ansContent = form._ansContent.value;
+            if ( _ansContent== "") {
                 alert("请输入回答内容！");
-                form.content.focus();
+                form._ansContent.focus();
                 return false;
             }
-            jQuery("#answerForm").submit();
+            var _problemId = form._problemId.value;
+            var _email = form._email.value;
+            var _ansPassportId = form._ansPassportId.value;
+
+            var url =  "/admin/adminProblem/addProblemAnswer";
+            //var data = "_problemId=1&_email=jiamengchen@126.com&_ansPassportId=chenjiameng@sogou-inc.com&_ansContent=你好呀"
+            var data = "_problemId="+_problemId+"&_email="+_email+"&_ansPassportId="+_ansPassportId+"&_ansContent="+_ansContent;
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success:  function(data){
+                    alert(data.statusText); // John
+                },
+                dataType: "json"
+            });
 
         }
         function goback() {

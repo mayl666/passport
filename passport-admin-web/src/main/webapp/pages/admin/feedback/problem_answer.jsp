@@ -1,8 +1,7 @@
 <%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
 <div id="floatProblemAnswer" style="display:none">
   <div id="problemAnswer">
-	   <form id="answerForm" method="post"action="/admin/adminProblem/addProblemAnswer"
-							style="margin: 0;">
+	   <form id="answerForm" method="post" style="margin: 0;">
            <table align="center" border="0">
                <tr>
                    <TD align="right" >回答内容</td>
@@ -20,8 +19,9 @@
                </tr>
                <tr>
                    <td align="center" height="15" colspan="2">
-                       <input type="submit" name="submit" value="提交">
-                       <input type="button" id="goback" value="返回" onclick="">
+                      <!-- <input type="submit" name="submit" value="提交" onclick="answerFormSubmit()">-->
+                       <a href="javascript:answerFormSubmit();" class="btn_save">保存</a>
+                       <!--<input type="button" id="goback" value="返回" onclick=""> -->
                    </td>
                </tr>
            </table>
