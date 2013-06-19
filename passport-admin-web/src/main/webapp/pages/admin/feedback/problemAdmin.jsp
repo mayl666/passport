@@ -212,7 +212,7 @@ iframe#main { margin:0; padding:0; }
                 url: url,
                 data: data,
                 success:  function(data){
-                    alert(data.statusText); // John
+                    alert(data.statusText);
                 },
                 dataType: "json"
             });
@@ -226,7 +226,7 @@ iframe#main { margin:0; padding:0; }
                 url: url,
                 data: data,
                 success:  function(data){
-                    alert(data.statusText); // John
+                    alert(data.statusText);
                 },
                 dataType: "json"
             });
