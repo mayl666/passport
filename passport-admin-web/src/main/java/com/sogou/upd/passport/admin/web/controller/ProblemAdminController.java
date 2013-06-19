@@ -122,9 +122,9 @@ public class ProblemAdminController extends BaseController {
         return result.toString();
     }
 
-    @RequestMapping(value = "/adminProblem/updateProblemStatus", method = RequestMethod.GET)
+    @RequestMapping(value = "/adminProblem/updateProblemStatus", method = RequestMethod.POST)
     @ResponseBody
-    public Object updateProblemStatus(@RequestParam("problemId") int problemId, @RequestParam("status") int status) throws Exception{
+    public Object updateProblemStatus(@RequestParam("_problemId") int problemId, @RequestParam("_status") int status,@RequestParam("_ansPassportId") String _ansPassportId) throws Exception{
         Result result = problemManager.updateStatusById(problemId,status);
         return  result.toString();
     }

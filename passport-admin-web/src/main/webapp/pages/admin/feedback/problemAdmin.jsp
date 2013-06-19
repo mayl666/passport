@@ -111,6 +111,7 @@ iframe#main { margin:0; padding:0; }
                             <th width="4%"><div>状态</div></th>
 
                             <th width="12%"><div>回复</div></th>
+                            <th width="12%"><div>更改状态</div></th>
                         </tr>
                         </thead>
                         <c:if test ="${problemVOList!=null}">
@@ -145,6 +146,10 @@ iframe#main { margin:0; padding:0; }
                             </td>
                             <td style="text-align:center;">
                                <input type="button" value="回复" onclick="onAnswer('${problemVO.id}','${problemVO.email}','${UserPassportId}')" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="button" value="已回复" onclick="onChanageState('${problemVO.id}','1','${UserPassportId}')" />
+                                <input type="button" value="关闭" onclick="onChanageState('${problemVO.id}','2','${UserPassportId}')" />
                             </td>
                         </tr>
                         </c:forEach>
@@ -213,8 +218,18 @@ iframe#main { margin:0; padding:0; }
             });
 
         }
-        function goback() {
-            jQuery("#floatProblemAnswer").css("display","none");
+        function onChanageState(problemId,status,passportId){
+            var url =  "/admin/adminProblem/updateProblemStatus";
+            var data = "_problemId="+problemId+"&_status="+status+"&_ansPassportId="+passportId;
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success:  function(data){
+                    alert(data.statusText); // John
+                },
+                dataType: "json"
+            });
         }
     </script>
 </body>
