@@ -124,8 +124,9 @@ public class ProblemAdminController extends BaseController {
 
     @RequestMapping(value = "/adminProblem/updateProblemStatus", method = RequestMethod.POST)
     @ResponseBody
-    public Object updateProblemStatus(@RequestParam("_problemId") int problemId, @RequestParam("_status") int status,@RequestParam("_ansPassportId") String _ansPassportId) throws Exception{
+    public Object updateProblemStatus(@RequestParam("_problemId") int problemId, @RequestParam("_status") int status,@RequestParam("_ansPassportId") String ansPassportId) throws Exception{
         Result result = problemManager.updateStatusById(problemId,status);
+        logger.info("changeProblemState:problemId="+problemId+",status="+status+",ansPassportId="+ansPassportId);
         return  result.toString();
     }
 
