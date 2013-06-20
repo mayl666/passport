@@ -85,7 +85,7 @@ iframe#main { margin:0; padding:0; }
                                     </div>
                                 </td>
                             </tr>
-
+                            <input id="pageNum" name="pageNum" value="1" type="hidden">
                             <tr><td><span class="button button-main"><button type="submit" onclick="onQueryProblemSubmit();" class="button">开始查询</button></span>
                             </td></tr>
                         <table>
@@ -153,8 +153,15 @@ iframe#main { margin:0; padding:0; }
                             </td>
                         </tr>
                         </c:forEach>
+
                         </c:if>
                      </table>
+                     第${currentPage}/${totalPageNum}页
+                    <a href="javascript:onProblemPage('${queryConditonStr}',1);" class="btn_save">第一页</a>
+                    <a href="javascript:onProblemPage('${queryConditonStr}',${currentPage}-1);" class="btn_save"> 上一页</a>
+                    <a href="javascript:onProblemPage('${queryConditonStr}',${currentPage}+1);" class="btn_save"> 下一页</a>
+                    <a href="javascript:onProblemPage('${queryConditonStr}',${totalPageNum});" class="btn_save"> 尾页</a>
+
                 </div>
 			</div><!-- pageCanvas End -->
 		</div><!-- pageBd End -->
@@ -170,9 +177,34 @@ iframe#main { margin:0; padding:0; }
             }else{
                 document.getElementById('status').value = 2;
             }
+
             jQuery("#queryProblemForm").submit();
         }
+        function onProblemPage(conditionStr,pageNum){
+            if(pageNum<=0){
+                return false;
+            }
+            if(pageNum>${totalPageNum}){
+                return false;
+            }
+            document.getElementById('status').value = '${status}';
+            document.getElementById('startDateStr').value = '${startDateStr}';
+            document.getElementById('endDateStr').value = '${endDateStr}';
+            document.getElementById('title').value = '${title}';
+            document.getElementById('content').value = '${content}';
+            document.getElementById('typeId').value = '${typeId}';
+            document.getElementById('pageNum').value = pageNum;
 
+            jQuery("#queryProblemForm").submit();
+            <%--alert('${queryConditonStr}');--%>
+            <%--var url =  "/admin/adminProblem/queryProblem";--%>
+            <%--var data = conditionStr+"&pageNum="+pageNum;--%>
+            <%--$.ajax({--%>
+                <%--type: 'POST',--%>
+                <%--url: url,--%>
+                <%--data: data--%>
+            <%--});--%>
+        }
         function onAnswer(problemId,email,passportId){
             document.getElementById('_problemId').value = problemId;
             document.getElementById('_email').value = email;
@@ -205,7 +237,6 @@ iframe#main { margin:0; padding:0; }
             var _ansPassportId = form._ansPassportId.value;
 
             var url =  "/admin/adminProblem/addProblemAnswer";
-            //var data = "_problemId=1&_email=jiamengchen@126.com&_ansPassportId=chenjiameng@sogou-inc.com&_ansContent=你好呀"
             var data = "_problemId="+_problemId+"&_email="+_email+"&_ansPassportId="+_ansPassportId+"&_ansContent="+_ansContent;
             $.ajax({
                 type: 'POST',

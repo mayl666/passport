@@ -8,6 +8,7 @@ import com.sogou.upd.passport.admin.manager.problem.ProblemAnswerManager;
 import com.sogou.upd.passport.admin.model.problem.ProblemAnswer;
 import com.sogou.upd.passport.admin.model.problemVO.ProblemVO;
 import com.sogou.upd.passport.admin.web.BaseController;
+import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.DateUtil;
 
@@ -37,7 +38,7 @@ import java.util.List;
 public class ProblemAdminController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(ProblemAdminController.class);
 
-    private static final Integer PAGE_SIZE = 50;
+    private static final Integer PAGE_SIZE = 5;
 
     @Autowired
     private ProblemVOManager problemVOManager;
@@ -90,22 +91,45 @@ public class ProblemAdminController extends BaseController {
         if (!Strings.isNullOrEmpty(problemQueryParam.getContent())) {
             queryContent = problemQueryParam.getContent();
         }
-        if (!!Strings.isNullOrEmpty(problemQueryParam.getTitle())) {
+        if (!Strings.isNullOrEmpty(problemQueryParam.getTitle())) {
             queryTitle = problemQueryParam.getTitle();
         }
+        int currentPage = 1;
         if (problemQueryParam.getPageNum() > 1) {
             queryStart = (problemQueryParam.getPageNum() - 1) * PAGE_SIZE + 1;
             queryEnd = problemQueryParam.getPageNum() * PAGE_SIZE;
+            currentPage =  problemQueryParam.getPageNum();
         } else {
             queryStart = 0;
             queryEnd = PAGE_SIZE;
         }
 
+        int size = problemManager.getProblemCount(queryStatus,queryClientId,queryClientId,startDate,endDate,queryTitle,queryContent);
+
         List<ProblemVO> problemVOList = problemVOManager.queryProblemVOList(queryStatus, queryClientId, queryTypeId,
                 startDate, endDate,queryTitle, queryContent, queryStart, queryEnd);
 
+        int totalPageNum = size/PAGE_SIZE;
+
+        if(totalPageNum%PAGE_SIZE !=0){
+            totalPageNum ++;
+        }
+        if(totalPageNum <=0){
+            totalPageNum = 1;
+        }
+
+        model.addAttribute("status",problemQueryParam.getStatus());
+        model.addAttribute("clientId",problemQueryParam.getClientId());
+        model.addAttribute("typeId",problemQueryParam.getClientId());
+        model.addAttribute("startDateStr",problemQueryParam.getStartDateStr());
+        model.addAttribute("endDateStr",problemQueryParam.getEndDateStr());
+        model.addAttribute("title",problemQueryParam.getTitle());
+        model.addAttribute("content",problemQueryParam.getContent());
 
         model.addAttribute("problemVOList", problemVOList);
+        model.addAttribute("totalPageNum",totalPageNum);
+        model.addAttribute("currentPage",currentPage);
+//        model.addAttribute("queryConditonStr",queryConditonStr);
         return "forward:/admin/adminProblem/index";
     }
 
@@ -127,6 +151,36 @@ public class ProblemAdminController extends BaseController {
     public Object updateProblemStatus(@RequestParam("_problemId") int problemId, @RequestParam("_status") int status,@RequestParam("_ansPassportId") String ansPassportId) throws Exception{
         Result result = problemManager.updateStatusById(problemId,status);
         logger.info("changeProblemState:problemId="+problemId+",status="+status+",ansPassportId="+ansPassportId);
+        return  result.toString();
+    }
+
+    @RequestMapping(value = "/adminProblem/addProblemType", method = RequestMethod.POST)
+    @ResponseBody
+    public Object addProblemType(@RequestParam("typeName") String typeName) throws Exception{
+        Result result = new APIResultSupport(false);
+        ProblemType problemType = new ProblemType();
+        problemType.setTypeName(typeName);
+        int row = problemTypeManager.insertProblemType(problemType);
+        if(row >0){
+            result.setSuccess(true);
+            result.setMessage("增加类型成功！");
+        }else{
+            result.setMessage("增加类型失败！");
+        }
+        return  result.toString();
+    }
+
+    @RequestMapping(value = "/adminProblem/deleteProblemType", method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleteProblemType(@RequestParam("typeName") String typeName) throws Exception{
+        Result result = new APIResultSupport(false);
+        int row = problemTypeManager.deleteProblemTypeByName(typeName);
+        if(row >0){
+            result.setSuccess(true);
+            result.setMessage("删除类型成功！");
+        }else{
+            result.setMessage("删除类型失败！");
+        }
         return  result.toString();
     }
 
