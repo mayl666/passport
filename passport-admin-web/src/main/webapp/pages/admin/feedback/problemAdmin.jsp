@@ -182,10 +182,10 @@ iframe#main { margin:0; padding:0; }
         }
         function onProblemPage(conditionStr,pageNum){
             if(pageNum<=0){
-                return false;
+                return;
             }
             if(pageNum>${totalPageNum}){
-                return false;
+                return;
             }
             document.getElementById('status').value = '${status}';
             document.getElementById('startDateStr').value = '${startDateStr}';

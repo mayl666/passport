@@ -38,7 +38,7 @@ import java.util.List;
 public class ProblemAdminController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(ProblemAdminController.class);
 
-    private static final Integer PAGE_SIZE = 5;
+    private static final Integer PAGE_SIZE = 15;
 
     @Autowired
     private ProblemVOManager problemVOManager;
@@ -73,7 +73,7 @@ public class ProblemAdminController extends BaseController {
         Integer queryStatus = null, queryClientId = null, queryTypeId = null, queryStart = null, queryEnd = null;
         Date startDate = null, endDate = null;
         String queryTitle=null,queryContent = null;
-        if (problemQueryParam.getStatus() > 0) {
+        if (problemQueryParam.getStatus() >= 0) {
             queryStatus = problemQueryParam.getStatus() ;
         }
         if (problemQueryParam.getClientId() > 0) {
@@ -96,15 +96,14 @@ public class ProblemAdminController extends BaseController {
         }
         int currentPage = 1;
         if (problemQueryParam.getPageNum() > 1) {
-            queryStart = (problemQueryParam.getPageNum() - 1) * PAGE_SIZE + 1;
-            queryEnd = problemQueryParam.getPageNum() * PAGE_SIZE;
+            queryStart = (problemQueryParam.getPageNum() - 1) * PAGE_SIZE ;
             currentPage =  problemQueryParam.getPageNum();
         } else {
             queryStart = 0;
-            queryEnd = PAGE_SIZE;
         }
+        queryEnd = PAGE_SIZE;
 
-        int size = problemManager.getProblemCount(queryStatus,queryClientId,queryClientId,startDate,endDate,queryTitle,queryContent);
+        int size = problemManager.getProblemCount(queryStatus,queryClientId,queryTypeId,startDate,endDate,queryTitle,queryContent);
 
         List<ProblemVO> problemVOList = problemVOManager.queryProblemVOList(queryStatus, queryClientId, queryTypeId,
                 startDate, endDate,queryTitle, queryContent, queryStart, queryEnd);
@@ -120,7 +119,7 @@ public class ProblemAdminController extends BaseController {
 
         model.addAttribute("status",problemQueryParam.getStatus());
         model.addAttribute("clientId",problemQueryParam.getClientId());
-        model.addAttribute("typeId",problemQueryParam.getClientId());
+        model.addAttribute("typeId",problemQueryParam.getTypeId());
         model.addAttribute("startDateStr",problemQueryParam.getStartDateStr());
         model.addAttribute("endDateStr",problemQueryParam.getEndDateStr());
         model.addAttribute("title",problemQueryParam.getTitle());
