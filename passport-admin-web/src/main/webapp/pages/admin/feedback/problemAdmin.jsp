@@ -101,16 +101,16 @@ iframe#main { margin:0; padding:0; }
                         <thead>
                         <tr style="background-color:#ADDA27;">
                             <th width="7%"><div>日期</div></th>
-                            <th width="7%"><div>问题ID</div></th>
+                            <th width="4%"><div>问题ID</div></th>
                             <th width="6%"><div>用户ID</div></th>
-                            <th width="6%"><div>clientID</div></th>
+                            <th width="4%"><div>clientID</div></th>
                             <th width="6%"><div>用户邮箱</div></th>
                             <th width="8%"><div>问题类型</div></th>
-                            <th width="16%"><div>反馈标题</div></th>
+                            <th width="12%"><div>反馈标题</div></th>
                             <th width="16%"><div>反馈内容</div></th>
-                            <th width="4%"><div>状态</div></th>
+                            <th width="8%"><div>状态</div></th>
 
-                            <th width="12%"><div>回复</div></th>
+                            <th width="8%"><div>回复</div></th>
                             <th width="12%"><div>更改状态</div></th>
                         </tr>
                         </thead>
@@ -142,7 +142,7 @@ iframe#main { margin:0; padding:0; }
                                     ${problemVO.content}
                             </td>
                             <td style="text-align:center;">
-                                    ${problemVO.status}
+                                    ${problemVO.stateName}
                             </td>
                             <td style="text-align:center;">
                                <input type="button" value="回复" onclick="onAnswer('${problemVO.id}','${problemVO.email}','${UserPassportId}')" />
