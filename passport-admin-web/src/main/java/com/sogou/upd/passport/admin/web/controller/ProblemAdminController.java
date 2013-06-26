@@ -73,8 +73,8 @@ public class ProblemAdminController extends BaseController {
         Integer queryStatus = null, queryClientId = null, queryTypeId = null, queryStart = null, queryEnd = null;
         Date startDate = null, endDate = null;
         String queryTitle=null,queryContent = null;
-        if (problemQueryParam.getStatus() >= 0) {
-            queryStatus = problemQueryParam.getStatus() ;
+        if (problemQueryParam.getStatus() >0) {
+            queryStatus = problemQueryParam.getStatus() -1;
         }
         if (problemQueryParam.getClientId() > 0) {
             queryClientId = problemQueryParam.getClientId();

@@ -52,7 +52,7 @@ iframe#main { margin:0; padding:0; }
                             <tr>
                                 <td>选择状态</td>
                                 <td>
-                                    <label class="check"><input name="ckStatus0" id="ckStatus0" class="chkStatus" checked="true" type="checkbox">未回复</label>
+                                    <label class="check"><input name="ckStatus0" id="ckStatus0" class="chkStatus" type="checkbox">未回复</label>
                                     <label class="check"><input name="ckStatus1" id="ckStatus1" class="chkStatus" type="checkbox">已回复</label>
                                     <label class="check"><input name="ckStatus2" id="ckStatus2" class="chkStatus" type="checkbox">已关闭</label>
                                     <input name="status" id="status"  type="hidden" value="0">
@@ -170,12 +170,12 @@ iframe#main { margin:0; padding:0; }
     <script type="text/javascript">
 
         function onQueryProblemSubmit(){
-            if(document.getElementById('ckStatus0').checked == true){
-                document.getElementById('status').value = 0;
+            if(document.getElementById('ckStatus2').checked == true){
+                document.getElementById('status').value = 3;
             }else if(document.getElementById('ckStatus1').checked == true){
-                document.getElementById('status').value = 1;
-            }else{
                 document.getElementById('status').value = 2;
+            }else if(document.getElementById('ckStatus0').checked == true){
+                document.getElementById('status').value = 1;
             }
 
             jQuery("#queryProblemForm").submit();
@@ -196,14 +196,6 @@ iframe#main { margin:0; padding:0; }
             document.getElementById('pageNum').value = pageNum;
 
             jQuery("#queryProblemForm").submit();
-            <%--alert('${queryConditonStr}');--%>
-            <%--var url =  "/admin/adminProblem/queryProblem";--%>
-            <%--var data = conditionStr+"&pageNum="+pageNum;--%>
-            <%--$.ajax({--%>
-                <%--type: 'POST',--%>
-                <%--url: url,--%>
-                <%--data: data--%>
-            <%--});--%>
         }
         function onAnswer(problemId,email,passportId){
             document.getElementById('_problemId').value = problemId;
