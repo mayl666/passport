@@ -431,7 +431,7 @@ public class CommonMenuFilter implements Filter {
 
   }
 
-  public static String getUrl(String url) {
+  public static String getUrl_tmp(String url) {
     // （1）构造HttpClient的实例
     HttpClient httpClient = new HttpClient();
 
@@ -479,5 +479,43 @@ public class CommonMenuFilter implements Filter {
     }
     return "";
   }
+
+    public static String getUrl(String url) {
+        // （1）构造HttpClient的实例
+        HttpClient httpClient = new HttpClient();
+
+        // （2）创建Get方法的实例
+        GetMethod getMethod = new GetMethod(url);
+
+        System.out.println("get url:" + url);
+
+        // 使用系统提供的默认的恢复策略
+        getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+                new DefaultHttpMethodRetryHandler());
+        try {
+            // （4）执行postMethod
+            int statusCode = httpClient.executeMethod(getMethod);
+            if (statusCode != HttpStatus.SC_OK) {
+                System.err.println("Method failed: "
+                        + getMethod.getStatusLine());
+            }
+            // （6）读取内容
+            byte[] responseBody = getMethod.getResponseBody();
+            // （7） 处理内容
+            return new String(responseBody);
+        } catch (HttpException e) {
+            // 发生致命的异常，可能是协议不对或者返回的内容有问题
+            System.out.println("Please check your provided http address!");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 释放连接
+            getMethod.releaseConnection();
+        }
+        return "";
+    }
 
 }
