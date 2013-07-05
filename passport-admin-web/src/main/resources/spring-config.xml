@@ -100,6 +100,9 @@
         </property>
     </bean>
 
+    <!--metrics监控初始化-->
+    <bean id="metrics" class="com.codahale.metrics.MetricRegistry"/>
+
     <!-- 将其放在RequestMappingHandlerAdapter之后用于解决@ResponseBody乱码问题 -->
     <mvc:annotation-driven/>
 
