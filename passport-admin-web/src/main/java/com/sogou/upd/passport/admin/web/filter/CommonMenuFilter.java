@@ -51,12 +51,6 @@ public class CommonMenuFilter implements Filter {
     String url = httpRequest.getRequestURI();
 
     String serverName = "";
-//    if (CommonConf.isOnlineServer()) {
-//      serverName = "<span style='color: red;font: bold;font-size: 15px;'>\u3010\u7ebf\u4e0a\u73af\u5883\u3011</span>";
-//    } else {
-//      serverName = "<span style='color: red;font: bold;font-size: 15px;'>\u3010\u6d4b\u8bd5\u73af\u5883\u3011</span>";
-//
-//    }
     request.setAttribute("server_name", serverName);
 
     // 不包括搜索接口
