@@ -213,7 +213,8 @@ public class CommonMenuFilter implements Filter {
    * 获得sogou-inc passprot 的email
    */
   String getPassportEmail(HttpServletRequest httpRequest) {
-    if (isWindows) {
+      return "chenjiameng"  + "@sogou-inc.com";
+   /* if (isWindows) {
       // 如果是windows返回测试,系统的用户
 //      return "test_" + menuTypeId + "@sogou-inc.com";
       return "chenjiameng"  + "@sogou-inc.com";
@@ -237,7 +238,7 @@ public class CommonMenuFilter implements Filter {
         }
       }
     }
-    return userEmail;
+    return userEmail;  */
   }
 
   public void init(FilterConfig filterConfig) throws ServletException {
