@@ -14,5 +14,5 @@ response.addCookie(cookie);
 
 //通知passport同步其它应用退出状态
 //String webUrl = "http://passport-app.upd.sogou-inc.com";
-//response.sendRedirect("https://passport.sogou-inc.com/logout.jsp?url="+webUrl);
+response.sendRedirect("https://passport.sogou-inc.com/logout.jsp);
 %>
