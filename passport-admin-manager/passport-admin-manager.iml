@@ -107,8 +107,8 @@
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: apache-log4j:log4j:1.2.15" level="project" />
     <orderEntry type="library" name="Maven: org.perf4j:perf4j:0.9.16" level="project" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-main-service:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-oauth2:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: sogou-passport:passport-main-service:1.0" level="project" />
+    <orderEntry type="library" name="Maven: sogou-passport:passport-oauth2:1.0" level="project" />
     <orderEntry type="library" name="Maven: sogou-passport:passport-main-manager:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: sogou-passport:passport-result:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.4" level="project" />

@@ -131,5 +131,54 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <delete file="src/main/resources/deploy_config.properties" />
+                                <copy file="${app_config_file}" tofile="src/main/resources/deploy_config.properties" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <app_config_file>
+                    src/main/resources/deploy_config_DEV.properties
+                </app_config_file>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <app_config_file>
+                    src/main/resources/deploy_config_TEST.properties
+                </app_config_file>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <app_config_file>
+                    src/main/resources/deploy_config_PROD.properties
+                </app_config_file>
+            </properties>
+        </profile>
+    </profiles>
 </project>
