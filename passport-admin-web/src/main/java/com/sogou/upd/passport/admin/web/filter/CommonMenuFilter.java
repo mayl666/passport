@@ -431,7 +431,7 @@ public class CommonMenuFilter implements Filter {
 
   }
 
-  public static String getUrl_tmp(String url) {
+  public static String getUrl_WIN(String url) {
     // （1）构造HttpClient的实例
     HttpClient httpClient = new HttpClient();
 
@@ -480,7 +480,7 @@ public class CommonMenuFilter implements Filter {
     return "";
   }
 
-    public static String getUrl(String url) {
+    public static String getUrl_Linux(String url) {
         // （1）构造HttpClient的实例
         HttpClient httpClient = new HttpClient();
 
@@ -516,6 +516,14 @@ public class CommonMenuFilter implements Filter {
             getMethod.releaseConnection();
         }
         return "";
+    }
+
+    public static String getUrl(String url) {
+        if (isWindows) {
+            return getUrl_WIN(url);
+        } else{
+            return getUrl_Linux(url);
+        }
     }
 
 }
