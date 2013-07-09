@@ -244,11 +244,6 @@
         </dependency>
 
         <dependency>
-            <artifactId>passport-main-manager</artifactId>
-            <groupId>sogou-passport</groupId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.codahale.metrics</groupId>
             <artifactId>metrics-core</artifactId>
             <version>3.0.0-RC1-SNAPSHOT</version>

@@ -12,8 +12,8 @@ import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.DateUtil;
 
-import com.sogou.upd.passport.manager.problem.ProblemManager;
-import com.sogou.upd.passport.manager.problem.ProblemTypeManager;
+import com.sogou.upd.passport.admin.manager.problem.ProblemManager;
+import com.sogou.upd.passport.admin.manager.problem.ProblemTypeManager;
 import com.sogou.upd.passport.model.problem.ProblemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
