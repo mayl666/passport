@@ -87,7 +87,7 @@
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-props:3.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-core:3.4.0" level="project" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-main-common:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: sogou-passport:passport-main-common:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.sohu:sendcloud:1.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: oro:oro:2.0.8" level="project" />
@@ -109,9 +109,6 @@
     <orderEntry type="library" name="Maven: org.perf4j:perf4j:0.9.16" level="project" />
     <orderEntry type="library" name="Maven: sogou-passport:passport-main-service:1.0" level="project" />
     <orderEntry type="library" name="Maven: sogou-passport:passport-oauth2:1.0" level="project" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-main-manager:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-result:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.1.2.RELEASE" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:jsp-api:2.0" level="project" />

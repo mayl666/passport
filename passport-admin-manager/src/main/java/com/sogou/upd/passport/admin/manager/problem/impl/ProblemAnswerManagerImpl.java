@@ -48,7 +48,7 @@ public class ProblemAnswerManagerImpl implements ProblemAnswerManager {
             activeEmail.setMap(map);
             activeEmail.setTemplateFile("problemAnswerEmail.vm");
             activeEmail.setSubject("搜狗通行证反馈回复");
-            activeEmail.setCategory("feedback");
+            activeEmail.setCategory("register");
             activeEmail.setToEmail(mail);
             mailUtils.sendEmail(activeEmail);
 
