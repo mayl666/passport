@@ -236,6 +236,7 @@ iframe#main { margin:0; padding:0; }
                 data: data,
                 success:  function(data){
                     alert(data.statusText);
+                    //jQuery("#floatProblemAnswer").css("display","none");
                 },
                 dataType: "json"
             });

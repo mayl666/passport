@@ -142,6 +142,9 @@ public class ProblemAdminController extends BaseController {
         problemAnswer.setAnsContent(_ansContent);
         problemAnswer.setAnsTime(new Date());
         Result result = problemAnswerManager.addProblemAnswer(problemAnswer,_email);
+        if(result.isSuccess()){
+            problemManager.updateStatusById(_problemId,1);
+        }
         return result.toString();
     }
 

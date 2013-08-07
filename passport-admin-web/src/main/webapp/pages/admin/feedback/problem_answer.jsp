@@ -20,7 +20,7 @@
                <tr>
                    <td align="center" height="15" colspan="2">
                       <!-- <input type="submit" name="submit" value="提交" onclick="answerFormSubmit()">-->
-                       <a href="javascript:answerFormSubmit();" class="btn_save">保存</a>
+                       <a href="javascript:answerFormSubmit();" class="btn_save">发送</a>
                        <!--<input type="button" id="goback" value="返回" onclick=""> -->
                    </td>
                </tr>
