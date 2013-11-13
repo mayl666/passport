@@ -18,7 +18,6 @@
     </aop:aspectj-autoproxy>
 
 
-
     <!-- 自动发现bean，包括@Component@Service@Controller等 -->
     <context:component-scan base-package="com.sogou.upd.passport.**"/>
 
@@ -27,6 +26,7 @@
     <import resource="classpath:spring-config-service.xml"/>
     <import resource="classpath:spring-config-jredis.xml"/>
     <import resource="classpath:spring-config-mail.xml"/>
+    <import resource="spring-config-memcache.xml"/>
     <!--<import resource="spring-config-mail.xml"/>-->
 
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -62,7 +62,6 @@
     <mvc:default-servlet-handler/>
 
 
-
     <!-- 特定对象mapper，用于注入对特定字符进行转义的类 -->
     <!-- <bean id="CustomObjectMapper" class="com.sogou.upd.passport.common.web.CustomObjectMapper"/> -->
     <bean
@@ -75,7 +74,6 @@
             </list>
         </property>
     </bean>
-
 
 
     <bean id="stringHttpMessageConverter"
@@ -95,7 +93,7 @@
             class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
-                <ref bean="stringHttpMessageConverter" />
+                <ref bean="stringHttpMessageConverter"/>
             </list>
         </property>
     </bean>
@@ -108,24 +106,24 @@
 
     <!-- 配置Velocity视图解析器 -->
     <!--<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">-->
-        <!--<property name="cache" value="true"/>-->
-        <!--<property name="suffix">-->
-            <!--<value>.vm</value>-->
-        <!--</property>-->
-        <!--<property name="contentType">-->
-            <!--<value>text/html;charset=UTF-8</value>-->
-        <!--</property>-->
-        <!--<property name="toolboxConfigLocation">-->
-            <!--<value>WEB-INF/velocity/toolbox.xml</value>-->
-        <!--</property>-->
+    <!--<property name="cache" value="true"/>-->
+    <!--<property name="suffix">-->
+    <!--<value>.vm</value>-->
+    <!--</property>-->
+    <!--<property name="contentType">-->
+    <!--<value>text/html;charset=UTF-8</value>-->
+    <!--</property>-->
+    <!--<property name="toolboxConfigLocation">-->
+    <!--<value>WEB-INF/velocity/toolbox.xml</value>-->
+    <!--</property>-->
     <!--</bean>-->
     <!--&lt;!&ndash; 配置Velocity引擎 &ndash;&gt;-->
     <!--<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">-->
-        <!--<property name="resourceLoaderPath">-->
-            <!--<value>/WEB-INF/velocity/vm/</value>-->
-        <!--</property>-->
-        <!--<property name="configLocation">-->
-            <!--<value>/WEB-INF/velocity/velocity.properties</value>-->
-        <!--</property>-->
+    <!--<property name="resourceLoaderPath">-->
+    <!--<value>/WEB-INF/velocity/vm/</value>-->
+    <!--</property>-->
+    <!--<property name="configLocation">-->
+    <!--<value>/WEB-INF/velocity/velocity.properties</value>-->
+    <!--</property>-->
     <!--</bean>-->
 </beans>

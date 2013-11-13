@@ -14,7 +14,7 @@
             <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMin" value="ERROR"/>
         </filter>
     </appender>
     <appender name="CONSOLE-INFO" class="org.apache.log4j.ConsoleAppender">
@@ -22,7 +22,7 @@
             <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMin" value="ERROR"/>
         </filter>
     </appender>
     <appender name="FILE-ALL" class="org.apache.log4j.DailyRollingFileAppender">
@@ -40,8 +40,8 @@
     </category>
 
     <root>
-        <priority value="${passport.log.level}"/>
-        <appender-ref ref="CONSOLE-DEBUG"/>
+        <priority value="error"/>
+        <appender-ref ref="CONSOLE-ERROR"/>
     </root>
 
 
