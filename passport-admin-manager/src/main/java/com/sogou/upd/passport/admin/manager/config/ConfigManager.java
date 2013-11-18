@@ -1,5 +1,6 @@
 package com.sogou.upd.passport.admin.manager.config;
 
+import com.sogou.upd.passport.model.app.AppConfig;
 import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
 import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
 
@@ -103,4 +104,21 @@ public interface ConfigManager {
      * @throws Exception
      */
     public ClientIdLevelMapping getLevelByClientId(String clientId) throws Exception;
+
+    /**
+     * 根据应用id查询应用名称
+     *
+     * @param clientId
+     * @return
+     * @throws Exception
+     */
+    public AppConfig getAppNameByAppId(String clientId) throws Exception;
+
+    /**
+     * 获取所有应用的信息，主要是id和name
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<AppConfig> getAppList() throws Exception;
 }

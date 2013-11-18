@@ -1,6 +1,7 @@
 package com.sogou.upd.passport.admin.manager.config.impl;
 
 import com.sogou.upd.passport.admin.manager.config.ConfigManager;
+import com.sogou.upd.passport.model.app.AppConfig;
 import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
 import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
 import com.sogou.upd.passport.service.config.ConfigService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +38,7 @@ public class ConfigManagerImpl implements ConfigManager {
 
     @Override
     public boolean saveOrUpdateInterfaceLevelMapping(InterfaceLevelMapping interfaceLevelMapping) throws Exception {
+        interfaceLevelMapping.setCreateTime(new Date());
         return configService.saveOrUpdateInterfaceLevelMapping(interfaceLevelMapping);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -77,6 +80,16 @@ public class ConfigManagerImpl implements ConfigManager {
     @Override
     public ClientIdLevelMapping getLevelByClientId(String clientId) throws Exception {
         return configService.getLevelByClientId(clientId);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public AppConfig getAppNameByAppId(String clientId) throws Exception {
+        return configService.getAppNameByAppId(clientId);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<AppConfig> getAppList() throws Exception {
+        return configService.getAppList();  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

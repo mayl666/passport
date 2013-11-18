@@ -1,25 +1,33 @@
 package com.sogou.upd.passport.admin.web.controller;
 
+import com.alibaba.dubbo.common.json.JSONObject;
 import com.google.common.collect.Maps;
 import com.sogou.upd.passport.admin.manager.config.ConfigManager;
 import com.sogou.upd.passport.admin.web.BaseController;
+import com.sogou.upd.passport.admin.web.form.ClientVo;
+import com.sogou.upd.passport.admin.web.form.LevelVo;
 import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
+import com.sogou.upd.passport.model.app.AppConfig;
 import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
 import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
+import org.codehaus.jackson.JsonEncoding;
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.redis.hash.JacksonHashMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,6 +41,17 @@ import java.util.Set;
 public class ConfigAdminController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ConfigAdminController.class);
+
+    private final static String PRIMARY_LEVEL = "0";
+    private final static String MIDDLE_LEVEL = "1";
+    private final static String HIGH_LEVEL = "2";
+    private final static String PRIMARY_LEVEL_COUNT = "0";
+    private final static String MIDDLE_LEVEL_COUNT = "0";
+    private final static String HIGH_LEVEL_COUNT = "0";
+    private final static String PRIMARY_LEVEL_NAME = "初级";
+    private final static String MIDDLE_LEVEL_NAME = "中级";
+    private final static String HIGH_LEVEL_NAME = "高级";
+
 
     @Autowired
     private ConfigManager configManager;
@@ -63,21 +82,25 @@ public class ConfigAdminController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/interface/saveinterface", method = RequestMethod.POST)
-    public String saveInterface(@RequestParam("interfaceName") String interfaceName, @RequestParam("id") String id) throws Exception {
+    public String saveInterface(@RequestParam("interfaceName") String interfaceName, @RequestParam("interId") String interId) throws Exception {
         Result result = new APIResultSupport(false);
         try {
             InterfaceLevelMapping ilm = new InterfaceLevelMapping();
-            if (!"".equals(id) || id != null) {
-                ilm.setId(Long.parseLong(id));
+            if (!"".equals(interId) && interId != null) {
+                ilm.setId(Long.parseLong(interId));
             }
             ilm.setInterfaceName(interfaceName);
+            ilm.setPrimaryLevel(PRIMARY_LEVEL);
+            ilm.setPrimaryLevelCount(PRIMARY_LEVEL_COUNT);
+            ilm.setMiddleLevel(MIDDLE_LEVEL);
+            ilm.setMiddleLevelCount(MIDDLE_LEVEL_COUNT);
+            ilm.setHighLevel(HIGH_LEVEL);
+            ilm.setHighLevelCount(HIGH_LEVEL_COUNT);
             boolean isSuccess = configManager.saveOrUpdateInterfaceLevelMapping(ilm);
             if (isSuccess) {
-                result.setSuccess(true);
-                result.setMessage("保存接口成功!");
-                return result.toString();
+                return "redirect:/admin/interface/queryinterfacelist";
             } else {
-                result.setMessage("保存接口失败!");
+                result.setMessage("保存接口失败！");
             }
         } catch (Exception e) {
             logger.error("saveInterfcae error:", e);
@@ -101,7 +124,7 @@ public class ConfigAdminController extends BaseController {
             logger.error("getInterfaceById Error:id is " + id, e);
         }
         model.addAttribute("interfaceVO", ilm);
-        return "/pages/admin/config/addinterface.jsp";
+        return "/pages/admin/config/addInterface.jsp";
     }
 
     /**
@@ -111,21 +134,14 @@ public class ConfigAdminController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/interface/delInterface", method = RequestMethod.POST)
+    @RequestMapping(value = "/interface/delInterface", method = RequestMethod.GET)
     public String delInterface(@RequestParam("id") String id) throws Exception {
-        Result result = new APIResultSupport(false);
         try {
-            boolean isSuccess = configManager.deleteInterfaceLevelById(id);
-            if (isSuccess) {
-                result.setSuccess(true);
-                result.setMessage("删除接口成功!");
-            } else {
-                result.setMessage("删除接口失败!");
-            }
+            configManager.deleteInterfaceLevelById(id);
         } catch (Exception e) {
             logger.error("delInterface error:id is " + id, e);
         }
-        return result.toString();
+        return "forward:/admin/interface/queryinterfacelist";
     }
 
     /**
@@ -137,24 +153,57 @@ public class ConfigAdminController extends BaseController {
      */
     @RequestMapping(value = "/interface/getclientandlevel", method = RequestMethod.GET)
     public String getClientIdAndLevelList(Model model) throws Exception {
-        List<ClientIdLevelMapping> listVOResult = null;
+        List<ClientVo> clientVOList = new ArrayList<>();
+        List<LevelVo> levelVOList = new ArrayList<>();
         try {
-            listVOResult = configManager.findClientIdLevelMappingList();
+
+            List<AppConfig> appList = configManager.getAppList();
+            if (appList != null && appList.size() > 0) {
+                for (AppConfig ac : appList) {
+                    ClientVo cv = new ClientVo();
+                    String clientId = String.valueOf(ac.getClientId());
+                    String clientName = ac.getClientName();
+                    cv.setClientId(clientId);
+                    cv.setClientName(clientName);
+                    clientVOList.add(cv);
+                }
+                model.addAttribute("clientVOList", clientVOList);
+                levelVOList = getLevelList();
+                model.addAttribute("levelVOList", levelVOList);
+            }
         } catch (Exception e) {
             logger.error("getClientIdAndLevelList error:", e);
         }
-        model.addAttribute("listVO", listVOResult);
+
         return "/pages/admin/config/clientAndLevel.jsp";
     }
 
+    private List<LevelVo> getLevelList() throws Exception {
+        List<LevelVo> levelVoList = new ArrayList<>();
+        LevelVo lv1 = new LevelVo();
+        lv1.setLevelId(PRIMARY_LEVEL);
+        lv1.setLevelName(PRIMARY_LEVEL_NAME);
+        LevelVo lv2 = new LevelVo();
+        lv2.setLevelId(MIDDLE_LEVEL);
+        lv2.setLevelName(MIDDLE_LEVEL_NAME);
+        LevelVo lv3 = new LevelVo();
+        lv3.setLevelId(HIGH_LEVEL);
+        lv3.setLevelName(HIGH_LEVEL_NAME);
+        levelVoList.add(lv1);
+        levelVoList.add(lv2);
+        levelVoList.add(lv3);
+        return levelVoList;
+    }
+
     /**
-     * 根据应用查询该应用对应的等级,应用和等级做联动处理
+     * 根据应用查询该应用对应的等级,应用和等级做联动处理，有等级的显示，无等级显示“请选择”
      *
      * @param clientId
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/interface/getlevelbyclientid", method = RequestMethod.GET)
+    @ResponseBody
     public String getLevelByClientId(@RequestParam("clientId") String clientId, Model model) throws Exception {
         ClientIdLevelMapping clm = null;
         try {
@@ -162,8 +211,14 @@ public class ConfigAdminController extends BaseController {
         } catch (Exception e) {
             logger.error("getLevelByClientId error:clientId is " + clientId, e);
         }
-        model.addAttribute("clientLevelVO", clm);
-        return "/pages/admin/config/clientAndLevel.jsp";
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (clm != null) {
+            return objectMapper.writeValueAsString(clm);
+        } else {
+            ClientIdLevelMapping clmNull = new ClientIdLevelMapping();
+            clmNull.setLevelInfo("");
+            return objectMapper.writeValueAsString(clmNull);
+        }
     }
 
     /**
@@ -174,7 +229,7 @@ public class ConfigAdminController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/interfce/saveclientlevel", method = RequestMethod.POST)
+    @RequestMapping(value = "/interface/saveclientlevel", method = RequestMethod.POST)
     public String saveClientIdAndLevel(@RequestParam("clientId") String clientId, @RequestParam("level") String level) throws Exception {
         Result result = new APIResultSupport(false);
         try {
@@ -206,13 +261,13 @@ public class ConfigAdminController extends BaseController {
         Map<String, List<InterfaceLevelMapping>> maps;
         try {
             maps = configManager.getInterfaceMapByLevel();
-            Set<String> keySet = maps.keySet();
-            if (keySet != null && keySet.size() > 0) {
-                Iterator ite = keySet.iterator();
-                if (ite != null && ite.hasNext()) {
-                    String levelKey = (String) ite.next();
-                    model.addAttribute(levelKey, maps.get(levelKey));
+            if (maps != null && maps.size() > 0) {
+                List<InterfaceLevelMapping> interfaceVOList = maps.get("primaryList");
+                if (interfaceVOList != null && interfaceVOList.size() > 0) {
+                    model.addAttribute("interfaceVOList", interfaceVOList);
+                    model.addAttribute("rowCount", interfaceVOList.size());
                 }
+
             }
         } catch (Exception e) {
             logger.error("getInterfaceAndLevelList error:", e);
@@ -236,7 +291,7 @@ public class ConfigAdminController extends BaseController {
         } catch (Exception e) {
             logger.error("getInterfaceLevelById", e);
         }
-        model.addAttribute("interfacelevelVO", ilm);
+        model.addAttribute("interfaceLevelVO", ilm);
         return "/pages/admin/config/interfaceMain.jsp";
     }
 
@@ -249,7 +304,7 @@ public class ConfigAdminController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/interfce/saveinterfaceandlevel", method = RequestMethod.POST)
+    @RequestMapping(value = "/interface/saveinterfaceandlevel", method = RequestMethod.POST)
     public String saveInterfaceAndLevel(@RequestParam("id") String id, @RequestParam("interfaceName") String interfaceName, @RequestParam("level") String level, @RequestParam("levelCount") String levelCount) throws Exception {
         Result result = new APIResultSupport(false);
         try {
@@ -259,8 +314,7 @@ public class ConfigAdminController extends BaseController {
             ilm.setInterfaceName(interfaceName);
             boolean isSuccess = configManager.saveOrUpdateInterfaceLevelMapping(ilm);
             if (isSuccess) {
-                result.setSuccess(true);
-                result.setMessage("保存接口与等级信息成功！");
+                return "redirect:/admin/interface/getinterfaceandlevellist";
             } else {
                 result.setMessage("保存接口与等级信息失败！");
             }
