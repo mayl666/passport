@@ -101,7 +101,15 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var url="/admin/interface/queryinterfacelist";
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: "json"
+        });
+    });
+</script>
 </body>
 </html>

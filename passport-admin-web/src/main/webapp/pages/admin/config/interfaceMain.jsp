@@ -187,6 +187,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function(){
+        var url="/admin/interface/getinterfaceandlevellist";
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: "json"
+        });
+    });
     $(".modify").click(function (e) {
         var elem = this;
         var oldT = $(elem).parent('td').parent('tr').find("input.oldLevelCount").hide();

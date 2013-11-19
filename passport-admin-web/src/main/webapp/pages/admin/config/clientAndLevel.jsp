@@ -105,6 +105,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function(){
+        var url="/admin/interface/getclientandlevel";
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: "json"
+        });
+    });
     function IFeelGood(elem) {
         var client_id = elem.value;
         var data = "clientId=" + client_id;

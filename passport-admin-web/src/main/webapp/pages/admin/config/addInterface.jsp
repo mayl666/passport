@@ -88,8 +88,7 @@
                             <span class="button button-main"><button type="submit">保存</button></span>
                         </label>
                         <label>
-                            <span class="button button-main"> <a href="javascript:onCancelInterfaceSubmit();"
-                                                                 class="btn_save">取消</a></span>
+                            <span class="button button-main"> <button type="button" onclick="onCancelInterfaceSubmit()">取消</button></span>
                         </label>
                     </p>
                 </form>
@@ -126,6 +125,10 @@
             },
             dataType: "json"
         });
+    }
+
+    function onCancelInterfaceSubmit() {
+        location.reload();
     }
 </script>
 </body>

@@ -66,7 +66,7 @@ public class ConfigAdminController extends BaseController {
     public String queryInterfaceList(Model model) throws Exception {
         List<InterfaceLevelMapping> interfaceVOList = null;
         try {
-            interfaceVOList = configManager.findInterfaceLevelMappingList();
+             interfaceVOList = configManager.findInterfaceLevelMappingList();
         } catch (Exception e) {
             logger.error("queryInterfaceList error:", e);
         }
