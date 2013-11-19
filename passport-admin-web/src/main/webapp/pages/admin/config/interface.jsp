@@ -5,14 +5,14 @@
   Time: 下午7:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jstl/sql" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>passport后台</title>
-    <%--<%@ include file="/pages/admin/head.jsp" %>--%>
+    <%@ include file="/pages/admin/head.jsp" %>
 
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
     <script type="text/javascript" language="javascript" src="/js/jquery-1.6.2.min.js"></script>
@@ -48,10 +48,10 @@
 <body>
 <div id="page">
     <!-- 引入顶部信息 -->
-    <%--<%@ include file="/pages/admin/include_top.jsp" %>--%>
+    <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
         <!-- 引入菜单 -->
-        <%--<%@ include file="/pages/admin/include_menu.jsp" %>--%>
+        <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
