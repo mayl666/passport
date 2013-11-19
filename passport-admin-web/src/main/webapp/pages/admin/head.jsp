@@ -6,7 +6,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <link rel="stylesheet"  type="text/css"  href="/css/chosen.css" />
