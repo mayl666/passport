@@ -67,9 +67,9 @@
             <div>
                 <a href="/admin/interface/getclientandlevel">配置应用与等级</a>
                 <a href="/admin/interface/queryinterfacelist">接口操作</a>
-                <table style="font-size:13px" class="question-table" border="0">
+                <table style="font-size:13px" class="question-table" border="1">
                     <thead>
-                    <tr style="background-color:#ADDA27;">
+                    <tr align="center" style="background-color:#ADDA27;">
                         <td width="8%">
                             <div>级别</div>
                         </td>
@@ -79,7 +79,7 @@
                         <td width="5%">
                             <div>接口初始频次</div>
                         </td>
-                        <td width="20%">
+                        <td width="10%">
                             <div>操作类型</div>
                         </td>
                     </tr>
@@ -88,7 +88,7 @@
 
                         <%--<td style="text-align:center;" rowspan="${rowCount}">初级</td>--%>
                         <c:forEach items="${interfaceVOList}" var="primaryVO" varStatus="i">
-                            <tr>
+                            <tr  align="center">
                                 <c:if test="${i.index==0}">
                                     <td rowspan="${rowCount}" width="8%">
                                         初级
@@ -122,7 +122,7 @@
 
                         <%--<td style="text-align:center;" rowspan="${rowCount}">中级</td>--%>
                         <c:forEach items="${interfaceVOList}" var="middleVO" varStatus="j">
-                            <tr>
+                            <tr align="center">
                                 <c:if test="${j.index==0}">
                                     <td rowspan="${rowCount}">
                                         中级
@@ -153,7 +153,7 @@
 
                         <%--<td style="text-align:center;" rowspan="${rowCount}">高级</td>--%>
                         <c:forEach items="${interfaceVOList}" var="highVO" varStatus="k">
-                            <tr>
+                            <tr align="center">
                                 <c:if test="${k.index==0}">
                                     <td rowspan="${rowCount}">
                                         高级
