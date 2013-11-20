@@ -45,9 +45,9 @@ public class ConfigAdminController extends BaseController {
     private final static String PRIMARY_LEVEL = "0";
     private final static String MIDDLE_LEVEL = "1";
     private final static String HIGH_LEVEL = "2";
-    private final static String PRIMARY_LEVEL_COUNT = "0";
-    private final static String MIDDLE_LEVEL_COUNT = "1";
-    private final static String HIGH_LEVEL_COUNT = "2";
+    private final static String PRIMARY_LEVEL_COUNT = "0";    //新增接口时，所有级别次数都默认为0
+    private final static String MIDDLE_LEVEL_COUNT = "0";
+    private final static String HIGH_LEVEL_COUNT = "0";
     private final static String PRIMARY_LEVEL_NAME = "初级";
     private final static String MIDDLE_LEVEL_NAME = "中级";
     private final static String HIGH_LEVEL_NAME = "高级";
@@ -66,7 +66,7 @@ public class ConfigAdminController extends BaseController {
     public String queryInterfaceList(Model model) throws Exception {
         List<InterfaceLevelMapping> interfaceVOList = null;
         try {
-             interfaceVOList = configManager.findInterfaceLevelMappingList();
+            interfaceVOList = configManager.findInterfaceLevelMappingList();
         } catch (Exception e) {
             logger.error("queryInterfaceList error:", e);
         }
