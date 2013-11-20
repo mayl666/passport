@@ -250,9 +250,7 @@ public class ConfigAdminController extends BaseController {
             clm.setLevelInfo(level);
             boolean isSuccess = configManager.saveOrUpdateClientAndLevel(clm);
             if (isSuccess) {
-                return "forward:/admin/interface/getclientandlevel";
-//                result.setSuccess(true);
-//                result.setMessage("保存应用与等级成功！");
+                return "redirect:/admin/interface/getclientandlevel";
             } else {
                 result.setMessage("保存应用与等级失败！");
             }

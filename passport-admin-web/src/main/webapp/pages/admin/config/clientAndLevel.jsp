@@ -156,9 +156,8 @@
                 clientId: client_id,
                 level: level_info
             },
-            success: function (data) {
+            complete: function (data) {
                 location.reload();
-//                alert(data.statusText);
             },
             dataType: "json"
         });
