@@ -219,7 +219,7 @@ body{display:block;height:100%;}
 		#pageNav{_display:inline;overflow:hidden;position:relative;float:left;width:169px;margin:0 0 0 -170px;zoom:1;}
 			#pageNavInt{padding:0 14px 0 8px;}
 		#pageCanvas{_display:inline;overflow:initial;position:relative;float:right;width:100%;background:url(i/canvasBg.gif) repeat-x;zoom:1;}
-			#pageCanvasInt{_height:300px;min-height:300px;padding:9px 14px 14px;}
+			#pageCanvasInt{_height:100px;min-height:0px;padding:9px 14px 14px;}
 	#pageFt{clear:both;padding:5px 0 10px;color:#999;text-align:center;}
 		#pageFt a{color:#999;}
 

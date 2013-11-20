@@ -82,14 +82,6 @@ public interface ConfigManager {
     public boolean saveOrUpdateClientAndLevel(ClientIdLevelMapping clientIdLevelMapping) throws Exception;
 
     /**
-     * 根据hashKey获取对应的key-value键值对
-     *
-     * @param clientId
-     * @return
-     */
-    public Map<String, String> getMapsFromCacheKey(String clientId) throws Exception;
-
-    /**
      * 查询所有接口及对应等级信息，按三个不同的等级划分
      *
      * @return

@@ -67,11 +67,6 @@ public class ConfigManagerImpl implements ConfigManager {
     }
 
     @Override
-    public Map<String, String> getMapsFromCacheKey(String clientId) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public Map<String, List<InterfaceLevelMapping>> getInterfaceMapByLevel() throws Exception {
         return configService.getInterfaceMapByLevel();  //To change body of implemented methods use File | Settings | File Templates.
     }
