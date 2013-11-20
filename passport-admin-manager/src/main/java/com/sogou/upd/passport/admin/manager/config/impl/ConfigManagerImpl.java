@@ -2,9 +2,9 @@ package com.sogou.upd.passport.admin.manager.config.impl;
 
 import com.sogou.upd.passport.admin.config.ConfigService;
 import com.sogou.upd.passport.admin.manager.config.ConfigManager;
+import com.sogou.upd.passport.admin.model.config.ClientIdLevelMapping;
+import com.sogou.upd.passport.admin.model.config.InterfaceLevelMapping;
 import com.sogou.upd.passport.model.app.AppConfig;
-import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
-import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

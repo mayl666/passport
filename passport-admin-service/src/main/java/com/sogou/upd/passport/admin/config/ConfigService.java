@@ -1,10 +1,10 @@
 package com.sogou.upd.passport.admin.config;
 
 
+import com.sogou.upd.passport.admin.model.config.ClientIdLevelMapping;
+import com.sogou.upd.passport.admin.model.config.InterfaceLevelMapping;
 import com.sogou.upd.passport.exception.ServiceException;
 import com.sogou.upd.passport.model.app.AppConfig;
-import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
-import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
 
 import java.util.List;
 import java.util.Map;

@@ -2,12 +2,12 @@ package com.sogou.upd.passport.admin.config.impl;
 
 import com.sogou.upd.passport.admin.config.ConfigService;
 import com.sogou.upd.passport.admin.dao.problem.config.ConfigDAO;
+import com.sogou.upd.passport.admin.model.config.ClientIdLevelMapping;
+import com.sogou.upd.passport.admin.model.config.InterfaceLevelMapping;
 import com.sogou.upd.passport.common.CacheConstant;
 import com.sogou.upd.passport.common.utils.RedisUtils;
 import com.sogou.upd.passport.exception.ServiceException;
 import com.sogou.upd.passport.model.app.AppConfig;
-import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
-import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

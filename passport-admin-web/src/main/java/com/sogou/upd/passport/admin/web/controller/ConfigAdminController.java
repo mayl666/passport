@@ -1,25 +1,18 @@
 package com.sogou.upd.passport.admin.web.controller;
 
-import com.alibaba.dubbo.common.json.JSONObject;
-import com.google.common.collect.Maps;
 import com.sogou.upd.passport.admin.manager.config.ConfigManager;
+import com.sogou.upd.passport.admin.model.config.ClientIdLevelMapping;
+import com.sogou.upd.passport.admin.model.config.InterfaceLevelMapping;
 import com.sogou.upd.passport.admin.web.BaseController;
 import com.sogou.upd.passport.admin.web.form.ClientVo;
 import com.sogou.upd.passport.admin.web.form.LevelVo;
 import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.model.app.AppConfig;
-import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
-import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
-import org.codehaus.jackson.JsonEncoding;
-import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.data.redis.hash.JacksonHashMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
