@@ -38,7 +38,6 @@ public class ConfigManagerImpl implements ConfigManager {
 
     @Override
     public boolean saveOrUpdateInterfaceLevelMapping(InterfaceLevelMapping interfaceLevelMapping) throws Exception {
-        interfaceLevelMapping.setCreateTime(new Date());
         return configService.saveOrUpdateInterfaceLevelMapping(interfaceLevelMapping);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
