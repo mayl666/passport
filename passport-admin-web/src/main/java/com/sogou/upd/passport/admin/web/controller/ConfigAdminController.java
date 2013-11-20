@@ -88,14 +88,10 @@ public class ConfigAdminController extends BaseController {
             InterfaceLevelMapping ilm = new InterfaceLevelMapping();
             if (!"".equals(interId) && interId != null) {
                 ilm.setId(Long.parseLong(interId));
+            } else {
+                setDefaultValue(ilm);
             }
             ilm.setInterfaceName(interfaceName);
-            ilm.setPrimaryLevel(PRIMARY_LEVEL);
-            ilm.setPrimaryLevelCount(PRIMARY_LEVEL_COUNT);
-            ilm.setMiddleLevel(MIDDLE_LEVEL);
-            ilm.setMiddleLevelCount(MIDDLE_LEVEL_COUNT);
-            ilm.setHighLevel(HIGH_LEVEL);
-            ilm.setHighLevelCount(HIGH_LEVEL_COUNT);
             boolean isSuccess = configManager.saveOrUpdateInterfaceLevelMapping(ilm);
             if (isSuccess) {
                 return "redirect:/admin/interface/queryinterfacelist";
@@ -106,6 +102,22 @@ public class ConfigAdminController extends BaseController {
             logger.error("saveInterfcae error:", e);
         }
         return result.toString();
+    }
+
+    /**
+     * 新增接口设置默认值，每个级别都为0
+     *
+     * @param ilm
+     * @return
+     */
+    public InterfaceLevelMapping setDefaultValue(InterfaceLevelMapping ilm) {
+        ilm.setPrimaryLevel(PRIMARY_LEVEL);
+        ilm.setPrimaryLevelCount(PRIMARY_LEVEL_COUNT);
+        ilm.setMiddleLevel(MIDDLE_LEVEL);
+        ilm.setMiddleLevelCount(MIDDLE_LEVEL_COUNT);
+        ilm.setHighLevel(HIGH_LEVEL);
+        ilm.setHighLevelCount(HIGH_LEVEL_COUNT);
+        return ilm;
     }
 
     /**
