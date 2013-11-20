@@ -43,6 +43,10 @@
             margin: 0;
             padding: 0;
         }
+        table{border-collapse: collapse;}
+        table input[type='text']{border:1px solid #ADDA27;}
+        table input[type='text']:disabled{border-color: #fff;}
+        table tr.error input.oldLevelCount{background: red;color:#fff;}
     </style>
 </head>
 <body>
@@ -88,19 +92,19 @@
 
                         <%--<td style="text-align:center;" rowspan="${rowCount}">初级</td>--%>
                         <c:forEach items="${interfaceVOList}" var="primaryVO" varStatus="i">
-                            <tr  align="center">
+                            <tr  align="center" data-pri="0" data-row-index="${i.index}">
                                 <c:if test="${i.index==0}">
                                     <td rowspan="${rowCount}" width="8%">
                                         初级
                                     </td>
                                 </c:if>
-                                <c:if test="${i.index!=0}">
+                                <c:if test="${1!=0}">
                                     <td style="text-align:center;" width="15%"><c:out
                                             value="${primaryVO.interfaceName}"/></td>
                                     <td style="text-align:center;" width="5%">
                                         <input type="text" class="oldLevelCount" style="display: block"
                                                value="<c:out value="${primaryVO.primaryLevelCount}"/>"
-                                               disabled="false"/>
+                                                   disabled="disabled"/>
                                         <input type="text" class="newLevelCount" style="display: none"/>
                                     </td>
                                     <td style="text-align:center;" width="20%">
@@ -122,13 +126,13 @@
 
                         <%--<td style="text-align:center;" rowspan="${rowCount}">中级</td>--%>
                         <c:forEach items="${interfaceVOList}" var="middleVO" varStatus="j">
-                            <tr align="center">
+                            <tr align="center" data-pri="1" data-row-index="${j.index}">
                                 <c:if test="${j.index==0}">
                                     <td rowspan="${rowCount}">
                                         中级
                                     </td>
                                 </c:if>
-                                <c:if test="${j.index!=0}">
+                                <c:if test="${1!=0}">
                                     <td style="text-align:center;"><c:out value="${middleVO.interfaceName}"/></td>
                                     <td style="text-align:center;">
                                         <input type="text" class="oldLevelCount" style="display: block"
@@ -152,14 +156,14 @@
 
 
                         <%--<td style="text-align:center;" rowspan="${rowCount}">高级</td>--%>
-                        <c:forEach items="${interfaceVOList}" var="highVO" varStatus="k">
-                            <tr align="center">
+                        <%--<c:forEach items="${interfaceVOList}" var="highVO" varStatus="k">
+                            <tr align="center" data-pri="2" data-row-index="${k.index}">
                                 <c:if test="${k.index==0}">
                                     <td rowspan="${rowCount}">
                                         高级
                                     </td>
                                 </c:if>
-                                <c:if test="${k.index!=0}">
+                                <c:if test="${1!=0}">
                                     <td style="text-align:center;"><c:out value="${highVO.interfaceName}"/></td>
                                     <td style="text-align:center;">
                                         <input type="text" class="oldLevelCount" style="display: block"
@@ -179,7 +183,7 @@
                                     </td>
                                 </c:if>
                             </tr>
-                        </c:forEach>
+                        </c:forEach> --%>
                     </c:if>
                 </table>
             </div>
@@ -197,18 +201,38 @@
     });
     $(".modify").click(function (e) {
         var elem = this;
-        var oldT = $(elem).parent('td').parent('tr').find("input.oldLevelCount").hide();
-        var newT = $(elem).parent('td').parent('tr').find("input.newLevelCount").show();
-        newT.val(oldT.val());
+        var oldT = $(elem).parent('td').parent('tr').find("input.oldLevelCount").prop("disabled",false);
+        //var newT = $(elem).parent('td').parent('tr').find("input.newLevelCount").show();
+        //newT.val(oldT.val());
         $(elem).hide().parent('td').parent('tr').find("input.save").show();
         return;
     });
     $('.save').click(function () {
+        $('tr').removeClass('error');
         var $tr = $(this).parent("td").parent("tr");
         var primaryId = $tr.find('.modifyId').val();
         var primaryInterfaceName = $tr.find('.modifyInterfaceName').val();
         var primaryLevel = $tr.find('.modifyLevel').val();
-        var primaryLevelCount = $tr.find('.newLevelCount').val();
+        var primaryLevelCount = $tr.find('.oldLevelCount').val();
+
+        {
+            var failed=false;
+            var my_pri=+$tr.attr('data-pri'),my_index=+$tr.attr('data-row-index');
+            $.each($("table tr[data-pri][data-row-index='"+my_index+"']"),function(index,item){
+
+                var $item=$(item),tmp_pri;
+                if((tmp_pri=+$item.attr('data-pri'))==my_pri)
+                    return true;
+
+                var val=+$item.find(".oldLevelCount").val();
+                 if(tmp_pri>my_pri&&val<=primaryLevelCount){failed=true;$item.addClass('error')}
+                if(tmp_pri<my_pri&&val>=primaryLevelCount){failed=true;$item.addClass("error");}
+
+            });
+                 if(failed){
+                    return 0;//alert('ffz');
+                 }
+        }
         var url = "/admin/interface/saveinterfaceandlevel";
         $.ajax({
             type: 'POST',
