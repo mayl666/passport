@@ -1,17 +1,14 @@
 package com.sogou.upd.passport.admin.manager.config.impl;
 
+import com.sogou.upd.passport.admin.config.ConfigService;
 import com.sogou.upd.passport.admin.manager.config.ConfigManager;
 import com.sogou.upd.passport.model.app.AppConfig;
 import com.sogou.upd.passport.model.config.ClientIdLevelMapping;
 import com.sogou.upd.passport.model.config.InterfaceLevelMapping;
-import com.sogou.upd.passport.service.config.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -67,7 +64,7 @@ public class ConfigManagerImpl implements ConfigManager {
     }
 
     @Override
-    public Map<String, List<InterfaceLevelMapping>> getInterfaceMapByLevel() throws Exception {
+    public List<InterfaceLevelMapping> getInterfaceMapByLevel() throws Exception {
         return configService.getInterfaceMapByLevel();  //To change body of implemented methods use File | Settings | File Templates.
     }
 

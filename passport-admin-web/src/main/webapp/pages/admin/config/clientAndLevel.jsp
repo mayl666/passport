@@ -157,7 +157,8 @@
                 level: level_info
             },
             success: function (data) {
-                alert(data.statusText);
+                location.reload();
+//                alert(data.statusText);
             },
             dataType: "json"
         });

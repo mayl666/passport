@@ -86,7 +86,7 @@ public interface ConfigManager {
      *
      * @return
      */
-    public Map<String, List<InterfaceLevelMapping>> getInterfaceMapByLevel() throws Exception;
+    public List<InterfaceLevelMapping> getInterfaceMapByLevel() throws Exception;
 
     /**
      * 根据应用查询该应用对应的等级

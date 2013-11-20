@@ -166,7 +166,7 @@ public class ConfigAdminController extends BaseController {
     @RequestMapping(value = "/interface/getclientandlevel", method = RequestMethod.GET)
     public String getClientIdAndLevelList(Model model) throws Exception {
         List<ClientVo> clientVOList = new ArrayList<>();
-        List<LevelVo> levelVOList = new ArrayList<>();
+        List<LevelVo> levelVOList;
         try {
 
             List<AppConfig> appList = configManager.getAppList();
@@ -250,8 +250,9 @@ public class ConfigAdminController extends BaseController {
             clm.setLevelInfo(level);
             boolean isSuccess = configManager.saveOrUpdateClientAndLevel(clm);
             if (isSuccess) {
-                result.setSuccess(true);
-                result.setMessage("保存应用与等级成功！");
+                return "forward:/admin/interface/getclientandlevel";
+//                result.setSuccess(true);
+//                result.setMessage("保存应用与等级成功！");
             } else {
                 result.setMessage("保存应用与等级失败！");
             }
@@ -270,16 +271,12 @@ public class ConfigAdminController extends BaseController {
      */
     @RequestMapping(value = "/interface/getinterfaceandlevellist", method = RequestMethod.GET)
     public String getInterfaceAndLevelList(Model model) throws Exception {
-        Map<String, List<InterfaceLevelMapping>> maps;
+        List<InterfaceLevelMapping> lists;
         try {
-            maps = configManager.getInterfaceMapByLevel();
-            if (maps != null && maps.size() > 0) {
-                List<InterfaceLevelMapping> interfaceVOList = maps.get("primaryList");
-                if (interfaceVOList != null && interfaceVOList.size() > 0) {
-                    model.addAttribute("interfaceVOList", interfaceVOList);
-                    model.addAttribute("rowCount", interfaceVOList.size());
-                }
-
+            lists = configManager.getInterfaceMapByLevel();
+            if (lists != null && lists.size() > 0) {
+                model.addAttribute("interfaceVOList", lists);
+                model.addAttribute("rowCount", lists.size());
             }
         } catch (Exception e) {
             logger.error("getInterfaceAndLevelList error:", e);
@@ -288,7 +285,7 @@ public class ConfigAdminController extends BaseController {
     }
 
     /**
-     * 修改之前，先根据id查询该接口，等级及次数的对应信息
+     * 修改接口频次之前，先根据id查询该接口，等级及次数的对应信息
      *
      * @param id
      * @param model
