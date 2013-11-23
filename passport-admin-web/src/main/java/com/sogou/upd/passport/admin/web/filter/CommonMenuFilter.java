@@ -193,6 +193,9 @@ public class CommonMenuFilter implements Filter {
   public static final boolean isWindows = System.getProperty("os.name") != null
                                           && System.getProperty("os.name").toLowerCase().contains("windows");
 
+    public static final boolean isLinux = System.getProperty("os.name") != null
+            && System.getProperty("os.name").toLowerCase().contains("linux");
+
   private String commReplace(String str) throws UnsupportedEncodingException {
     // 转换字符编码
     try {
@@ -214,7 +217,7 @@ public class CommonMenuFilter implements Filter {
    */
   String getPassportEmail(HttpServletRequest httpRequest) {
       //return "chenjiameng"  + "@sogou-inc.com";
-    if (isWindows) {
+    if (isLinux) {
       // 如果是windows返回测试,系统的用户
 //      return "test_" + menuTypeId + "@sogou-inc.com";
       return "liuling"  + "@sogou-inc.com";
