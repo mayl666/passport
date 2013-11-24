@@ -200,7 +200,7 @@ public class CommonMenuFilter implements Filter {
         return "";
       }
       if (!isWindows) {
-        str = new String(str.getBytes("ISO8859_1"), "GBK");
+       // str = new String(str.getBytes("ISO8859_1"), "GBK");
       }
       str = str.replaceAll("\u003d", "=");
     } catch (Exception e) {
