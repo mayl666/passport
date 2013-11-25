@@ -117,6 +117,23 @@ public class ConfigServiceImpl implements ConfigService {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public InterfaceLevelMapping findInterfaceByName(String interName) throws ServiceException {
+        try {
+            if (!"".equals(interName) && interName != null) {
+                InterfaceLevelMapping ilm = configDAO.getInterfaceByName(interName);
+                if (ilm != null) {
+                    return ilm;
+                } else {
+                    return null;
+                }
+            }
+        } catch (Exception e) {
+            throw new ServiceException();
+        }
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     /**
      * 重新刷新一遍已有应用的接口，等级信息
      *
@@ -387,6 +404,7 @@ public class ConfigServiceImpl implements ConfigService {
         }
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
 
     private String getValue(InterfaceLevelMapping inter, String level) {
         String value = null;

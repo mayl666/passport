@@ -42,6 +42,7 @@ public interface ConfigDAO {
      * @param id
      * @return
      * @throws org.springframework.dao.DataAccessException
+     *
      */
     @SQL("select * from" +
             INTERFACE_LEVEL_TABLE_NAME +
@@ -61,6 +62,7 @@ public interface ConfigDAO {
      *
      * @return
      * @throws org.springframework.dao.DataAccessException
+     *
      */
     @SQL("select count(*) from " +
             INTERFACE_LEVEL_TABLE_NAME)
@@ -98,11 +100,10 @@ public interface ConfigDAO {
             "#if(:inter.middleLevelCount != null){middle_level_count=:inter.middleLevelCount,}  " +
             "#if(:inter.highLevel != null){high_level=:inter.highLevel,}  " +
             "#if(:inter.highLevelCount != null){high_level_count=:inter.highLevelCount,}  " +
-            "#if(:inter.createTime != null){create_time=:inter.createTime}  "  +
+            "#if(:inter.createTime != null){create_time=:inter.createTime}  " +
             "where id=:inter.id"
     )
     public int updateInterfaceLevelMapping(@SQLParam("inter") InterfaceLevelMapping inter) throws DataAccessException;
-
 
 
     /**
@@ -135,6 +136,7 @@ public interface ConfigDAO {
      * @param clm
      * @return
      * @throws org.springframework.dao.DataAccessException
+     *
      */
     @SQL("insert into" +
             CLIENTID_LEVEL_TABLE_NAME +
@@ -175,6 +177,7 @@ public interface ConfigDAO {
      * @param clientId
      * @return
      * @throws org.springframework.dao.DataAccessException
+     *
      */
     @SQL("select * from " +
             CLIENTID_LEVEL_TABLE_NAME +
@@ -187,6 +190,7 @@ public interface ConfigDAO {
      *
      * @return
      * @throws org.springframework.dao.DataAccessException
+     *
      */
     @SQL("select * from" +
             INTERFACE_LEVEL_TABLE_NAME)
@@ -199,6 +203,7 @@ public interface ConfigDAO {
      * @param appId
      * @return
      * @throws org.springframework.dao.DataAccessException
+     *
      */
     @SQL("select * from" +
             APP_CONFIG +
@@ -212,9 +217,20 @@ public interface ConfigDAO {
      *
      * @return
      * @throws org.springframework.dao.DataAccessException
+     *
      */
     @SQL("select * from" + APP_CONFIG)
     public List<AppConfig> getAppList() throws DataAccessException;
+
+    /**
+     * 根据接口名称查询接口信息
+     *
+     * @param interfaceName
+     * @return
+     * @throws DataAccessException
+     */
+    @SQL("select * from" + INTERFACE_LEVEL_TABLE_NAME + "where interface_name=:interfaceName")
+    public InterfaceLevelMapping getInterfaceByName(@SQLParam("interfaceName") String interfaceName) throws DataAccessException;
 
 
 }

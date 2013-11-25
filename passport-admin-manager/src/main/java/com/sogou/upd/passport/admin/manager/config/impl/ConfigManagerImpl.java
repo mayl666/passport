@@ -83,5 +83,13 @@ public class ConfigManagerImpl implements ConfigManager {
         return configService.getAppList();  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public boolean getInterfaceByName(String interName) throws Exception {
+        InterfaceLevelMapping ilm = configService.findInterfaceByName(interName);
+        if (ilm != null) {
+            return true;
+        }
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
 }

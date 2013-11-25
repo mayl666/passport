@@ -23,7 +23,6 @@ public interface ConfigService {
      *
      * @param id
      * @return
-     *
      */
     public InterfaceLevelMapping findInterfaceById(String id) throws ServiceException;
 
@@ -41,6 +40,16 @@ public interface ConfigService {
      * @return
      */
     public boolean saveOrUpdateInterfaceLevelMapping(InterfaceLevelMapping interfaceLevelMapping) throws ServiceException;
+
+
+    /**
+     * 根据接口名称查询接口信息
+     *
+     * @param interName
+     * @return
+     * @throws ServiceException
+     */
+    public InterfaceLevelMapping findInterfaceByName(String interName) throws ServiceException;
 
     /**
      * 删除接口

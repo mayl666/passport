@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,25 +78,35 @@ public class ConfigAdminController extends BaseController {
      */
     @RequestMapping(value = "/interface/saveinterface", method = RequestMethod.POST)
     public String saveInterface(@RequestParam("interfaceName") String interfaceName, @RequestParam("interId") String interId) throws Exception {
-        Result result = new APIResultSupport(false);
+        String errMessage = "";
         try {
-            InterfaceLevelMapping ilm = new InterfaceLevelMapping();
-            if (!"".equals(interId) && interId != null) {
-                ilm.setId(Long.parseLong(interId));
+            if ("".equals(interfaceName) || interfaceName == null) {
+                errMessage = "interface name is not allowed NULL";
             } else {
-                setDefaultValue(ilm);
-            }
-            ilm.setInterfaceName(interfaceName);
-            boolean isSuccess = configManager.saveOrUpdateInterfaceLevelMapping(ilm);
-            if (isSuccess) {
-                return "redirect:/admin/interface/queryinterfacelist";
-            } else {
-                result.setMessage("保存接口失败！");
+                boolean isExistInterface = configManager.getInterfaceByName(interfaceName);
+                if (isExistInterface) {
+                    errMessage = "error info:this interface is already exists！";
+                } else {
+                    InterfaceLevelMapping ilm = new InterfaceLevelMapping();
+                    if (!"".equals(interId) && interId != null) {
+                        ilm.setId(Long.parseLong(interId));
+                    } else {
+                        setDefaultValue(ilm);
+                    }
+                    ilm.setInterfaceName(interfaceName);
+                    boolean isSuccess = configManager.saveOrUpdateInterfaceLevelMapping(ilm);
+                    if (isSuccess) {
+                        return "redirect:/admin/interface/queryinterfacelist";
+                    } else {
+                        errMessage = "error info:save interface error！";
+                    }
+                }
             }
         } catch (Exception e) {
-            logger.error("saveInterfcae error:", e);
+            logger.error("saveInterface error:", e);
         }
-        return result.toString();
+        String redirectString = "/admin/interface/errpage?errMessage=" + errMessage;
+        return "redirect:" + redirectString;
     }
 
     /**
@@ -237,7 +248,7 @@ public class ConfigAdminController extends BaseController {
      */
     @RequestMapping(value = "/interface/saveclientlevel", method = RequestMethod.POST)
     public String saveClientIdAndLevel(@RequestParam("clientId") String clientId, @RequestParam("level") String level) throws Exception {
-        Result result = new APIResultSupport(false);
+        String errMessage = "";
         try {
             ClientIdLevelMapping clm = new ClientIdLevelMapping();
             clm.setClientId(clientId);
@@ -246,12 +257,12 @@ public class ConfigAdminController extends BaseController {
             if (isSuccess) {
                 return "redirect:/admin/interface/getclientandlevel";
             } else {
-                result.setMessage("保存应用与等级失败！");
+                errMessage = "error info:save app and level error！";
             }
         } catch (Exception e) {
             logger.error("saveClientIdAndLevel error:clientid is " + clientId, e);
         }
-        return result.toString();
+        return "redirect:/admin/interface/errpage?errMessage=" + errMessage;
     }
 
     /**
@@ -307,7 +318,7 @@ public class ConfigAdminController extends BaseController {
      */
     @RequestMapping(value = "/interface/saveinterfaceandlevel", method = RequestMethod.POST)
     public String saveInterfaceAndLevel(@RequestParam("id") String id, @RequestParam("interfaceName") String interfaceName, @RequestParam("level") String level, @RequestParam("levelCount") String levelCount) throws Exception {
-        Result result = new APIResultSupport(false);
+        String errMessage = "";
         try {
             InterfaceLevelMapping ilm = new InterfaceLevelMapping();
             setValue(ilm, level, levelCount);
@@ -317,12 +328,12 @@ public class ConfigAdminController extends BaseController {
             if (isSuccess) {
                 return "redirect:/admin/interface/getinterfaceandlevellist";
             } else {
-                result.setMessage("保存接口与等级信息失败！");
+                errMessage = "error info:save interface and level error！";
             }
         } catch (Exception e) {
             logger.error("saveInterfaceAndLevel error: id is " + id, e);
         }
-        return result.toString();
+        return "redirect:/admin/interface/errpage?errMessage=" + errMessage;
     }
 
     private InterfaceLevelMapping setValue(InterfaceLevelMapping ilm, String level, String levelCount) {
@@ -341,6 +352,15 @@ public class ConfigAdminController extends BaseController {
                 break;
         }
         return ilm;
+    }
+
+    @RequestMapping(value = "/interface/errpage", method = RequestMethod.GET)
+    public String showErrorPage(@RequestParam("errMessage") String errMessage, Model model,HttpServletRequest request) throws Exception {
+        if (!"".equals(errMessage) && errMessage != null) {
+            request.setAttribute("errMessage","dws");
+            model.addAttribute("errMessage", errMessage);
+        }
+        return "forward:/pages/admin/config/errPage.jsp";
     }
 
 }

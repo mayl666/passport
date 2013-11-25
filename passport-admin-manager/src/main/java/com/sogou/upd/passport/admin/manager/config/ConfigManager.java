@@ -113,4 +113,14 @@ public interface ConfigManager {
      * @throws Exception
      */
     public List<AppConfig> getAppList() throws Exception;
+
+
+    /**
+     * 根据接口名称查询该接口信息
+     *
+     * @param interName
+     * @return
+     * @throws Exception
+     */
+    public boolean getInterfaceByName(String interName) throws Exception;
 }
