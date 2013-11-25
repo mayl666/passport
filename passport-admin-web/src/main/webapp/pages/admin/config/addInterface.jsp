@@ -72,23 +72,36 @@
                             <label>
                                 <input type="text" name="interfaceName"
                                        value="<c:out value="${interfaceVO.interfaceName}" /> "/>
-                                <input type="hidden" name="interId"  value="<c:out value="${interfaceVO.id}"/>"/>
+                                初级：<input type="text" name="primaryLevelCount"
+                                          value="<c:out value="${interfaceVO.primaryLevelCount}" /> "/>
+                                中级:<input type="text" name="middleLevelCount"
+                                          value="<c:out value="${interfaceVO.middleLevelCount}" /> "/>
+                                高级:<input type="text" name="highLevelCount"
+                                          value="<c:out value="${interfaceVO.highLevelCount}" /> "/>
+                                <input type="hidden" name="interId" value="<c:out value="${interfaceVO.id}"/>"/>
                             </label>
                         </c:when>
 
                         <c:otherwise>
                             <label>
                                 <input type="text" name="interfaceName"/>
+                                初级:<input type="text" name="primaryLevelCount"/>
+                                中级：<input type="text" name="middleLevelCount"/>
+                                高级:<input type="text" name="highLevelCount"/>
                             </label>
                             <input type="hidden" value="" name="interId"/>
                         </c:otherwise>
                     </c:choose>
                     <p>
                         <label>
-                            <span class="button button-main"><button type="submit">保存</button></span>
+                            <span class="button button-main"><button type="submit">
+                                保存
+                            </button></span>
                         </label>
                         <label>
-                            <span class="button button-main"> <button type="button" onclick="onCancelInterfaceSubmit()">取消</button></span>
+                            <span class="button button-main"> <button type="button" onclick="onCancelInterfaceSubmit()">
+                                取消
+                            </button></span>
                         </label>
                     </p>
                 </form>
@@ -97,35 +110,55 @@
     </div>
 </div>
 <script type="text/javascript">
-    function onSaveInterfaceSubmit() {
-        var form = document.getElementById('addInterfaceForm');
-        var _interfaceName = form.interfaceName.value;
-        var _id = "";
-        alert("interfaceName is" + _interfaceName);
-        if (_interfaceName == "") {
-            alert("请输入接口名称！");
-            form.interfaceName.focus();
-            return false;
-        }
+//    function onSaveInterfaceSubmit() {
+//        var form = document.getElementById('addInterfaceForm');
+//        var _interfaceName = form.interfaceName.value;
+//        var _primaryLevelCount = form.primaryLevelCount.value;
+//        var _middleLevelCount = form.middleLevelCount.value;
+//        var _highLevelCount = form.highLevelCount.value;
+////        alert("interfaceName is" + _interfaceName);
+//        if (_interfaceName == "") {
+//            alert("请输入接口名称！");
+//            form.interfaceName.focus();
+//            return 0;
+//        }
+//        if (_primaryLevelCount == "") {
+//            alert("请设置接口初级频次！");
+//            form.primaryLevelCount.focus();
+//            return 0;
+//        }
+//        if (_middleLevelCount == "") {
+//            alert("请设置接口中级频次！");
+//            form.middleLevelCount.focus();
+//            return 0;
+//        }
+//        if (_highLevelCount == "") {
+//            alert("请设置接口高级频次！");
+//            form.highLevelCount.focus();
+//            return 0;
+//        }
 
-        var url = "/admin/interface/saveinterface";
-       // var data = "interfaceName=" + _interfaceName + "&id=" + _id;
-//        {"interfaceName":_interfaceName,"id":_id}
-//        alert(data);
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: {
-                interfaceName:_interfaceName,
-                id:_id
-            },
-            context: document.body,
-            success: function (data) {
-                alert(data.statusText);
-            },
-            dataType: "json"
-        });
-    }
+//        var url = "/admin/interface/saveinterface";
+//       // var data = "interfaceName=" + _interfaceName + "&id=" + _id;
+////        {"interfaceName":_interfaceName,"id":_id}
+////        alert(data);
+//        $.ajax({
+//            type: 'POST',
+//            url: url,
+//            data: {
+//                interfaceName:_interfaceName,
+//                primaryLevelCount:_primaryLevelCount,
+//                middleLevelCount:_middleLevelCount,
+//                highLevelCount:_highLevelCount,
+//                id:_id
+//            },
+//            context: document.body,
+//            success: function (data) {
+//                alert(data.statusText);
+//            },
+//            dataType: "json"
+//        });
+//    }
 
     function onCancelInterfaceSubmit() {
         location.reload();

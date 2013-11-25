@@ -13,11 +13,11 @@
     ${UserMenuHtmlCache}
 
 
-    <script type="text/javascript">
-        //临时添加折叠菜单.
-        $(document).ready(function () {
-            zTree1.expandAll(false);
-        });
-    </script>
+    <%--<script type="text/javascript">--%>
+        <%--//临时添加折叠菜单.--%>
+        <%--$(document).ready(function () {--%>
+            <%--zTree1.expandAll(false);--%>
+        <%--});--%>
+    <%--</script>--%>
 
 </div>
