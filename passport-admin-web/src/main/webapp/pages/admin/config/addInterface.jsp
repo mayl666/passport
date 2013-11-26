@@ -69,26 +69,26 @@
                     接口名称：
                     <c:choose>
                         <c:when test="${interfaceVO!=null}">
-                            <label>
+                            <div>
                                 <input type="text" name="interfaceName"
-                                       value="<c:out value="${interfaceVO.interfaceName}" /> "/>
+                                       value="<c:out value="${interfaceVO.interfaceName}" />"/>
                                 初级：<input type="text" name="primaryLevelCount"
-                                          value="<c:out value="${interfaceVO.primaryLevelCount}" /> "/>
+                                          value="<c:out value="${interfaceVO.primaryLevelCount}" />"/>
                                 中级:<input type="text" name="middleLevelCount"
-                                          value="<c:out value="${interfaceVO.middleLevelCount}" /> "/>
+                                          value="<c:out value="${interfaceVO.middleLevelCount}" />"/>
                                 高级:<input type="text" name="highLevelCount"
-                                          value="<c:out value="${interfaceVO.highLevelCount}" /> "/>
+                                          value="<c:out value="${interfaceVO.highLevelCount}" />"/>
                                 <input type="hidden" name="interId" value="<c:out value="${interfaceVO.id}"/>"/>
-                            </label>
+                            </div>
                         </c:when>
 
                         <c:otherwise>
-                            <label>
+                            <div>
                                 <input type="text" name="interfaceName"/>
                                 初级:<input type="text" name="primaryLevelCount"/>
                                 中级：<input type="text" name="middleLevelCount"/>
                                 高级:<input type="text" name="highLevelCount"/>
-                            </label>
+                            </div>
                             <input type="hidden" value="" name="interId"/>
                         </c:otherwise>
                     </c:choose>
