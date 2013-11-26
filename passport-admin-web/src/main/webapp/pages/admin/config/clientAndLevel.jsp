@@ -130,7 +130,7 @@
                 } else if (levelInfo == 2) {
                     document.getElementById('levelId').value = '2';
                 }
-                levelInfo ? $("#levelId").val(levelInfo) : $("#levelId").val(-1);
+                levelInfo != -2 ? $("#levelId").val(levelInfo) : $("#levelId").val(-1);
             },
             error: function (data) {
                 alert("error");

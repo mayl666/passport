@@ -24,7 +24,7 @@ public class ConfigManagerImpl implements ConfigManager {
     private ConfigService configService;
 
     @Override
-    public InterfaceLevelMapping findInterfaceById(String id) throws Exception {
+    public InterfaceLevelMapping findInterfaceById(long id) throws Exception {
         return configService.findInterfaceById(id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -39,7 +39,7 @@ public class ConfigManagerImpl implements ConfigManager {
     }
 
     @Override
-    public boolean deleteInterfaceLevelById(String id) throws Exception {
+    public boolean deleteInterfaceLevelById(long id) throws Exception {
         return configService.deleteInterfaceLevelById(id);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -49,7 +49,7 @@ public class ConfigManagerImpl implements ConfigManager {
     }
 
     @Override
-    public ClientIdLevelMapping findLevelByClientId(String clientId) throws Exception {
+    public ClientIdLevelMapping findLevelByClientId(int clientId) throws Exception {
         return configService.findLevelByClientId(clientId);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
@@ -69,12 +69,12 @@ public class ConfigManagerImpl implements ConfigManager {
     }
 
     @Override
-    public ClientIdLevelMapping getLevelByClientId(String clientId) throws Exception {
+    public ClientIdLevelMapping getLevelByClientId(int clientId) throws Exception {
         return configService.getLevelByClientId(clientId);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public AppConfig getAppNameByAppId(String clientId) throws Exception {
+    public AppConfig getAppNameByAppId(int clientId) throws Exception {
         return configService.getAppNameByAppId(clientId);  //To change body of implemented methods use File | Settings | File Templates.
     }
 

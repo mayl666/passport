@@ -14,12 +14,12 @@ public class InterfaceLevelMapping {
 
     private long id;                         //主键id
     private String interfaceName;            //接口名
-    private String primaryLevel;             //初级,数值表示为0
-    private String primaryLevelCount;        //初级对应的接口限制次数
-    private String middleLevel;              //中级，数值表示为1
-    private String middleLevelCount;         //中级对应的接口限制次数
-    private String highLevel;                //高级，数值表示为2
-    private String highLevelCount;           //高级对应的接口限制次数
+    private int primaryLevel;             //初级,数值表示为0
+    private long primaryLevelCount;        //初级对应的接口限制次数
+    private int middleLevel;              //中级，数值表示为1
+    private long middleLevelCount;         //中级对应的接口限制次数
+    private int highLevel;                //高级，数值表示为2
+    private long highLevelCount;           //高级对应的接口限制次数
     private Date createTime;                 //日期，新增记录是创建日期；修改记录是修改日期
 
     public long getId() {
@@ -38,51 +38,51 @@ public class InterfaceLevelMapping {
         this.interfaceName = interfaceName;
     }
 
-    public String getPrimaryLevel() {
+    public int getPrimaryLevel() {
         return primaryLevel;
     }
 
-    public void setPrimaryLevel(String primaryLevel) {
+    public void setPrimaryLevel(int primaryLevel) {
         this.primaryLevel = primaryLevel;
     }
 
-    public String getPrimaryLevelCount() {
+    public long getPrimaryLevelCount() {
         return primaryLevelCount;
     }
 
-    public void setPrimaryLevelCount(String primaryLevelCount) {
+    public void setPrimaryLevelCount(long primaryLevelCount) {
         this.primaryLevelCount = primaryLevelCount;
     }
 
-    public String getMiddleLevel() {
+    public int getMiddleLevel() {
         return middleLevel;
     }
 
-    public void setMiddleLevel(String middleLevel) {
+    public void setMiddleLevel(int middleLevel) {
         this.middleLevel = middleLevel;
     }
 
-    public String getMiddleLevelCount() {
+    public long getMiddleLevelCount() {
         return middleLevelCount;
     }
 
-    public void setMiddleLevelCount(String middleLevelCount) {
+    public void setMiddleLevelCount(long middleLevelCount) {
         this.middleLevelCount = middleLevelCount;
     }
 
-    public String getHighLevel() {
+    public int getHighLevel() {
         return highLevel;
     }
 
-    public void setHighLevel(String highLevel) {
+    public void setHighLevel(int highLevel) {
         this.highLevel = highLevel;
     }
 
-    public String getHighLevelCount() {
+    public long getHighLevelCount() {
         return highLevelCount;
     }
 
-    public void setHighLevelCount(String highLevelCount) {
+    public void setHighLevelCount(long highLevelCount) {
         this.highLevelCount = highLevelCount;
     }
 

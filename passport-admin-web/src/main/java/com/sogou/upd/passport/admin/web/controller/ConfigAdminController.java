@@ -37,9 +37,9 @@ public class ConfigAdminController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ConfigAdminController.class);
 
-    private final static String PRIMARY_LEVEL = "0";
-    private final static String MIDDLE_LEVEL = "1";
-    private final static String HIGH_LEVEL = "2";
+    private final static int PRIMARY_LEVEL = 0;
+    private final static int MIDDLE_LEVEL = 1;
+    private final static int HIGH_LEVEL = 2;
     private final static String PRIMARY_LEVEL_NAME = "初级";
     private final static String MIDDLE_LEVEL_NAME = "中级";
     private final static String HIGH_LEVEL_NAME = "高级";
@@ -66,11 +66,11 @@ public class ConfigAdminController extends BaseController {
         return "/pages/admin/config/interface.jsp";
     }
 
-    private boolean checkLevelCountIsWrong(String primaryLevel, String middleLevel, String highLevel) {
+    private boolean checkLevelCountIsWrong(long primaryLevel, long middleLevel, long highLevel) {
         boolean flag = false;
-        int primaryLevelCount = Integer.parseInt(primaryLevel);
-        int middleLevelCount = Integer.parseInt(middleLevel);
-        int highLevelCount = Integer.parseInt(highLevel);
+        long primaryLevelCount = primaryLevel;
+        long middleLevelCount = middleLevel;
+        long highLevelCount = highLevel;
         if (primaryLevelCount > middleLevelCount || primaryLevelCount > highLevelCount || primaryLevelCount < 0) {
             flag = true;
             return flag;
@@ -99,28 +99,24 @@ public class ConfigAdminController extends BaseController {
             , @RequestParam("highLevelCount") String highLevelCount) throws Exception {
         String errMessage = "";
         try {
-            if ("".equals(interfaceName) || interfaceName == null) {
-                errMessage = "error info:interface name is not allowed NULL";
-            } else if ("".equals(primaryLevelCount) || interfaceName == null) {
-                errMessage = "error info:please input the primary level count!";
-            } else if ("".equals(middleLevelCount) || interfaceName == null) {
-                errMessage = "error info:please input the middle level count!";
-            } else if ("".equals(highLevelCount) || interfaceName == null) {
-                errMessage = "error info:please input the high level count!";
+            String checkParamsIsWrongString =  checkParamsIsEmpty(interfaceName,primaryLevelCount,middleLevelCount,highLevelCount);
+            if (!"".equals(checkParamsIsWrongString)) {
+                errMessage = checkParamsIsWrongString;
             } else {
-                if (checkLevelCountIsWrong(primaryLevelCount, middleLevelCount, highLevelCount)) {
+                if (checkLevelCountIsWrong(Long.parseLong(primaryLevelCount), Long.parseLong(middleLevelCount), Long.parseLong(highLevelCount))) {
                     errMessage = "please input the right level count!";
-                }
-                boolean isExistInterface = configManager.getInterfaceByName(interfaceName);
-                if (isExistInterface) {
-                    errMessage = "error info:this interface is already exists！";
                 } else {
                     InterfaceLevelMapping ilm = new InterfaceLevelMapping();
-                    if (!"".equals(interId) && interId != null) {
-                        ilm.setId(Long.parseLong(interId));
-                    } else {
-                        setDefaultValue(ilm, primaryLevelCount, middleLevelCount, highLevelCount);
+                    boolean isExistInterface = configManager.getInterfaceByName(interfaceName);
+                    if (isExistInterface) {
+                        errMessage = "error info:this interface is already exists！";
+                        String redirectString = "/admin/interface/errpage?errMessage=" + errMessage;
+                        return "redirect:" + redirectString;
                     }
+                    if (interId != null || !"".equals(interId)) {  //说明是新增，要查是否已有此接口
+                        ilm.setId(Long.parseLong(interId));
+                    }
+                    setDefaultValue(ilm, Long.parseLong(primaryLevelCount), Long.parseLong(middleLevelCount), Long.parseLong(highLevelCount));
                     ilm.setInterfaceName(interfaceName);
                     boolean isSuccess = configManager.saveOrUpdateInterfaceLevelMapping(ilm);
                     if (isSuccess) {
@@ -137,13 +133,27 @@ public class ConfigAdminController extends BaseController {
         return "redirect:" + redirectString;
     }
 
+    private String checkParamsIsEmpty(String interfaceName,String primaryLevelCount,String middleLevelCount,String highLevelCount){
+        String errMessage = "";
+        if ("".equals(interfaceName) || interfaceName == null) {
+            errMessage = "error info:interface name is not allowed NULL";
+        } else if ("".equals(primaryLevelCount) || primaryLevelCount == null) {
+            errMessage = "error info:please input the primary level count!";
+        } else if ("".equals(middleLevelCount) || middleLevelCount == null) {
+            errMessage = "error info:please input the middle level count!";
+        } else if ("".equals(highLevelCount) || highLevelCount == null) {
+            errMessage = "error info:please input the high level count!";
+        }
+        return errMessage;
+    }
+
     /**
-     * 新增接口设置默认值，每个级别都为0
+     * 设置等级对应的值
      *
      * @param ilm
      * @return
      */
-    public InterfaceLevelMapping setDefaultValue(InterfaceLevelMapping ilm, String primaryLevel, String middleLevel, String highLevel) {
+    public InterfaceLevelMapping setDefaultValue(InterfaceLevelMapping ilm, long primaryLevel, long middleLevel, long highLevel) {
         ilm.setPrimaryLevel(PRIMARY_LEVEL);
         ilm.setPrimaryLevelCount(primaryLevel);
         ilm.setMiddleLevel(MIDDLE_LEVEL);
@@ -164,7 +174,7 @@ public class ConfigAdminController extends BaseController {
     public String getInterfaceById(@RequestParam("id") String id, Model model) throws Exception {
         InterfaceLevelMapping ilm = null;
         try {
-            ilm = configManager.findInterfaceById(id);
+            ilm = configManager.findInterfaceById(Long.parseLong(id));
         } catch (Exception e) {
             logger.error("getInterfaceById Error:id is " + id, e);
         }
@@ -182,7 +192,7 @@ public class ConfigAdminController extends BaseController {
     @RequestMapping(value = "/interface/delInterface", method = RequestMethod.GET)
     public String delInterface(@RequestParam("id") String id) throws Exception {
         try {
-            configManager.deleteInterfaceLevelById(id);
+            configManager.deleteInterfaceLevelById(Long.parseLong(id));
         } catch (Exception e) {
             logger.error("delInterface error:id is " + id, e);
         }
@@ -226,13 +236,13 @@ public class ConfigAdminController extends BaseController {
     private List<LevelVo> getLevelList() throws Exception {
         List<LevelVo> levelVoList = new ArrayList<>();
         LevelVo lv1 = new LevelVo();
-        lv1.setLevelId(PRIMARY_LEVEL);
+        lv1.setLevelId(String.valueOf(PRIMARY_LEVEL));
         lv1.setLevelName(PRIMARY_LEVEL_NAME);
         LevelVo lv2 = new LevelVo();
-        lv2.setLevelId(MIDDLE_LEVEL);
+        lv2.setLevelId(String.valueOf(MIDDLE_LEVEL));
         lv2.setLevelName(MIDDLE_LEVEL_NAME);
         LevelVo lv3 = new LevelVo();
-        lv3.setLevelId(HIGH_LEVEL);
+        lv3.setLevelId(String.valueOf(HIGH_LEVEL));
         lv3.setLevelName(HIGH_LEVEL_NAME);
         levelVoList.add(lv1);
         levelVoList.add(lv2);
@@ -252,7 +262,7 @@ public class ConfigAdminController extends BaseController {
     public String getLevelByClientId(@RequestParam("clientId") String clientId, Model model) throws Exception {
         ClientIdLevelMapping clm = null;
         try {
-            clm = configManager.getLevelByClientId(clientId);
+            clm = configManager.getLevelByClientId(Integer.parseInt(clientId));
         } catch (Exception e) {
             logger.error("getLevelByClientId error:clientId is " + clientId, e);
         }
@@ -261,7 +271,7 @@ public class ConfigAdminController extends BaseController {
             return objectMapper.writeValueAsString(clm);
         } else {
             ClientIdLevelMapping clmNull = new ClientIdLevelMapping();
-            clmNull.setLevelInfo("");
+            clmNull.setLevelInfo(-2);
             return objectMapper.writeValueAsString(clmNull);
         }
     }
@@ -279,8 +289,8 @@ public class ConfigAdminController extends BaseController {
         String errMessage = "";
         try {
             ClientIdLevelMapping clm = new ClientIdLevelMapping();
-            clm.setClientId(clientId);
-            clm.setLevelInfo(level);
+            clm.setClientId(Integer.parseInt(clientId));
+            clm.setLevelInfo(Integer.parseInt(level));
             boolean isSuccess = configManager.saveOrUpdateClientAndLevel(clm);
             if (isSuccess) {
                 return "redirect:/admin/interface/getclientandlevel";
@@ -327,7 +337,7 @@ public class ConfigAdminController extends BaseController {
     public String getInterfaceLevelById(@RequestParam("id") String id, Model model) throws Exception {
         InterfaceLevelMapping ilm = null;
         try {
-            ilm = configManager.findInterfaceById(id);
+            ilm = configManager.findInterfaceById(Long.parseLong(id));
         } catch (Exception e) {
             logger.error("getInterfaceLevelById", e);
         }
@@ -349,8 +359,8 @@ public class ConfigAdminController extends BaseController {
         String errMessage = "";
         try {
             InterfaceLevelMapping ilm = new InterfaceLevelMapping();
-            setValue(ilm, level, levelCount);
-            ilm.setId(Long.parseLong(id));
+            setValue(ilm, Integer.parseInt(level), Long.parseLong(levelCount));
+            ilm.setId(Integer.parseInt(id));
             ilm.setInterfaceName(interfaceName);
             boolean isSuccess = configManager.saveOrUpdateInterfaceLevelMapping(ilm);
             if (isSuccess) {
@@ -364,17 +374,17 @@ public class ConfigAdminController extends BaseController {
         return "redirect:/admin/interface/errpage?errMessage=" + errMessage;
     }
 
-    private InterfaceLevelMapping setValue(InterfaceLevelMapping ilm, String level, String levelCount) {
+    private InterfaceLevelMapping setValue(InterfaceLevelMapping ilm, int level, long levelCount) {
         switch (level) {
-            case "0":
+            case 0:
                 ilm.setPrimaryLevel(level);
                 ilm.setPrimaryLevelCount(levelCount);
                 break;
-            case "1":
+            case 1:
                 ilm.setMiddleLevel(level);
                 ilm.setMiddleLevelCount(levelCount);
                 break;
-            case "2":
+            case 2:
                 ilm.setHighLevel(level);
                 ilm.setHighLevelCount(levelCount);
                 break;

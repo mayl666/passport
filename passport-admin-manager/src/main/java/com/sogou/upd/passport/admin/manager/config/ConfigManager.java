@@ -24,7 +24,7 @@ public interface ConfigManager {
      * @throws com.sogou.upd.passport.exception.ServiceException
      *
      */
-    public InterfaceLevelMapping findInterfaceById(String id) throws Exception;
+    public InterfaceLevelMapping findInterfaceById(long id) throws Exception;
 
     /**
      * 获取配置信息列表
@@ -47,7 +47,7 @@ public interface ConfigManager {
      * @param id 要删除的接口id
      * @return
      */
-    public boolean deleteInterfaceLevelById(String id) throws Exception;
+    public boolean deleteInterfaceLevelById(long id) throws Exception;
 
     /**
      * 查询接口列表的总行数
@@ -64,7 +64,7 @@ public interface ConfigManager {
      * @return
      * @throws Exception
      */
-    public ClientIdLevelMapping findLevelByClientId(String clientId) throws Exception;
+    public ClientIdLevelMapping findLevelByClientId(int clientId) throws Exception;
 
     /**
      * 获取所有应用id
@@ -95,7 +95,7 @@ public interface ConfigManager {
      * @return
      * @throws Exception
      */
-    public ClientIdLevelMapping getLevelByClientId(String clientId) throws Exception;
+    public ClientIdLevelMapping getLevelByClientId(int clientId) throws Exception;
 
     /**
      * 根据应用id查询应用名称
@@ -104,7 +104,7 @@ public interface ConfigManager {
      * @return
      * @throws Exception
      */
-    public AppConfig getAppNameByAppId(String clientId) throws Exception;
+    public AppConfig getAppNameByAppId(int clientId) throws Exception;
 
     /**
      * 获取所有应用的信息，主要是id和name

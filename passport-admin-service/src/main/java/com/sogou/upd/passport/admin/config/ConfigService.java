@@ -24,7 +24,7 @@ public interface ConfigService {
      * @param id
      * @return
      */
-    public InterfaceLevelMapping findInterfaceById(String id) throws ServiceException;
+    public InterfaceLevelMapping findInterfaceById(long id) throws ServiceException;
 
     /**
      * 获取配置信息列表
@@ -57,7 +57,7 @@ public interface ConfigService {
      * @param id 要删除的接口id
      * @return
      */
-    public boolean deleteInterfaceLevelById(String id) throws ServiceException;
+    public boolean deleteInterfaceLevelById(long id) throws ServiceException;
 
     /**
      * 查询接口列表的总行数
@@ -74,7 +74,7 @@ public interface ConfigService {
      * @return
      * @throws ServiceException
      */
-    public ClientIdLevelMapping findLevelByClientId(String clientId) throws ServiceException;
+    public ClientIdLevelMapping findLevelByClientId(int clientId) throws ServiceException;
 
     /**
      * 获取所有应用id
@@ -101,7 +101,7 @@ public interface ConfigService {
      * @throws com.sogou.upd.passport.exception.ServiceException
      *
      */
-    public Map<String, String> getMapsFromCacheKey(String clientId) throws ServiceException;
+    public Map<String, String> getMapsFromCacheKey(int clientId) throws ServiceException;
 
     /**
      * 查询所有接口及对应等级信息，按三个不同的等级划分
@@ -118,7 +118,7 @@ public interface ConfigService {
      * @return
      * @throws ServiceException
      */
-    public ClientIdLevelMapping getLevelByClientId(String clientId) throws ServiceException;
+    public ClientIdLevelMapping getLevelByClientId(int clientId) throws ServiceException;
 
     /**
      * 根据应用id查询应用名称
@@ -127,7 +127,7 @@ public interface ConfigService {
      * @return
      * @throws ServiceException
      */
-    public AppConfig getAppNameByAppId(String clientId) throws ServiceException;
+    public AppConfig getAppNameByAppId(int clientId) throws ServiceException;
 
     /**
      * 根据应用id查询应用名称

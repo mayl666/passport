@@ -11,8 +11,8 @@ package com.sogou.upd.passport.admin.model.config;
 public class ClientIdLevelMapping {
 
     private long id;                  //主键id
-    private String clientId;          //应用id
-    private String levelInfo;         //等级信息
+    private int clientId;          //应用id
+    private int levelInfo;         //等级信息
     private String interfaceName;     //接口名称，todo 为以后单独指定某一应用下某一接口等级所做的扩展，暂时没用到此参数
 
     public long getId() {
@@ -23,19 +23,19 @@ public class ClientIdLevelMapping {
         this.id = id;
     }
 
-    public String getClientId() {
+    public int getClientId() {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
+    public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 
-    public String getLevelInfo() {
+    public int getLevelInfo() {
         return levelInfo;
     }
 
-    public void setLevelInfo(String levelInfo) {
+    public void setLevelInfo(int levelInfo) {
         this.levelInfo = levelInfo;
     }
 

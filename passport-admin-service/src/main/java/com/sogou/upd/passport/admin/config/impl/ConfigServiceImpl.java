@@ -44,7 +44,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @throws ServiceException
      */
     @Override
-    public InterfaceLevelMapping findInterfaceById(String id) throws ServiceException {
+    public InterfaceLevelMapping findInterfaceById(long id) throws ServiceException {
         try {
             InterfaceLevelMapping inter = configDAO.findInterfaceById(id);
             if (inter != null) {
@@ -100,12 +100,12 @@ public class ConfigServiceImpl implements ConfigService {
                 List<ClientIdLevelMapping> appList = configDAO.findClientIdAndLevelList();
                 if (appList != null && appList.size() > 0) {
                     for (ClientIdLevelMapping clm : appList) {
-                        String clientId = String.valueOf(clm.getClientId());
+                        int clientId = clm.getClientId();
                         //先删除应用所有接口信息
                         String hashCacheKey = buildCacheKey(clientId);
                         redisUtils.delete(hashCacheKey);
                         //重新刷新一遍缓存,先得到应用等级信息
-                        String level = clm.getLevelInfo();
+                        int level = clm.getLevelInfo();
                         reInitInterfaceLevel(hashCacheKey, level);
                     }
                 }
@@ -140,13 +140,13 @@ public class ConfigServiceImpl implements ConfigService {
      * @param hashCacheKey
      * @param level
      */
-    private void reInitInterfaceLevel(String hashCacheKey, String level) {
+    private void reInitInterfaceLevel(String hashCacheKey, int level) {
         //获取接口列表
         List<InterfaceLevelMapping> interfaceList = configDAO.getInterfaceListAll();
         for (InterfaceLevelMapping ilm : interfaceList) {
             //key是接口名称，value是此等级下该接口对应的频次限制
             String key = ilm.getInterfaceName();
-            String value = getValue(ilm, level);
+            long value = getValue(ilm, level);
             //更新缓存,更新该应用下所有接口等级
             try {
                 redisUtils.hPut(hashCacheKey, key, value);
@@ -164,7 +164,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @throws ServiceException
      */
     @Override
-    public boolean deleteInterfaceLevelById(String id) throws ServiceException {
+    public boolean deleteInterfaceLevelById(long id) throws ServiceException {
         try {
             //查询接口信息
             InterfaceLevelMapping ilm = configDAO.findInterfaceById(id);
@@ -213,8 +213,8 @@ public class ConfigServiceImpl implements ConfigService {
      * @throws ServiceException
      */
     @Override
-    public ClientIdLevelMapping findLevelByClientId(String clientId) throws ServiceException {
-        if (clientId != null) {
+    public ClientIdLevelMapping findLevelByClientId(int clientId) throws ServiceException {
+        if (clientId != 0) {
             ClientIdLevelMapping clientIdLevelMapping = configDAO.findLevelByClientId(clientId);
             if (clientIdLevelMapping != null) {
                 return clientIdLevelMapping;
@@ -254,7 +254,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public boolean saveOrUpdateClientAndLevel(ClientIdLevelMapping clientIdLevelMapping) throws ServiceException {
         try {
-            String clientId = clientIdLevelMapping.getClientId();
+            int clientId = clientIdLevelMapping.getClientId();
             int row;
             //先查是否存在，确定是新增还是修改
             ClientIdLevelMapping clmForLevel = configDAO.findLevelByClientId(clientId);
@@ -270,10 +270,10 @@ public class ConfigServiceImpl implements ConfigService {
                 if (clmForLevel == null) {
                     //将新添等级的产品id写入缓存
                     String clientHashCacheKey = buildClientHashKey();
-                    redisUtils.sadd(clientHashCacheKey, clientId);
+                    redisUtils.sadd(clientHashCacheKey, String.valueOf(clientId));
                 }
                 String hashCacheKey = buildCacheKey(clientId);
-                String level = clientIdLevelMapping.getLevelInfo();
+                int level = clientIdLevelMapping.getLevelInfo();
                 reInitInterfaceLevel(hashCacheKey, level);
                 return true;
             }
@@ -295,7 +295,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @throws ServiceException
      */
     @Override
-    public Map<String, String> getMapsFromCacheKey(String clientId) throws ServiceException {
+    public Map<String, String> getMapsFromCacheKey(int clientId) throws ServiceException {
         String cacheKey = buildCacheKey(clientId);
         Map<String, String> maps;
         List<InterfaceLevelMapping> list;
@@ -307,14 +307,14 @@ public class ConfigServiceImpl implements ConfigService {
                 //先根据应用id得到该应用对应的等级
                 ClientIdLevelMapping clm = configDAO.findLevelByClientId(clientId);
                 if (clm != null) {
-                    String level = clm.getLevelInfo();
+                    int level = clm.getLevelInfo();
                     //再根据该等级读出此等级下所有接口及对应的频次限制次数
                     list = configDAO.getInterfaceListAll();
                     if (list != null && list.size() > 0) {
                         for (InterfaceLevelMapping inter : list) {
                             String key = inter.getInterfaceName();
-                            String value = getValue(inter, level);
-                            maps.put(key, value);
+                            long value = getValue(inter, level);
+                            maps.put(key, String.valueOf(value));
                         }
                         return maps;
                     }
@@ -351,7 +351,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @throws ServiceException
      */
     @Override
-    public ClientIdLevelMapping getLevelByClientId(String clientId) throws ServiceException {
+    public ClientIdLevelMapping getLevelByClientId(int clientId) throws ServiceException {
         ClientIdLevelMapping clm;
         try {
             clm = configDAO.getLevelByClientId(clientId);
@@ -372,7 +372,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @throws ServiceException
      */
     @Override
-    public AppConfig getAppNameByAppId(String clientId) throws ServiceException {
+    public AppConfig getAppNameByAppId(int clientId) throws ServiceException {
         AppConfig appConfig;
         try {
             appConfig = configDAO.getAppNameByAppId(clientId);
@@ -406,23 +406,23 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
 
-    private String getValue(InterfaceLevelMapping inter, String level) {
-        String value = null;
+    private long getValue(InterfaceLevelMapping inter, int level) {
+        long value = 0;
         switch (level) {
-            case "0":
+            case 0:
                 value = inter.getPrimaryLevelCount();
                 break;
-            case "1":
+            case 1:
                 value = inter.getMiddleLevelCount();
                 break;
-            case "2":
+            case 2:
                 value = inter.getHighLevelCount();
                 break;
         }
         return value;
     }
 
-    private String buildCacheKey(String clientId) {
+    private String buildCacheKey(int clientId) {
         return CACHE_PREFIX_PASSPORT_INTER_AND_LEVEL + clientId;
     }
 }

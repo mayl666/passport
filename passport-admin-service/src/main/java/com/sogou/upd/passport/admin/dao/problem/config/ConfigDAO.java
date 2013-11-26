@@ -29,6 +29,26 @@ public interface ConfigDAO {
      * 应用与等级数据库表名称
      */
     String CLIENTID_LEVEL_TABLE_NAME = " clientid_level_mapping ";
+    /**
+     * 接口与次数表所有字段
+     */
+    String INTERFACE_ALL_FIELDS = " id,interface_name,primary_level,primary_level_count,middle_level,middle_level_count,high_level,high_level_count,create_time ";
+    /**
+     * 接口与次数表所有字段值
+     */
+    String INTERFACE_ALL_VALUES = ":inter.id,:inter.interfaceName,:inter.primaryLevel,:inter.primaryLevelCount,:inter.middleLevel,:inter.middleLevelCount,:inter.highLevel,:inter.highLevelCount,:inter.createTime";
+    /**
+     * 应用与等级表所有字段
+     */
+    String CLIENTID_ALL_FIELDS = " id,client_id,level_info,interface_name ";
+    /**
+     * 应用与等级表所有字段值
+     */
+    String CLIENTID_ALL_VALUES = ":clm.id,:clm.clientId,:clm.levelInfo,:clm.interfaceName";
+    /**
+     * 查询应用表所有字段
+     */
+    String APP_CONFIG_ALL_FIELDS = " id,client_id,sms_text,access_token_expiresin,refresh_token_expiresin,server_secret,client_secret,create_time,client_name ";
 
 
     /**
@@ -44,15 +64,15 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from" +
+    @SQL(" select " + INTERFACE_ALL_FIELDS + " from " +
             INTERFACE_LEVEL_TABLE_NAME +
             " where id=:id")
-    public InterfaceLevelMapping findInterfaceById(@SQLParam("id") String id) throws DataAccessException;
+    public InterfaceLevelMapping findInterfaceById(@SQLParam("id") long id) throws DataAccessException;
 
     /**
      * 获取所有接口配置信息列表
      */
-    @SQL("select * from" +
+    @SQL("select " + INTERFACE_ALL_FIELDS + " from " +
             INTERFACE_LEVEL_TABLE_NAME
     )
     public List<InterfaceLevelMapping> findInterfaceLevelMappingList() throws DataAccessException;
@@ -73,8 +93,8 @@ public interface ConfigDAO {
      */
     @SQL("insert into" +
             INTERFACE_LEVEL_TABLE_NAME +
-            "(id,interface_name,primary_level,primary_level_count,middle_level,middle_level_count,high_level,high_level_count) " +
-            "values (:inter.id,:inter.interfaceName,:inter.primaryLevel,:inter.primaryLevelCount,:inter.middleLevel,:inter.middleLevelCount,:inter.highLevel,:inter.highLevelCount)"
+            "(" + INTERFACE_ALL_FIELDS + ") " +
+            "values (" + INTERFACE_ALL_VALUES + ")"
     )
     public int insertInterfaceLevelMapping(@SQLParam("inter") InterfaceLevelMapping inter) throws DataAccessException;
 
@@ -85,7 +105,7 @@ public interface ConfigDAO {
             INTERFACE_LEVEL_TABLE_NAME +
             "where id=:id"
     )
-    public int deleteInterfaceLevelMappingById(@SQLParam("id") String id) throws DataAccessException;
+    public int deleteInterfaceLevelMappingById(@SQLParam("id") long id) throws DataAccessException;
 
     /**
      * 修改接口配置信息
@@ -94,12 +114,12 @@ public interface ConfigDAO {
             INTERFACE_LEVEL_TABLE_NAME +
             " set " +
             "#if(:inter.interfaceName != null){interface_name=:inter.interfaceName,}  " +
-            "#if(:inter.primaryLevel != null){primary_level=:inter.primaryLevel,}  " +
-            "#if(:inter.primaryLevelCount != null){primary_level_count=:inter.primaryLevelCount,}  " +
-            "#if(:inter.middleLevel != null){middle_level=:inter.middleLevel,}  " +
-            "#if(:inter.middleLevelCount != null){middle_level_count=:inter.middleLevelCount,}  " +
-            "#if(:inter.highLevel != null){high_level=:inter.highLevel,}  " +
-            "#if(:inter.highLevelCount != null){high_level_count=:inter.highLevelCount,}  " +
+            "#if(:inter.primaryLevel != 0){primary_level=:inter.primaryLevel,}  " +
+            "#if(:inter.primaryLevelCount != 0){primary_level_count=:inter.primaryLevelCount,}  " +
+            "#if(:inter.middleLevel != 0){middle_level=:inter.middleLevel,}  " +
+            "#if(:inter.middleLevelCount != 0){middle_level_count=:inter.middleLevelCount,}  " +
+            "#if(:inter.highLevel != 0){high_level=:inter.highLevel,}  " +
+            "#if(:inter.highLevelCount != 0){high_level_count=:inter.highLevelCount,}  " +
             "#if(:inter.createTime != null){create_time=:inter.createTime}  " +
             "where id=:inter.id"
     )
@@ -113,7 +133,7 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from " +
+    @SQL(" select " + CLIENTID_ALL_FIELDS + " from " +
             CLIENTID_LEVEL_TABLE_NAME)
     public List<ClientIdLevelMapping> findClientIdAndLevelList() throws DataAccessException;
 
@@ -125,10 +145,10 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from" +
+    @SQL(" select " + CLIENTID_ALL_FIELDS + " from " +
             CLIENTID_LEVEL_TABLE_NAME +
             "where client_id=:clientId")
-    public ClientIdLevelMapping findLevelByClientId(@SQLParam("clientId") String clientId) throws DataAccessException;
+    public ClientIdLevelMapping findLevelByClientId(@SQLParam("clientId") int clientId) throws DataAccessException;
 
     /**
      * 新增应用与等级关系
@@ -140,8 +160,8 @@ public interface ConfigDAO {
      */
     @SQL("insert into" +
             CLIENTID_LEVEL_TABLE_NAME +
-            "(id,client_id,level_info,interface_name)" +
-            "values (:clm.id,:clm.clientId,:clm.levelInfo,:clm.interfaceName)"
+            "(" + CLIENTID_ALL_FIELDS +")" +
+            "values (" + CLIENTID_ALL_VALUES +")"
     )
     public int insertClientIdAndLevel(@SQLParam("clm") ClientIdLevelMapping clm) throws DataAccessException;
 
@@ -166,10 +186,10 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from " +
+    @SQL("select " + CLIENTID_ALL_FIELDS + " from " +
             CLIENTID_LEVEL_TABLE_NAME +
             "where level_info=:level")
-    public List<ClientIdLevelMapping> getClientIdListByLevel(@SQLParam("level") String level) throws DataAccessException;
+    public List<ClientIdLevelMapping> getClientIdListByLevel(@SQLParam("level") int level) throws DataAccessException;
 
     /**
      * 根据应用id查该应用对应的等级
@@ -179,11 +199,11 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from " +
+    @SQL("select " + CLIENTID_ALL_FIELDS + " from " +
             CLIENTID_LEVEL_TABLE_NAME +
             "where client_id=:clientId"
     )
-    public ClientIdLevelMapping getLevelByClientId(@SQLParam("clientId") String clientId) throws DataAccessException;
+    public ClientIdLevelMapping getLevelByClientId(@SQLParam("clientId") int clientId) throws DataAccessException;
 
     /**
      * 查询所有接口与等级的信息
@@ -192,7 +212,7 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from" +
+    @SQL("select " + INTERFACE_ALL_FIELDS  + " from " +
             INTERFACE_LEVEL_TABLE_NAME)
     public List<InterfaceLevelMapping> getInterfaceListAll() throws DataAccessException;
 
@@ -205,11 +225,11 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from" +
+    @SQL("select " + APP_CONFIG_ALL_FIELDS  + " from" +
             APP_CONFIG +
             "where client_id=:appId"
     )
-    public AppConfig getAppNameByAppId(@SQLParam("appId") String appId) throws DataAccessException;
+    public AppConfig getAppNameByAppId(@SQLParam("appId") int appId) throws DataAccessException;
 
 
     /**
@@ -219,7 +239,7 @@ public interface ConfigDAO {
      * @throws org.springframework.dao.DataAccessException
      *
      */
-    @SQL("select * from" + APP_CONFIG)
+    @SQL("select " + APP_CONFIG_ALL_FIELDS + " from " + APP_CONFIG)
     public List<AppConfig> getAppList() throws DataAccessException;
 
     /**
@@ -229,7 +249,7 @@ public interface ConfigDAO {
      * @return
      * @throws DataAccessException
      */
-    @SQL("select * from" + INTERFACE_LEVEL_TABLE_NAME + "where interface_name=:interfaceName")
+    @SQL("select " + INTERFACE_ALL_FIELDS + " from " + INTERFACE_LEVEL_TABLE_NAME + "where interface_name=:interfaceName")
     public InterfaceLevelMapping getInterfaceByName(@SQLParam("interfaceName") String interfaceName) throws DataAccessException;
 
 
