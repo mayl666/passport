@@ -118,7 +118,7 @@ public class ConfigAdminController extends BaseController {
                     }
                     if (interId != null && !"".equals(interId)) {  //说明修改
                         InterfaceLevelMapping interLM = configManager.findInterfaceById(Long.parseLong(interId));
-                        if (interLM.getInterfaceName() != interfaceName) {
+                        if (interLM.getInterfaceName().equals(interfaceName)) {
                             boolean isExist = configManager.getInterfaceByName(interfaceName);
                             if (isExist) {
                                 errMessage = "error info:this interface is already exists！";
