@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
     <script type="text/javascript" language="javascript" src="/js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" language="javascript" src="/js/jquery-ui-1.7.3.custom.min.js"></script>
-    <link href="/css/jqgrid/ui.jqgrid.css" rel="stylesheet" type="text/css">
+    <%--<link href="/css/jqgrid/ui.jqgrid.css" rel="stylesheet" type="text/css">--%>
     <link href="/css/base.css" rel="stylesheet" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <style>
