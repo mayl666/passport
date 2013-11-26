@@ -99,7 +99,7 @@ public class ConfigAdminController extends BaseController {
             , @RequestParam("highLevelCount") String highLevelCount) throws Exception {
         String errMessage = "";
         try {
-            String checkParamsIsWrongString =  checkParamsIsEmpty(interfaceName,primaryLevelCount,middleLevelCount,highLevelCount);
+            String checkParamsIsWrongString = checkParamsIsEmpty(interfaceName, primaryLevelCount, middleLevelCount, highLevelCount);
             if (!"".equals(checkParamsIsWrongString)) {
                 errMessage = checkParamsIsWrongString;
             } else {
@@ -107,13 +107,25 @@ public class ConfigAdminController extends BaseController {
                     errMessage = "please input the right level count!";
                 } else {
                     InterfaceLevelMapping ilm = new InterfaceLevelMapping();
-                    boolean isExistInterface = configManager.getInterfaceByName(interfaceName);
-                    if (isExistInterface) {
-                        errMessage = "error info:this interface is already exists！";
-                        String redirectString = "/admin/interface/errpage?errMessage=" + errMessage;
-                        return "redirect:" + redirectString;
+                    //新增接口时，要查询该接口是否已经存在
+                    if (interId == null || "".equals(interId)) {
+                        boolean isExistInterface = configManager.getInterfaceByName(interfaceName);
+                        if (isExistInterface) {
+                            errMessage = "error info:this interface is already exists！";
+                            String redirectString = "/admin/interface/errpage?errMessage=" + errMessage;
+                            return "redirect:" + redirectString;
+                        }
                     }
-                    if (interId != null || !"".equals(interId)) {  //说明是新增，要查是否已有此接口
+                    if (interId != null && !"".equals(interId)) {  //说明修改
+                        InterfaceLevelMapping interLM = configManager.findInterfaceById(Long.parseLong(interId));
+                        if (interLM.getInterfaceName() != interfaceName) {
+                            boolean isExist = configManager.getInterfaceByName(interfaceName);
+                            if (isExist) {
+                                errMessage = "error info:this interface is already exists！";
+                                String redirectString = "/admin/interface/errpage?errMessage=" + errMessage;
+                                return "redirect:" + redirectString;
+                            }
+                        }
                         ilm.setId(Long.parseLong(interId));
                     }
                     setDefaultValue(ilm, Long.parseLong(primaryLevelCount), Long.parseLong(middleLevelCount), Long.parseLong(highLevelCount));
@@ -133,7 +145,7 @@ public class ConfigAdminController extends BaseController {
         return "redirect:" + redirectString;
     }
 
-    private String checkParamsIsEmpty(String interfaceName,String primaryLevelCount,String middleLevelCount,String highLevelCount){
+    private String checkParamsIsEmpty(String interfaceName, String primaryLevelCount, String middleLevelCount, String highLevelCount) {
         String errMessage = "";
         if ("".equals(interfaceName) || interfaceName == null) {
             errMessage = "error info:interface name is not allowed NULL";
