@@ -71,15 +71,15 @@ public class ConfigAdminController extends BaseController {
         long primaryLevelCount = primaryLevel;
         long middleLevelCount = middleLevel;
         long highLevelCount = highLevel;
-        if (primaryLevelCount > middleLevelCount || primaryLevelCount > highLevelCount || primaryLevelCount < 0) {
+        if (primaryLevelCount > middleLevelCount || primaryLevelCount > highLevelCount || primaryLevelCount <= 0) {
             flag = true;
             return flag;
         }
-        if (middleLevelCount < primaryLevelCount || middleLevelCount > highLevelCount || middleLevelCount < 0) {
+        if (middleLevelCount < primaryLevelCount || middleLevelCount > highLevelCount || middleLevelCount <= 0) {
             flag = true;
             return flag;
         }
-        if (highLevelCount < middleLevelCount || highLevelCount < primaryLevelCount || highLevelCount < 0) {
+        if (highLevelCount < middleLevelCount || highLevelCount < primaryLevelCount || highLevelCount <= 0) {
             flag = true;
             return flag;
         }
