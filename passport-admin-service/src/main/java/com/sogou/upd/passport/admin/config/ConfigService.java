@@ -94,16 +94,6 @@ public interface ConfigService {
     public boolean saveOrUpdateClientAndLevel(ClientIdLevelMapping clientIdLevelMapping) throws ServiceException;
 
     /**
-     * 根据hashKey获取对应的key-value键值对
-     *
-     * @param clientId
-     * @return
-     * @throws com.sogou.upd.passport.exception.ServiceException
-     *
-     */
-    public Map<String, String> getMapsFromCacheKey(int clientId) throws ServiceException;
-
-    /**
      * 查询所有接口及对应等级信息，按三个不同的等级划分
      *
      * @return

@@ -288,45 +288,6 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     /**
-     * 根据应用id，先读取该应用的等级，再根据此等级，读出该等级下所有接口对应的次数，返回值为map,key为接口名称，value为等级对应的接口限制的次数
-     *
-     * @param clientId
-     * @return
-     * @throws ServiceException
-     */
-    @Override
-    public Map<String, String> getMapsFromCacheKey(int clientId) throws ServiceException {
-        String cacheKey = buildCacheKey(clientId);
-        Map<String, String> maps;
-        List<InterfaceLevelMapping> list;
-        try {
-            //先读缓存
-            maps = redisUtils.hGetAll(cacheKey);
-            //如果没有，读数据库
-            if (maps == null && maps.size() == 0) {
-                //先根据应用id得到该应用对应的等级
-                ClientIdLevelMapping clm = configDAO.findLevelByClientId(clientId);
-                if (clm != null) {
-                    int level = clm.getLevelInfo();
-                    //再根据该等级读出此等级下所有接口及对应的频次限制次数
-                    list = configDAO.getInterfaceListAll();
-                    if (list != null && list.size() > 0) {
-                        for (InterfaceLevelMapping inter : list) {
-                            String key = inter.getInterfaceName();
-                            long value = getValue(inter, level);
-                            maps.put(key, String.valueOf(value));
-                        }
-                        return maps;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new ServiceException();
-        }
-        return maps;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    /**
      * 在页面上显示三个等级下的所有接口及其对应的次数
      *
      * @return
