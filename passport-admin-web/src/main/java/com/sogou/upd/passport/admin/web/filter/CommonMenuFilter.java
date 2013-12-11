@@ -213,32 +213,32 @@ public class CommonMenuFilter implements Filter {
      * 获得sogou-inc passprot 的email
      */
     String getPassportEmail(HttpServletRequest httpRequest) {
-        return "liuling" + "@sogou-inc.com";
-//    if (isWindows) {
-//      // 如果是windows返回测试,系统的用户
-////      return "test_" + menuTypeId + "@sogou-inc.com";
-//      return "liuling"  + "@sogou-inc.com";
-//    }
-//    String cookieStr = httpRequest.getHeader("Cookie");
-//    // 字符串截取.
-//    cookieStr = StringUtils.substringBetween(cookieStr, "jpassport-sp={",
-//                                             "}");
-//    String userEmail = "";
-//    if (StringUtils.isNotBlank(cookieStr)) {
-//      String[] strArray = cookieStr.split(",");
-//      for (String strTemp : strArray) {
-//        // System.out.println(strTemp);
-//        String[] strName = strTemp.split(":");
-//        // System.out.println(strName[0] + "/" + strName[1]);
-//        // 循环查找cookie里面的内容.
-//        if (strName != null && strName.length == 2
-//            && strName[0] != null && strName[1] != null
-//            && strName[0].equals("username")) {
-//          userEmail = strName[1];
-//        }
-//      }
-//    }
-//    return userEmail;
+//        return "liuling" + "@sogou-inc.com";
+        if (isWindows) {
+            // 如果是windows返回测试,系统的用户
+//      return "test_" + menuTypeId + "@sogou-inc.com";
+            return "liuling" + "@sogou-inc.com";
+        }
+        String cookieStr = httpRequest.getHeader("Cookie");
+        // 字符串截取.
+        cookieStr = StringUtils.substringBetween(cookieStr, "jpassport-sp={",
+                "}");
+        String userEmail = "";
+        if (StringUtils.isNotBlank(cookieStr)) {
+            String[] strArray = cookieStr.split(",");
+            for (String strTemp : strArray) {
+                // System.out.println(strTemp);
+                String[] strName = strTemp.split(":");
+                // System.out.println(strName[0] + "/" + strName[1]);
+                // 循环查找cookie里面的内容.
+                if (strName != null && strName.length == 2
+                        && strName[0] != null && strName[1] != null
+                        && strName[0].equals("username")) {
+                    userEmail = strName[1];
+                }
+            }
+        }
+        return userEmail;
     }
 
     public void init(FilterConfig filterConfig) throws ServletException {
