@@ -219,7 +219,8 @@ public class CommonMenuFilter implements Filter {
 //      return "test_" + menuTypeId + "@sogou-inc.com";
             return "chenjiameng" + "@sogou-inc.com";
         }
-        String cookieStr = httpRequest.getHeader("Cookie");
+        return "chenjiameng" + "@sogou-inc.com";
+       /* String cookieStr = httpRequest.getHeader("Cookie");
         // 字符串截取.
         cookieStr = StringUtils.substringBetween(cookieStr, "jpassport-sp={",
                 "}");
@@ -238,7 +239,7 @@ public class CommonMenuFilter implements Filter {
                 }
             }
         }
-        return userEmail;
+        return userEmail;  */
     }
 
     public void init(FilterConfig filterConfig) throws ServletException {
