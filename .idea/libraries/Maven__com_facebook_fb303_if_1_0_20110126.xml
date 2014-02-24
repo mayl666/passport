@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.facebook:fb303-if:1.0-20110126">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/facebook/fb303-if/1.0-20110126/fb303-if-1.0-20110126.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/facebook/fb303-if/1.0-20110126/fb303-if-1.0-20110126-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/facebook/fb303-if/1.0-20110126/fb303-if-1.0-20110126-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

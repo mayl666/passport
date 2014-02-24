@@ -27,7 +27,6 @@
     <import resource="classpath:spring-config-jredis.xml"/>
     <import resource="classpath:spring-config-mail.xml"/>
     <import resource="spring-config-image.xml"/>
-    <import resource="spring-config-memcache.xml"/>
     <!--<import resource="spring-config-mail.xml"/>-->
 
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
