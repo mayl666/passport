@@ -90,6 +90,9 @@ iframe#main { margin:0; padding:0; }
 	</div><!-- page End -->
 
     <script type="text/javascript">
+        function trim(str){ //删除左右两端的空格
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        }
 
         function onDel(loginWhiteValue){
             var url =  "/admin/security/delLoginWhiteItem";
@@ -107,6 +110,11 @@ iframe#main { margin:0; padding:0; }
 
         function onAdd(){
             var ipOrUsername =  document.getElementById('ipOrUsername').value;
+
+            if(!ipOrUsername){
+                alert("增加项不能为空");
+            }
+            ipOrUsername = trim(ipOrUsername);
 
             var url =  "/admin/security/addWhiteItem";
             var data = "ipOrUsername="+ipOrUsername;

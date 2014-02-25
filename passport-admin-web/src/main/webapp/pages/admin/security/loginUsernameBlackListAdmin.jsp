@@ -117,6 +117,9 @@ iframe#main { margin:0; padding:0; }
 	</div><!-- page End -->
 
     <script type="text/javascript">
+        function trim(str){ //删除左右两端的空格
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        }
 
         function onDel(id,userName){
             var url =  "/admin/security/delLoginBlackUserByName";
@@ -134,7 +137,10 @@ iframe#main { margin:0; padding:0; }
 
         function onAdd(){
             var userNameStr =  document.getElementById('userNameStr').value;
-
+            if(!userNameStr){
+                alert("增加项不能为空");
+            }
+            userNameStr = trim(userNameStr);
             var url =  "/admin/security/addLoginBlackUser";
             var data = "userName="+userNameStr;
             $.ajax({
@@ -146,30 +152,6 @@ iframe#main { margin:0; padding:0; }
                 },
                 dataType: "json"
             });
-        }
-
-
-        function onDelProblemTypeSubmit() {
-            var form =  document.getElementById('deleteProblemTypeForm');
-            var _typeName = form.deltypeName.value;
-            if ( _typeName== "") {
-                alert("请输入类型名称！");
-                form.deltypeName.focus();
-                return false;
-            }
-
-            var url =  "/admin/adminProblem/deleteProblemType";
-            var data = "typeName="+_typeName;
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: data,
-                success:  function(data){
-                    alert(data.statusText);
-                },
-                dataType: "json"
-            });
-
         }
     </script>
 </body>
