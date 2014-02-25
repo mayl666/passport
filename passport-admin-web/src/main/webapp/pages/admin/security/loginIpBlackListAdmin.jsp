@@ -80,13 +80,13 @@ iframe#main { margin:0; padding:0; }
                                             ${loginBlackIp.name}
                                     </td>
                                     <td style="text-align:center;">
-                                        <c:if test ="${loginBlackIp.flagSuccessLimit == 0}">
+                                        <c:if test ="${loginBlackIp.limitSort == 0}">
                                             失败限制
                                         </c:if>
-                                        <c:if test ="${loginBlackIp.flagSuccessLimit == 1}">
+                                        <c:if test ="${loginBlackIp.limitSort == 1}">
                                             成功限制
                                         </c:if>
-                                        <c:if test ="${loginBlackIp.flagSuccessLimit == 2}">
+                                        <c:if test ="${loginBlackIp.limitSort == 2}">
                                             后台添加
                                         </c:if>
                                     </td>
