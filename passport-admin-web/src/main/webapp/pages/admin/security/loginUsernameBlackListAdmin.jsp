@@ -139,6 +139,7 @@ iframe#main { margin:0; padding:0; }
             var userNameStr =  document.getElementById('userNameStr').value;
             if(!userNameStr){
                 alert("增加项不能为空");
+                return;
             }
             userNameStr = trim(userNameStr);
             var url =  "/admin/security/addLoginBlackUser";

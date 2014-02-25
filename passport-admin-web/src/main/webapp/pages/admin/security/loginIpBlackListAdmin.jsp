@@ -136,6 +136,7 @@ iframe#main { margin:0; padding:0; }
             var ipStr =  document.getElementById('addIpStr').value;
             if(!ipStr){
                 alert("增加项不能为空");
+                return;
             }
             ipStr = trim(ipStr);
             var url =  "/admin/security/addLoginBlackIp";

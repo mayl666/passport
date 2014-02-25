@@ -113,6 +113,7 @@ iframe#main { margin:0; padding:0; }
 
             if(!ipOrUsername){
                 alert("增加项不能为空");
+                return;
             }
             ipOrUsername = trim(ipOrUsername);
 
