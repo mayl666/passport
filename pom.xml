@@ -138,7 +138,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google</groupId>
+            <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.2.4</version>
         </dependency>
