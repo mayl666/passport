@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
@@ -105,7 +106,8 @@
     <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.3" level="project" />
     <orderEntry type="library" name="Maven: xmlpull:xmlpull:1.1.3.1" level="project" />
     <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
-    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-core:3.0.0-RC1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-core:3.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-jvm:3.0.0-RC1" level="project" />
     <orderEntry type="library" name="Maven: org.patchca:patchca:0.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.amqp:spring-rabbit:1.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.amqp:spring-amqp:1.1.2.RELEASE" level="project" />
@@ -116,6 +118,15 @@
     <orderEntry type="library" name="Maven: org.apache.hadoop:libthrift:0.5.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
     <orderEntry type="library" name="Maven: com.facebook:fb303-if:1.0-20110126" level="project" />
+    <orderEntry type="library" name="Maven: com.sogou.passport:logback-kafka:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.kafka:kafka_2.9.2:0.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-compiler:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: com.101tec:zkclient:0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.0.4.1" level="project" />
+    <orderEntry type="library" name="Maven: com.yammer.metrics:metrics-core:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.yammer.metrics:metrics-annotation:2.2.0" level="project" />
     <orderEntry type="library" name="Maven: sogou-passport:passport-main-service:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.netflix.curator:curator-recipes:1.3.3" level="project" />
     <orderEntry type="library" name="Maven: com.netflix.curator:curator-framework:1.3.3" level="project" />
