@@ -4,7 +4,19 @@
 <head>
 <title>passport后台</title>
     <%@ include file="/pages/admin/head.jsp"%>
-    <script src="/js/jquery.md5.js" type="text/javascript"></script>
+    <%--<script src="/js/jquery.md5.js" type="text/javascript"></script>--%>
+
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <style>
 div#header { display:none; background-color: #f5f5dc; }
 div#logo { width:130px; height:37px; background: url(/img/admin/logo.png); }
@@ -38,42 +50,60 @@ iframe#main { margin:0; padding:0; }
                                 </c:if>
                     </form>
 
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
 
                     <hr>
                     <form id="accountForm" action="" method="post">
-                        <c:if test ="${account != null}">
-                            <table>
-                                <tbody>
-                                <input type="hidden" id="passportId" name="passportId" value="${account.passportId}"/>
-                                <input type="hidden" id="newState" name="newState" value="${account.status}"/>
-                                <tr><td style="color: #005AA0">ID</td><td style="color: #005AA0">用户名</td><td style="color: #005AA0">密码</td><td style="color: #005AA0">绑定手机</td><td style="color: #005AA0">注册时间</td><td style="color: #005AA0">注册IP</td>
-                                    <td style="color: #005AA0">版本</td><td style="color: #005AA0">账号类型</td><td style="color: #005AA0">封/解禁</td><td style="color: #005AA0">重置密码</td></tr>
-                                <tr>
-                                    <td>${account.id}</td><td>${account.passportId}</td>
-                                    <td><input type="text" id="oldPasswd" value="${account.passwd}" disabled="false"/>
-                                        <input type="text" id="newPasswd" name="newPasswd" style="display: none" />
-                                    </td>
-                                    <td>${account.mobile}</td><td>${account.regTime}</td><td>${account.regIp}</td><td>${account.version}</td>
-                                    <td>${account.accountType}</td>
-                                    <td>
-                                        <c:if test ="${account.status == 1}">
-                                            <input type="button" value="封禁" onclick="forbid()"/>
-                                        </c:if>
-                                        <c:if test ="${account.status == 3}">
-                                            <input type="button"  value="解禁" onclick="unForbid()"/>
-                                        </c:if>
-                                    </td>
-                                    <td>
-                                        <input id="oldPasswdBtn" type="button" value="重置" onclick="resetPassword()"/>
-                                        <input id="newPasswdBtn" type="button" value="保存" onclick="savePassword()" style="display: none"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">用户账号信息</div>
+                            <c:if test ="${account != null}">
+                                <!-- Table -->
+                                <table class="table">
+                                    <tbody>
+                                    <input type="hidden" id="passportId" name="passportId" value="${account.passportId}"/>
+                                    <input type="hidden" id="newState" name="newState" value="${account.flag}"/>
+                                    <tr>
+                                        <td style="color: #005AA0">用户名</td>
+                                        <td style="color: #005AA0">密码</td>
+                                        <td style="color: #005AA0">绑定手机</td>
+                                        <td style="color: #005AA0">注册时间</td>
+                                        <td style="color: #005AA0">注册IP</td>
+                                        <td style="color: #005AA0">账号类型</td>
+                                        <td style="color: #005AA0">封/解禁</td>
+                                        <td style="color: #005AA0">重置密码</td>
+                                    </tr>
+                                    <tr>
+                                        <td>${account.passportId}</td>
+                                        <td><input type="text" id="oldPasswd" value="${account.password}" disabled="false"/>
+                                            <input type="text" id="newPasswd" name="newPasswd" style="display: none" />
+                                        </td>
+                                        <td>${account.mobile}</td><td>${account.regTime}</td><td>${account.regIp}</td>
+                                        <td>${account.accountType}</td>
+                                        <td>
+                                            <c:if test ="${account.flag == 1}">
+                                                <input type="button" value="封禁" onclick="forbid()"/>
+                                            </c:if>
+                                            <c:if test ="${account.flag == 3}">
+                                                <input type="button"  value="解禁" onclick="unForbid()"/>
+                                            </c:if>
+                                        </td>
+                                        <td>
+                                            <input id="oldPasswdBtn" type="button" value="重置" onclick="resetPassword()"/>
+                                            <input id="newPasswdBtn" type="button" value="保存" onclick="savePassword()" style="display: none"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                        </div>
                         </c:if>
                     </form>
-
-
 
 				</div><!-- pageCanvasInt End -->
 			</div><!-- pageCanvas End -->
