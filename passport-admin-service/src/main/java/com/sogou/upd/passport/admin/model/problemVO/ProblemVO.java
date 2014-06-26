@@ -1,6 +1,6 @@
 package com.sogou.upd.passport.admin.model.problemVO;
 
-import com.sogou.upd.passport.admin.common.parameter.ProblemStateEnum;
+import com.sogou.upd.passport.admin.common.enums.ProblemStateEnum;
 import com.sogou.upd.passport.model.problem.Problem;
 
 /**
@@ -11,15 +11,15 @@ public class ProblemVO extends Problem {
     private String typeName;
     private String stateName;
 
-    public ProblemVO(String typeName,Problem problem) {
+    public ProblemVO(String typeName, Problem problem) {
         this.typeName = typeName;
         ProblemStateEnum problemStateEnum = ProblemStateEnum.getProblemState(problem.getStatus());
-        if(ProblemStateEnum.ANSWERED.equals(problemStateEnum)){
+        if (ProblemStateEnum.ANSWERED.equals(problemStateEnum)) {
             this.stateName = "已回复";
-        }else if(ProblemStateEnum.CLOSED.equals(problemStateEnum)){
-            this.stateName ="已关闭";
-        }else {
-            this.stateName ="未回复";
+        } else if (ProblemStateEnum.CLOSED.equals(problemStateEnum)) {
+            this.stateName = "已关闭";
+        } else {
+            this.stateName = "未回复";
         }
         this.setId(problem.getId());
         this.setTitle(problem.getTitle());

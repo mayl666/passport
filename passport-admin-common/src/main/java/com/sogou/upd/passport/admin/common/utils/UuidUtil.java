@@ -1,4 +1,4 @@
-package util;
+package com.sogou.upd.passport.admin.common.utils;
 
 import com.sogou.upd.passport.common.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;

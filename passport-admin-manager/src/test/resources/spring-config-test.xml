@@ -34,8 +34,17 @@
     <import resource="classpath:spring-config-dao.xml"/>
 
     <import resource="classpath:spring-config-service.xml"/>
+    <import resource="classpath:spring-config-image-test.xml"/>
     <import resource="classpath:spring-config-jredis.xml"/>
 
     <import resource="spring-config-mail.xml"/>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:deploy_config.properties</value>
+            </list>
+        </property>
+    </bean>
 
 </beans>

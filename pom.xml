@@ -10,6 +10,7 @@
         <module>passport-admin-service</module>
         <module>passport-admin-manager</module>
         <module>passport-admin-web</module>
+        <module>passport-commons-service</module>
     </modules>
     <packaging>pom</packaging>
 

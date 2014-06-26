@@ -128,7 +128,7 @@ public class ProblemAdminController extends BaseController {
         model.addAttribute("problemVOList", problemVOList);
         model.addAttribute("totalPageNum",totalPageNum);
         model.addAttribute("currentPage",currentPage);
-//        model.addAttribute("queryConditonStr",queryConditonStr);
+//        enum.addAttribute("queryConditonStr",queryConditonStr);
         return "forward:/admin/adminProblem/index";
     }
 

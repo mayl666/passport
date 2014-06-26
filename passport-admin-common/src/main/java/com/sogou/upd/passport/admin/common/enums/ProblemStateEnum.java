@@ -1,4 +1,4 @@
-package com.sogou.upd.passport.admin.common.parameter;
+package com.sogou.upd.passport.admin.common.enums;
 
 /**
  * Created with IntelliJ IDEA.
