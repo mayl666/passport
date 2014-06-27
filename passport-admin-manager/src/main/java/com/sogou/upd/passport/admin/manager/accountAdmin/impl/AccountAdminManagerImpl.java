@@ -16,11 +16,14 @@ import com.sogou.upd.passport.model.account.AccountInfo;
 import com.sogou.upd.passport.service.account.AccountInfoService;
 import com.sogou.upd.passport.service.account.AccountService;
 import com.sogou.upd.passport.service.account.MobilePassportMappingService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -213,7 +216,6 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     @Override
     public Result unbundlingEmail(String passportId) {
         Result result = new APIResultSupport(false);
-
         try {
             //更新 account ,清空用户绑定的 email 信息
             Account account = accountService.queryAccountByPassportId(passportId);
@@ -233,6 +235,48 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             }
         } catch (Exception e) {
             logger.error("unbind email  error.passportId:" + passportId);
+            result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
+        }
+        result.setSuccess(true);
+        return result;
+    }
+
+    @Override
+    public Result unBindMobiles(List<String> mobileList) {
+        Result result = new APIResultSupport(false);
+        try {
+            if (!CollectionUtils.isEmpty(mobileList)) {
+                for (String mobile : mobileList) {
+                    String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
+                    if (!Strings.isNullOrEmpty(mobileMappingPassportId)) {
+                        //执行清除手机映射
+                        boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
+                        if (deleteMobileMapping) {
+                            //清除手机映射成功、清空account_info 用户mobile 信息
+                            Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
+                            if (account != null) {
+                                boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
+                                if (clearAccountBindMobile) {
+                                    result.setSuccess(true);
+                                } else {
+                                    result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                                }
+                            } else {
+                                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
+                                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                            }
+                        } else {
+                            result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                            result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("unBindMobiles error.", e);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
         result.setSuccess(true);

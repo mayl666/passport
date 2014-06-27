@@ -4,6 +4,10 @@ import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.model.account.Account;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created with IntelliJ IDEA.
  * User: chenjiameng
@@ -53,6 +57,15 @@ public interface AccountAdminManager {
      * @return
      */
     public Result unbundlingEmail(String passportId);
+
+
+    /**
+     * 批量解除手机绑定
+     *
+     * @param mobileList
+     * @return
+     */
+    public Result unBindMobiles(List<String> mobileList);
 
 
 }
