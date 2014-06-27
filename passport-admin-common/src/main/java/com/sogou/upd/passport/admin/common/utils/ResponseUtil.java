@@ -87,7 +87,9 @@ public final class ResponseUtil {
      */
     private static ObjectMapper createObjectMap() {
         try {
-            SerializationConfig serializationConfig = new SerializationConfig(BasicClassIntrospector.instance, new JacksonAnnotationIntrospector(), VisibilityChecker.Std.defaultInstance(),
+            SerializationConfig serializationConfig = new SerializationConfig(BasicClassIntrospector.instance,
+                    new JacksonAnnotationIntrospector(),
+                    VisibilityChecker.Std.defaultInstance(),
                     null, null, TypeFactory.defaultInstance(), null);
             StdEscapeHTMLSerializerProvider stdEscapeHTMLSerializerProvider = new StdEscapeHTMLSerializerProvider(serializationConfig);
             return new ObjectMapper(null, stdEscapeHTMLSerializerProvider, null);

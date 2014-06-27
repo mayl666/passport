@@ -5,7 +5,6 @@ import com.google.common.base.Strings;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.admin.web.BaseController;
-import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.model.account.Account;
 import org.slf4j.Logger;
@@ -28,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/admin")
 @SessionAttributes("account")
 public class AccountAdminController extends BaseController {
+
     private static final Logger logger = LoggerFactory.getLogger(AccountAdminController.class);
 
     @Autowired
@@ -104,10 +104,14 @@ public class AccountAdminController extends BaseController {
             if (Strings.isNullOrEmpty(passportId)) {
                 return modelAndView;
             }
+//            modelAndView.setViewName("/commons/resultdata");
 
-            Result result = accountAdminManager.resetPassword(passportId, true);
+
+            Result result = accountAdminManager.resetUserPassword(passportId, true);
             if (result.isSuccess()) {
-
+                modelAndView.addObject("resultData", result.toString());
+            } else {
+//                ResponseUtil.genErrorJsonResult(modelAndView, result.getMessage());
             }
         } catch (Exception e) {
             logger.error("resetPassword error.", e);

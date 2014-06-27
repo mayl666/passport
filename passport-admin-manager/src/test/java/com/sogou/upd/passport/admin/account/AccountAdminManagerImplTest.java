@@ -25,7 +25,7 @@ public class AccountAdminManagerImplTest extends BaseTest {
 
 //        String newPp = UuidUtil.generatePassword();
 
-        Result result = accountAdminManager.resetPassword(passportId, true);
+        Result result = accountAdminManager.resetUserPassword(passportId, true);
 //        Assert.assertNotNull(result);
 //        Assert.assertEquals(true, result.isSuccess());
 

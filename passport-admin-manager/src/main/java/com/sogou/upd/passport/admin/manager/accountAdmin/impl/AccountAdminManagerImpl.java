@@ -127,7 +127,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     }
 
     @Override
-    public Result resetPassword(String passportId, boolean needMD5) {
+    public Result resetUserPassword(String passportId, boolean needMD5) {
         Result result = new APIResultSupport(false);
         try {
             if (Strings.isNullOrEmpty(passportId)) {
@@ -148,6 +148,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 }
             } else {
                 result.setCode(ErrorUtil.INVALID_ACCOUNT);
+                return result;
             }
         } catch (Exception e) {
             logger.error("resetPassword error.passportId:" + passportId);
@@ -166,17 +167,44 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     @Override
     public Result unbundlingMobile(String passportId, String mobile) {
         Result result = new APIResultSupport(false);
-
         try {
-            //清除mobile_passport_id_mapping 影身
-
-            //更新account_info，清空用户绑定的 mobile 信息
-
-
-
-
+            //清除mobile_passport_id_mapping 映射
+            //根据传入的手机号、查询相应的passportId
+            String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
+            if (Strings.isNullOrEmpty(mobileMappingPassportId)) {
+                //根据给出的手机号、查询不到对应的账户
+                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST);
+                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST));
+                return result;
+            }
+            if (passportId.equals(mobileMappingPassportId)) {
+                //执行清除手机映射
+                boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
+                if (deleteMobileMapping) {
+                    //清除手机映射成功、清空account_info 用户mobile 信息
+                    Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
+                    if (account != null) {
+                        boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
+                        if (clearAccountBindMobile) {
+                            result.setSuccess(true);
+                        } else {
+                            result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                            result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                        }
+                    } else {
+                        result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
+                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                    }
+                } else {
+                    result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                }
+            } else {
+                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED);
+                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED));
+            }
         } catch (Exception e) {
-            logger.error("unbundlingMobile error.passportId:" + passportId);
+            logger.error("unbind Mobile error.passportId:" + passportId);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
         return result;
@@ -187,13 +215,27 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
         Result result = new APIResultSupport(false);
 
         try {
-
             //更新 account ,清空用户绑定的 email 信息
-
+            Account account = accountService.queryAccountByPassportId(passportId);
+            if (account != null) {
+                AccountInfo accountInfo = accountInfoService.queryAccountInfoByPassportId(passportId);
+                if (accountInfo != null && !Strings.isNullOrEmpty(accountInfo.getEmail())) {
+                    boolean clearBindEmail = accountInfoService.updateBindMEmail(accountInfo, StringUtils.EMPTY);
+                    if (!clearBindEmail) {
+                        result.setCode(ErrorUtil.ERR_CODE_EMAIL_UNBIND_FAIL);
+                        result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.ERR_CODE_EMAIL_UNBIND_FAIL));
+                    }
+                }
+            } else {
+                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
+                result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                return result;
+            }
         } catch (Exception e) {
-            logger.error("unbundlingEmail error.passportId:" + passportId);
+            logger.error("unbind email  error.passportId:" + passportId);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
+        result.setSuccess(true);
         return result;
     }
 }

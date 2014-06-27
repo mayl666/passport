@@ -35,7 +35,7 @@ public interface AccountAdminManager {
      * @param needMD5
      * @return
      */
-    public Result resetPassword(String passportId, boolean needMD5);
+    public Result resetUserPassword(String passportId, boolean needMD5);
 
     /**
      * 解绑绑定手机

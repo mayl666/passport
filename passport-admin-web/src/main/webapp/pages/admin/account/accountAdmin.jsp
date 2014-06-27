@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <%--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>--%>
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <%--<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>--%>
     <style>
         div#header {
             display: none;
@@ -115,8 +115,8 @@
                                     </c:if>
                                 </td>
                                 <td>
-                                    <input id="oldPasswdBtn" type="button" value="重置" onclick="resetPassword()"/>
-                                    <input id="newPasswdBtn" type="button" value="保存" onclick="savePassword()"
+                                    <input id="oldPasswdBtn" type="button" value="重置" onclick="resetUserPassword()"/>
+                                    <input id="newPasswdBtn" type="button" value="保存" onclick="resetUserPassword()"
                                            style="display: none"/>
                                 </td>
                             </tr>
@@ -163,6 +163,20 @@
         document.getElementById('accountForm').action = '/admin/alterAccount/resetPassword';
         document.getElementById('accountForm').submit();
     }
+
+
+    function resetUserPassword() {
+        document.getElementById('oldPasswd').style.display = "none";
+        document.getElementById('newPasswd').style.display = "block";
+        var passport_id = $("#passportId").val();
+        $.post('/admin/resetPassword', {passportId: passport_id}, function (res) {
+            if (res.status == 0) {
+                var data = res.data;
+                $('#newPasswd').val(data.newPassword);
+            }
+        }, 'json');
+    }
+
     function showMsg() {
         <c:if test ="${msg!=null}">
         alert("${msg}");
