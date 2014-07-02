@@ -45,12 +45,12 @@ iframe#main { margin:0; padding:0; }
 
                             <tr>
                                 <td>选择限制项</td>
-                                </td>
                                 <td>
                                     <select id="sortId" name="sortId" class="sql_where" size=1>
                                         <option  value="-1" selected >所有</option>
                                         <option  value="0">username</option>
                                         <option  value="1">ip</option>
+                                    </select>
                                 </td>
                             </tr>
 
@@ -63,6 +63,7 @@ iframe#main { margin:0; padding:0; }
                                         <option  value="0">失败</option>
                                         <option  value="1">成功</option>
                                         <option  value="2">后台添加</option>
+                                    </select>
                                 </td>
                             </tr>
 

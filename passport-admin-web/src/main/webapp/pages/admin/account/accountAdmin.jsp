@@ -98,13 +98,14 @@
                             </tr>
                             <tr>
                                 <td>${account.passportId}</td>
-                                <td><input type="text" id="oldPasswd" value="${account.password}" disabled="false"/>
+                                <td><input type="text" id="oldPasswd" value="<c:out value="${account.password}"/>"
+                                           disabled="false"/>
                                     <input type="text" id="newPasswd" name="newPasswd" style="display: none"/>
                                 </td>
-                                <td>${account.mobile}</td>
+                                <td><c:out value="${account.mobile}"/></td>
                                 <td>${account.email}</td>
                                 <td>${account.regTime}</td>
-                                <td>${account.regIp}</td>
+                                <td><c:out value="${account.regIp}"/></td>
                                 <td>${account.accountTypeName}</td>
                                 <td>
                                     <c:if test="${account.flag == 1}">

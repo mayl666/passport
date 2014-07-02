@@ -37,7 +37,7 @@ iframe#main { margin:0; padding:0; }
                     <form id="addProblemTypeForm" action="/admin/adminProblem/addProblemType" method="post">
                         <table>
                             <tr>
-                                <td>类型名称</td>
+                                <td>类型名称</td>     -*---------------------------------------------------------
                                 <td>
                                     <div class="input-append">
                                     <input id="typeName" name="typeName"  class="span2" type="text">

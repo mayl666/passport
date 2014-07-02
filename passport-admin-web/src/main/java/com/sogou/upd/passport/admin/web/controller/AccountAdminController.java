@@ -52,6 +52,28 @@ public class AccountAdminController extends BaseController {
         return "/pages/admin/account/accountAdmin.jsp";
     }
 
+
+    /**
+     * 重置密码
+     *
+     * @param passportId
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/reset/resetPassword", method = RequestMethod.POST)
+    public String resetPwd(@RequestParam("passportId") String passportId, Model model) throws Exception {
+        try {
+            Result result = accountAdminManager.resetUserPassword(passportId, true);
+            if (result.isSuccess()) {
+                model.addAttribute("newPwd", result.getModels().get("newPassword"));
+            }
+        } catch (Exception e) {
+            logger.error("resetPassword error.", e);
+        }
+        return "/pages/admin/account/resetPwd.jsp";
+    }
+
     /*
     解/封禁
     */
@@ -74,17 +96,17 @@ public class AccountAdminController extends BaseController {
      重置密码
     */
     @RequestMapping(value = "/alterAccount/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@ModelAttribute("account") Account account, @RequestParam("newPasswd") String newPasswd, Model model) throws Exception {
-        if (account == null) {
-            model.addAttribute("exist", false);
-            return "/pages/admin/account/accountAdmin.jsp";
+    public String resetPassword(@RequestParam("passportId") String passportId, Model model) throws Exception {
+        try {
+            Result result = accountAdminManager.resetUserPassword(passportId, true);
+            if (result.isSuccess()) {
+                model.addAttribute("newPwd", result.getModels().get("newPassword"));
+                model.addAttribute("passportId", passportId);
+            }
+        } catch (Exception e) {
+            logger.error("resetPassword error.", e);
         }
-        boolean result = accountAdminManager.resetPassword(account, newPasswd, true);
-        if (result) {
-            model.addAttribute("msg", "重置密码成功！");
-        } else {
-            model.addAttribute("msg", "重置密码失败！");
-        }
+//        return "/pages/admin/account/resetPwd.jsp";
         return "/pages/admin/account/accountAdmin.jsp";
     }
 
@@ -95,7 +117,7 @@ public class AccountAdminController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public ModelAndView ajaxResetPassword(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -104,8 +126,6 @@ public class AccountAdminController extends BaseController {
             if (Strings.isNullOrEmpty(passportId)) {
                 return modelAndView;
             }
-//            modelAndView.setViewName("/commons/resultdata");
-
 
             Result result = accountAdminManager.resetUserPassword(passportId, true);
             if (result.isSuccess()) {
@@ -117,6 +137,6 @@ public class AccountAdminController extends BaseController {
             logger.error("resetPassword error.", e);
         }
         return modelAndView;
-    }
+    }*/
 
 }
