@@ -55,29 +55,26 @@
                 </div>
                 <h2 id="pageTitle">÷ÿ÷√√‹¬Î</h2>
                 <hr>
-                <form id="resetForm" name="resetForm" class="form-horizontal" role="form"
-                      action="/admin/alterAccount/resetPassword" method="post">
+                <form class="form-horizontal" action="/admin/resetPassword" method="post">
                     <div class="form-group">
                         <label for="passportId" class="col-sm-2 control-label">’À∫≈</label>
 
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="passportId" placeholder="«Î ‰»Î’À∫≈">
+                            <input type="email" class="form-control" id="passportId" name="passportId" value="<c:out value="${passportId}"/>"
+                                   placeholder="«Î ‰»Î’À∫≈">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="newPwd" class="col-sm-2 control-label">–¬√‹¬Î</label>
 
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="newPwd" value="${newPwd}"
+                            <input type="text" class="form-control" id="newPwd" name="newPwd" value="<c:out value="${newPwd}"/>"
                                    placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <%--<button type="submit" class="btn btn-default" onclick="submitResetForm()">÷ÿ÷√√‹¬Î</button>--%>
-                            <span class="button button-main">
-                                  <input type="submit" value="Ã·Ωª" class="button"/>
-                                </span>
+                            <button type="submit" class="btn btn-default">÷ÿ÷√√‹¬Î</button>
                         </div>
                     </div>
                 </form>

@@ -210,6 +210,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             logger.error("unbind Mobile error.passportId:" + passportId);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
+        result.setSuccess(true);
         return result;
     }
 
