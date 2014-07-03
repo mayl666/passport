@@ -1,16 +1,19 @@
 package com.sogou.upd.passport.admin.manager.accountAdmin.impl;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.sogou.upd.passport.admin.common.CommonConstant;
 import com.sogou.upd.passport.admin.common.enums.AccountTypeMappingEnum;
 import com.sogou.upd.passport.admin.common.utils.MessageUtil;
 import com.sogou.upd.passport.admin.common.utils.UuidUtil;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
+import com.sogou.upd.passport.common.lang.StringUtil;
 import com.sogou.upd.passport.common.parameter.AccountDomainEnum;
 import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.ErrorUtil;
+import com.sogou.upd.passport.common.utils.PhoneUtil;
 import com.sogou.upd.passport.common.utils.ProvinceAndCityUtil;
 import com.sogou.upd.passport.model.account.Account;
 import com.sogou.upd.passport.model.account.AccountInfo;
@@ -108,7 +111,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 accountDetail.setPassword(account.getPassword());
                 accountDetail.setAccountTypeName(AccountTypeMappingEnum.indexOf(accountDomainEnum.getValue()).getAccountTypeName());
                 accountDetail.setAccountType(accountDomainEnum.getValue());
-                accountDetail.setMobile(Strings.isNullOrEmpty(account.getMobile()) ? StringUtils.EMPTY : account.getMobile());
+                accountDetail.setMobile(Strings.isNullOrEmpty(account.getMobile()) ? StringUtils.EMPTY : StringUtil.processMobile(account.getMobile()));
                 accountDetail.setRegIp(Strings.isNullOrEmpty(account.getRegIp()) ? StringUtils.EMPTY : account.getRegIp());
                 accountDetail.setRegTime(account.getRegTime().toString());
                 accountDetail.setUniqname(Strings.isNullOrEmpty(account.getUniqname()) ? StringUtils.EMPTY : account.getUniqname());
@@ -117,7 +120,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
 
             AccountInfo accountInfo = accountInfoService.queryAccountInfoByPassportId(passportId);
             if (accountInfo != null) {
-                accountDetail.setEmail(Strings.isNullOrEmpty(accountInfo.getEmail()) ? StringUtils.EMPTY : accountInfo.getEmail());
+                accountDetail.setEmail(Strings.isNullOrEmpty(accountInfo.getEmail()) ? StringUtils.EMPTY : StringUtil.processEmail(accountInfo.getEmail()));
                 accountDetail.setProvince(ProvinceAndCityUtil.getProvinceByPCode(accountInfo.getProvince()));
                 accountDetail.setCity(ProvinceAndCityUtil.getCityByCityCode(accountInfo.getCity()));
                 accountDetail.setGender(accountInfo.getGender().equalsIgnoreCase("0") ? "女" : "男");
@@ -247,41 +250,55 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     @Override
     public Result unBindMobiles(List<String> mobileList) {
         Result result = new APIResultSupport(false);
+        List<String> failed = Lists.newArrayList();//解除绑定失败结果
+        String failUnBinds = StringUtils.EMPTY;
         try {
             if (!CollectionUtils.isEmpty(mobileList)) {
                 for (String mobile : mobileList) {
-                    String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
-                    if (!Strings.isNullOrEmpty(mobileMappingPassportId)) {
-                        //执行清除手机映射
-                        boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
-                        if (deleteMobileMapping) {
-                            //清除手机映射成功、清空account_info 用户mobile 信息
-                            Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
-                            if (account != null) {
-                                boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
-                                if (clearAccountBindMobile) {
-                                    result.setSuccess(true);
+                    if (PhoneUtil.verifyPhoneNumberFormat(mobile)) {
+                        String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
+                        if (!Strings.isNullOrEmpty(mobileMappingPassportId)) {
+                            //执行清除手机映射
+                            boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
+                            if (deleteMobileMapping) {
+                                //清除手机映射成功、清空account_info 用户mobile 信息
+                                Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
+                                if (account != null) {
+                                    boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
+                                    if (!clearAccountBindMobile) {
+                                        failed.add(mobile);
+                                        result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                                    }
                                 } else {
-                                    result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
-                                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                                    failed.add(mobile);
+                                    result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
+                                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
                                 }
                             } else {
-                                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
-                                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                                failed.add(mobile);
+                                result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
                             }
                         } else {
-                            result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
-                            result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                            failed.add(mobile);
+                            continue;
                         }
                     } else {
                         continue;
                     }
                 }
             }
+            if (failed != null && !failed.isEmpty()) {
+                failUnBinds = StringUtils.join(failed, ",");
+            }
         } catch (Exception e) {
             logger.error("unBindMobiles error.", e);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
+        result.getModels().put("failed", failUnBinds);
+        result.setSuccess(true);
+        result.setMessage(CommonConstant.UN_BIND_SUCCESS);
         return result;
     }
 }

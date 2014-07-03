@@ -91,7 +91,7 @@ public class AccountAdminController extends BaseController {
             AccountDetailInfo account = accountAdminManager.getAccountDetailInfo(passportId);
             if (account == null) {
                 model.addAttribute("exist", false);
-                return "/pages/admin/account/accountAdmin.jsp";
+                return "/pages/admin/account/unbind.jsp";
             }
             model.addAttribute("account", account);
 
@@ -125,7 +125,6 @@ public class AccountAdminController extends BaseController {
         } catch (Exception e) {
             logger.error("unBindEmail error.", e);
         }
-//        return "/pages/admin/account/unbind.jsp";
         return result.toString();
     }
 
@@ -166,7 +165,8 @@ public class AccountAdminController extends BaseController {
      * @return
      * @throws Exception
      */
-    public String unBindPhones(@RequestParam("mobile") String mobiles, Model model) throws Exception {
+    @RequestMapping(value = "/unBindPhones", method = RequestMethod.POST)
+    public String unBindPhones(@RequestParam("mobiles") String mobiles, Model model) throws Exception {
         try {
             if (Strings.isNullOrEmpty(mobiles)) {
                 model.addAttribute("msg", ErrorUtil.getERR_CODE_MSG_MAP().get("ERR_CODE_COM_REQURIE"));
@@ -174,28 +174,38 @@ public class AccountAdminController extends BaseController {
             }
 
             List<String> mobileList = Lists.newArrayList();
-            String[] mobileArrays = StringUtils.split(mobiles, CommonConstant.COMMON_STRING_SPLIT);
+            String[] mobileArrays = StringUtils.split(mobiles, CommonConstant.COMMON_STRING_SPLIT_RETURN);
             if (mobileArrays.length > 0) {
                 for (String mobile : mobileArrays) {
-                    mobileList.add(mobile);
+                    if (!Strings.isNullOrEmpty(mobile)) {
+                        mobileList.add(mobile);
+                    }
                 }
             }
             Result result = accountAdminManager.unBindMobiles(mobileList);
+            //解除绑定失败结果
+            String failUnBind = StringUtils.EMPTY;
             if (result.isSuccess()) {
-                model.addAttribute("msg", CommonConstant.UN_BIND_SUCCESS);
-            } else {
-                model.addAttribute("msg", CommonConstant.UN_BIND_FAILURE);
+                failUnBind = String.valueOf(result.getModels().get("failed"));
             }
+            model.addAttribute("msg", CommonConstant.DONE_UN_BIND_MOBILE);
+            model.addAttribute("failed", failUnBind);
         } catch (Exception e) {
-            logger.error("unBindEmail error.", e);
+            logger.error("unBindPhones error.", e);
         }
         return "/pages/admin/account/unbindMobiles.jsp";
     }
 
 
-    /*
-    解/封禁
-    */
+    /**
+     * 解除封禁
+     *
+     * @param account
+     * @param newState
+     * @param model
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/alterAccount/updateState", method = RequestMethod.POST)
     public String updateState(@ModelAttribute("account") Account account, @RequestParam("newState") int newState, Model model) throws Exception {
         if (account == null) {
@@ -210,51 +220,4 @@ public class AccountAdminController extends BaseController {
         }
         return "/pages/admin/account/accountAdmin.jsp";
     }
-
-    /*
-     重置密码
-    */
-    @RequestMapping(value = "/alterAccount/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@RequestParam("passportId") String passportId, Model model) throws Exception {
-        try {
-            Result result = accountAdminManager.resetUserPassword(passportId, true);
-            if (result.isSuccess()) {
-                model.addAttribute("newPwd", result.getModels().get("newPassword"));
-                model.addAttribute("passportId", passportId);
-            }
-        } catch (Exception e) {
-            logger.error("resetPassword error.", e);
-        }
-        return "/pages/admin/account/resetPwd.jsp";
-    }
-
-    /**
-     * 重置密码
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    /*@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public ModelAndView ajaxResetPassword(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        try {
-            String passportId = ServletRequestUtils.getRequiredStringParameter(request, "passportId");
-            if (Strings.isNullOrEmpty(passportId)) {
-                return modelAndView;
-            }
-
-            Result result = accountAdminManager.resetUserPassword(passportId, true);
-            if (result.isSuccess()) {
-                modelAndView.addObject("resultData", result.toString());
-            } else {
-//                ResponseUtil.genErrorJsonResult(modelAndView, result.getMessage());
-            }
-        } catch (Exception e) {
-            logger.error("resetPassword error.", e);
-        }
-        return modelAndView;
-    }*/
-
 }

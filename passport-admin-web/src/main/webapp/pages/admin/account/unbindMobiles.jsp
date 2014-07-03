@@ -53,62 +53,39 @@
                     当前位置：<strong>后台管理</strong>
                     <span class="step">&gt;</span><strong>用户管理</strong>
                 </div>
-                <h2 id="pageTitle">解除绑定</h2>
-
-                <form class="navbar-form navbar-left" role="search" action="/admin/unBind" method="post">
-                    <div class="form-group">
-                        <input type="text" id="passportId" name="passportId" class="form-control" placeholder="用户账号">
-                    </div>
-                    <button type="submit" class="btn btn-default">查询</button>
-                </form>
-
+                <h2 id="pageTitle">批量解除手机绑定</h2>
 
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">绑定信息</div>
-                    <form class="navbar-form navbar-left" id="unBindForm" name="unBindForm" action=""
-                          method="post">
-                        <c:if test="${account != null}">
-                            <table class="table">
-                                <tbody>
-                                <input type="hidden" id="ppId" name="ppId" value=""/>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-envelope">密保邮箱</span>
-                                        <c:choose>
-                                            <c:when test="${account.email!=null && account.emali!=''}">
-                                                <c:out value="${account.email}"></c:out>
-                                                <span class="label label-success">已经绑定</span>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default">解绑</button>
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="label label-danger">未设置</span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-phone">密保手机</span>
-                                        <c:choose>
-                                            <c:when test="${account.mobile!=null && account.mobile!=''}">
-                                                <c:out value="${account.mobile}"></c:out>
-                                                <span class="label label-success">已经绑定</span>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default">解绑</button>
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="label label-danger">未设置</span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </c:if>
+                    <div class="panel-heading">解除绑定</div>
+                    <form class="navbar-form navbar-left" id="unBindMobileForm" name="unBindMobileForm"
+                          action="/admin/unBindPhones" method="post">
+                        <table class="table">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <textarea class="form-control" id="mobiles" name="mobiles" rows="10" cols="40" placeholder="请输入解绑手机号"></textarea>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <p>
+                                    <button type="submit" class="btn btn-default">解除</button>
+                                </p>
+                            </div>
+                            <c:if test="${failed!=null && failed!=''}">
+                            <div class="list-group">
+                                <div class="input-group">
+                                    <span class="label label-danger">解除绑定失败结果</span>
+                                </div>
+                            </div>
+
+                            <!-- 解绑失败结果 -->
+                            <div class="list-group">
+                                <div class="input-group">
+                                    <textarea class="form-control" id="failed" name="failed" rows="10" cols="40"><c:out value="${failed}"/></textarea>
+                                </div>
+                            </div>
+                            </c:if>
+                        </table>
                     </form>
                 </div>
 
@@ -120,6 +97,21 @@
     <!-- pageBd End -->
 </div>
 <!-- page End -->
+<script type="text/javascript">
+    //批量解绑手机
+    function unbindMobiles() {
+        var mobiles = $("#mobiles").val();
+        $.post('/admin/unBindPhones', {mobiles: mobiles}, function (data) {
+            alert(data.statusText);
+        }, 'json');
+    }
 
+    function showMsg() {
+        <c:if test ="${msg!=null}">
+            alert("${msg}");
+        </c:if>
+    }
+    showMsg();
+</script>
 </body>
 </html>
