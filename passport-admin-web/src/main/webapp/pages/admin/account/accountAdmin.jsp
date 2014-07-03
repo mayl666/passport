@@ -58,9 +58,7 @@
                 <form action="/admin/alterAccount/queryAccount" method="post">
                     请输入用户名，如(example@sogou.com)或手机号：
                     <input type="text" name="username"/>
-                                <span class="button button-main">
-                                  <input type="submit" value="提交" class="button"/>
-                                </span>
+                    <span class="button button-main"><input type="submit" value="提交" class="button"/></span>
                     <c:if test="${exist==false}">
                         <div style="color:#ff0000">账号不存在</div>
                     </c:if>
@@ -88,8 +86,22 @@
                             </tr>
                             <tr>
                                 <td><c:out value="${account.passportId}"/></td>
-                                <td><c:out value="${account.mobile}"/></td>
-                                <td><c:out value="${account.email}"/></td>
+                                <td>
+                                    <c:if test="${account.mobile!=null && account.mobile!=''}">
+                                        <c:out value="${account.mobile}"/>
+                                    </c:if>
+                                    <c:if test="${account.mobile==null || account.mobile==''}">
+                                       未设置
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${account.email!=null && account.email!=''}">
+                                        <c:out value="${account.email}"/>
+                                    </c:if>
+                                    <c:if test="${account.email==null || account.email==''}">
+                                        未设置
+                                    </c:if>
+                                </td>
                                 <td><c:out value="${account.regTime}"/></td>
                                 <td><c:out value="${account.regIp}"/></td>
                                 <td><c:out value="${account.accountTypeName}"/></td>
