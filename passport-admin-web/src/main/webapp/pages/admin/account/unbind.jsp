@@ -75,7 +75,7 @@
                                 <input type="hidden" id="ppId" name="ppId"
                                        value="<c:out value="${account.passportId}"/>"/>
                                 <input type="hidden" id="phone" name="phone"
-                                       value="<c:out value="${account.mobile}"/>"/>
+                                       value="<c:out value="${account.mobileOriginal}"/>"/>
                                 <tr>
                                     <td>
                                         <span class="glyphicon glyphicon-envelope">√‹±£” œ‰</span>

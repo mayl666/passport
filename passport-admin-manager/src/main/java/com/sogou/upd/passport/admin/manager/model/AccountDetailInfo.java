@@ -24,6 +24,11 @@ public class AccountDetailInfo {
     private String mobile;
 
     /**
+     * 绑定手机原始手机号
+     */
+    private String mobileOriginal;
+
+    /**
      * 注册时间
      */
     private String regTime;
@@ -59,6 +64,11 @@ public class AccountDetailInfo {
      * 绑定邮箱
      */
     private String email;
+
+    /**
+     * 绑定邮箱 原始显示
+     */
+    private String emailOriginal;
 
     /**
      * 姓名
@@ -102,6 +112,22 @@ public class AccountDetailInfo {
 
     public String getPassportId() {
         return passportId;
+    }
+
+    public String getMobileOriginal() {
+        return mobileOriginal;
+    }
+
+    public void setMobileOriginal(String mobileOriginal) {
+        this.mobileOriginal = mobileOriginal;
+    }
+
+    public String getEmailOriginal() {
+        return emailOriginal;
+    }
+
+    public void setEmailOriginal(String emailOriginal) {
+        this.emailOriginal = emailOriginal;
     }
 
     public void setPassportId(String passportId) {

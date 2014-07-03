@@ -112,6 +112,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 accountDetail.setAccountTypeName(AccountTypeMappingEnum.indexOf(accountDomainEnum.getValue()).getAccountTypeName());
                 accountDetail.setAccountType(accountDomainEnum.getValue());
                 accountDetail.setMobile(Strings.isNullOrEmpty(account.getMobile()) ? StringUtils.EMPTY : StringUtil.processMobile(account.getMobile()));
+                accountDetail.setMobileOriginal(Strings.isNullOrEmpty(account.getMobile()) ? StringUtils.EMPTY : account.getMobile());
                 accountDetail.setRegIp(Strings.isNullOrEmpty(account.getRegIp()) ? StringUtils.EMPTY : account.getRegIp());
                 accountDetail.setRegTime(account.getRegTime().toString());
                 accountDetail.setUniqname(Strings.isNullOrEmpty(account.getUniqname()) ? StringUtils.EMPTY : account.getUniqname());
@@ -121,6 +122,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             AccountInfo accountInfo = accountInfoService.queryAccountInfoByPassportId(passportId);
             if (accountInfo != null) {
                 accountDetail.setEmail(Strings.isNullOrEmpty(accountInfo.getEmail()) ? StringUtils.EMPTY : StringUtil.processEmail(accountInfo.getEmail()));
+                accountDetail.setEmailOriginal(Strings.isNullOrEmpty(accountInfo.getEmail()) ? StringUtils.EMPTY : accountInfo.getEmail());
                 accountDetail.setProvince(ProvinceAndCityUtil.getProvinceByPCode(accountInfo.getProvince()));
                 accountDetail.setCity(ProvinceAndCityUtil.getCityByCityCode(accountInfo.getCity()));
                 accountDetail.setGender(accountInfo.getGender().equalsIgnoreCase("0") ? "女" : "男");
