@@ -1,6 +1,7 @@
 package com.sogou.upd.passport.admin.manager.accountAdmin.impl;
 
 import com.google.common.base.Strings;
+import com.sogou.upd.passport.admin.common.CommonConstant;
 import com.sogou.upd.passport.admin.common.enums.AccountTypeMappingEnum;
 import com.sogou.upd.passport.admin.common.utils.MessageUtil;
 import com.sogou.upd.passport.admin.common.utils.UuidUtil;
@@ -210,7 +211,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             logger.error("unbind Mobile error.passportId:" + passportId);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
-        result.setSuccess(true);
+        result.setMessage(CommonConstant.UN_BIND_SUCCESS);
         return result;
     }
 
@@ -239,6 +240,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
         result.setSuccess(true);
+        result.setMessage(CommonConstant.UN_BIND_SUCCESS);
         return result;
     }
 
@@ -280,7 +282,6 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             logger.error("unBindMobiles error.", e);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
-        result.setSuccess(true);
         return result;
     }
 }

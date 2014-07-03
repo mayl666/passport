@@ -7,6 +7,7 @@ import com.sogou.upd.passport.admin.common.CommonConstant;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.admin.web.BaseController;
+import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.ErrorUtil;
 import com.sogou.upd.passport.model.account.Account;
@@ -110,21 +111,24 @@ public class AccountAdminController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/unBindEmail", method = RequestMethod.POST)
-    public String unBindEmail(@RequestParam("passportId") String passportId, Model model) throws Exception {
+    @ResponseBody
+    public Object unBindEmail(@RequestParam("passportId") String passportId, Model model) throws Exception {
+        Result result = new APIResultSupport(false);
         try {
-            Result result = accountAdminManager.unbundlingEmail(passportId);
+            result = accountAdminManager.unbundlingEmail(passportId);
             if (result.isSuccess()) {
-                model.addAttribute("passportId", passportId);
-                model.addAttribute("res", result.toString());
                 model.addAttribute("msg", CommonConstant.UN_BIND_SUCCESS);
             } else {
                 model.addAttribute("msg", CommonConstant.UN_BIND_FAILURE);
             }
+            model.addAttribute("passportId", passportId);
         } catch (Exception e) {
             logger.error("unBindEmail error.", e);
         }
-        return "/pages/admin/account/unbind.jsp";
+//        return "/pages/admin/account/unbind.jsp";
+        return result.toString();
     }
+
 
     /**
      * 解除绑定手机
@@ -136,21 +140,21 @@ public class AccountAdminController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/unBindPhone", method = RequestMethod.POST)
-    public String unBindPhone(@RequestParam("passportId") String passportId, @RequestParam("mobile") String mobile, Model model) throws Exception {
+    @ResponseBody
+    public Object unBindPhone(@RequestParam("passportId") String passportId, @RequestParam("mobile") String mobile, Model model) throws Exception {
+        Result result = new APIResultSupport(false);
         try {
-
-            Result result = accountAdminManager.unbundlingMobile(passportId, mobile);
+            result = accountAdminManager.unbundlingMobile(passportId, mobile);
             if (result.isSuccess()) {
-                model.addAttribute("passportId", passportId);
-                model.addAttribute("res", result.toString());
                 model.addAttribute("msg", CommonConstant.UN_BIND_SUCCESS);
             } else {
                 model.addAttribute("msg", CommonConstant.UN_BIND_FAILURE);
             }
+            model.addAttribute("passportId", passportId);
         } catch (Exception e) {
             logger.error("unBindEmail error.", e);
         }
-        return "/pages/admin/account/unbind.jsp";
+        return result.toString();
     }
 
 

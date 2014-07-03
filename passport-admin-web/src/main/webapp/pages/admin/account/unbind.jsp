@@ -16,7 +16,7 @@
     <%--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>--%>
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <%--<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>--%>
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <style>
         div#header {
             display: none;
@@ -57,7 +57,8 @@
 
                 <form class="navbar-form navbar-left" role="search" action="/admin/unBind" method="post">
                     <div class="form-group">
-                        <input type="text" id="passportId" name="passportId" value="" class="form-control"
+                        <input type="text" id="passportId" name="passportId" value="${account.passportId}"
+                               class="form-control"
                                placeholder="用户账号">
                     </div>
                     <button type="submit" class="btn btn-default">查询</button>
@@ -67,23 +68,26 @@
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">绑定信息</div>
-                    <form class="navbar-form navbar-left" id="unBindForm" name="unBindForm" action=""
-                          method="post">
-                        <c:if test="${account != null}">
+                    <form class="navbar-form navbar-left" id="unBindForm" name="unBindForm" action="" method="post">
+                        <c:if test="${account!=null && account!=''}">
                             <table class="table">
                                 <tbody>
                                 <input type="hidden" id="ppId" name="ppId"
                                        value="<c:out value="${account.passportId}"/>"/>
+                                <input type="hidden" id="phone" name="phone"
+                                       value="<c:out value="${account.mobile}"/>"/>
                                 <tr>
                                     <td>
                                         <span class="glyphicon glyphicon-envelope">密保邮箱</span>
                                         <c:choose>
-                                            <c:when test="${account.email!=null && account.emali!=''}">
+                                            <c:when test="${account.email!=null && account.email!=''}">
                                                 <c:out value="${account.email}"></c:out>
                                                 <span class="label label-success">已经绑定</span>
 
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-default" onclick="unbindEmail()">解绑</button>
+                                                    <button type="button" class="btn btn-default"
+                                                            onclick="unbindEmail()">解绑
+                                                    </button>
                                                 </div>
                                             </c:when>
                                             <c:otherwise>
@@ -101,7 +105,9 @@
                                                 <span class="label label-success">已经绑定</span>
 
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-default" onclick="unbindMobile()">解绑</button>
+                                                    <button type="button" class="btn btn-default"
+                                                            onclick="unbindMobile()">解绑
+                                                    </button>
                                                 </div>
                                             </c:when>
                                             <c:otherwise>
@@ -115,7 +121,6 @@
                         </c:if>
                     </form>
                 </div>
-
             </div>
             <!-- pageCanvasInt End -->
         </div>
@@ -129,31 +134,17 @@
     //解绑邮箱
     function unbindEmail() {
         var passportId = $("#ppId").val();
-        if (passportId == null || passportId == "") {
-            alert("用户账号不能为空");
-            return false;
-        }
-
-        $.post('/admin/unBindEmail', {passportId: passport_id}, function (res) {
-            if (res.status == 0) {
-                alert(res.statusText);
-            }
+        $.post('/admin/unBindEmail', {passportId: passportId}, function (data) {
+             alert(data.statusText);
         }, 'json');
     }
 
     //解绑手机
     function unbindMobile() {
         var passportId = $("#ppId").val();
-        var mobile = ${account.mobile};
-        if (passportId == null || passportId == "") {
-            alert("用户账号不能为空");
-            return false;
-        }
-
-        $.post('/admin/unBindPhone', {passportId: passport_id, mobile: mobile}, function (res) {
-            if (res.status == 0) {
-                alert(res.statusText);
-            }
+        var mobile = $("#phone").val();
+        $.post('/admin/unBindPhone', {passportId: passportId, mobile: mobile}, function (data) {
+            alert(data.statusText);
         }, 'json');
     }
 </script>

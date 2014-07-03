@@ -66,13 +66,6 @@
                     </c:if>
                 </form>
 
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-
                 <hr>
                 <form id="accountForm" action="" method="post">
 
@@ -83,43 +76,23 @@
                         <!-- Table -->
                         <table class="table">
                             <tbody>
-                            <input type="hidden" id="passportId" name="passportId" value="${account.passportId}"/>
-                            <input type="hidden" id="newState" name="newState" value="${account.flag}"/>
+                            <input type="hidden" id="passportId" name="passportId" value="<c:out value="${account.passportId}"/>"/>
+                            <input type="hidden" id="newState" name="newState" value="<c:out value="${account.flag}"/>"/>
                             <tr>
                                 <td style="color: #005AA0">用户名</td>
-                                <td style="color: #005AA0">密码</td>
                                 <td style="color: #005AA0">绑定手机</td>
                                 <td style="color: #005AA0">绑定邮箱</td>
                                 <td style="color: #005AA0">注册时间</td>
                                 <td style="color: #005AA0">注册IP</td>
                                 <td style="color: #005AA0">账号类型</td>
-                                <td style="color: #005AA0">封/解禁</td>
-                                <td style="color: #005AA0">重置密码</td>
                             </tr>
                             <tr>
-                                <td>${account.passportId}</td>
-                                <td><input type="text" id="oldPasswd" value="<c:out value="${account.password}"/>"
-                                           disabled="false"/>
-                                    <input type="text" id="newPasswd" name="newPasswd" style="display: none"/>
-                                </td>
+                                <td><c:out value="${account.passportId}"/></td>
                                 <td><c:out value="${account.mobile}"/></td>
-                                <td>${account.email}</td>
-                                <td>${account.regTime}</td>
+                                <td><c:out value="${account.email}"/></td>
+                                <td><c:out value="${account.regTime}"/></td>
                                 <td><c:out value="${account.regIp}"/></td>
-                                <td>${account.accountTypeName}</td>
-                                <td>
-                                    <c:if test="${account.flag == 1}">
-                                        <input type="button" value="封禁" onclick="forbid()"/>
-                                    </c:if>
-                                    <c:if test="${account.flag == 3}">
-                                        <input type="button" value="解禁" onclick="unForbid()"/>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <input id="oldPasswdBtn" type="button" value="重置" onclick="resetUserPassword()"/>
-                                    <input id="newPasswdBtn" type="button" value="保存" onclick="resetUserPassword()"
-                                           style="display: none"/>
-                                </td>
+                                <td><c:out value="${account.accountTypeName}"/></td>
                             </tr>
                             </tbody>
                         </table>
@@ -137,46 +110,45 @@
 <!-- page End -->
 
 <script type="text/javascript">
-    function forbid() {
-        document.getElementById('newState').value = 3;
-        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
-        document.getElementById('accountForm').submit();
-    }
-    function unForbid() {
-        document.getElementById('newState').value = 1;
-        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
-        document.getElementById('accountForm').submit();
-    }
-    function resetPassword() {
-        document.getElementById('oldPasswd').style.display = "none";
-        document.getElementById('newPasswd').style.display = "block";
-        document.getElementById('oldPasswdBtn').style.display = "none";
-        document.getElementById('newPasswdBtn').style.display = "block";
-    }
-    function savePassword() {
-        var newpasswdstr = document.getElementById('newPasswd').value;
-        if (newpasswdstr == "") {
-            alert("请输入新密码！");
-            return;
-        }
+//    function forbid() {
+//        document.getElementById('newState').value = 3;
+//        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
+//        document.getElementById('accountForm').submit();
+//    }
+//    function unForbid() {
+//        document.getElementById('newState').value = 1;
+//        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
+//        document.getElementById('accountForm').submit();
+//    }
+//    function resetPassword() {
+//        document.getElementById('oldPasswd').style.display = "none";
+//        document.getElementById('newPasswd').style.display = "block";
+//        document.getElementById('oldPasswdBtn').style.display = "none";
+//        document.getElementById('newPasswdBtn').style.display = "block";
+//    }
+//    function savePassword() {
+//        var newpasswdstr = document.getElementById('newPasswd').value;
+//        if (newpasswdstr == "") {
+//            alert("请输入新密码！");
+//            return;
+//        }
 //            newpasswdstr = $.md5(newpasswdstr);
-        document.getElementById('newPasswd').value = newpasswdstr;
-        document.getElementById('accountForm').action = '/admin/alterAccount/resetPassword';
-        document.getElementById('accountForm').submit();
-    }
+//        document.getElementById('newPasswd').value = newpasswdstr;
+//        document.getElementById('accountForm').action = '/admin/alterAccount/resetPassword';
+//        document.getElementById('accountForm').submit();
+//    }
 
-
-    function resetUserPassword() {
-        document.getElementById('oldPasswd').style.display = "none";
-        document.getElementById('newPasswd').style.display = "block";
-        var passport_id = $("#passportId").val();
-        $.post('/admin/resetPassword', {passportId: passport_id}, function (res) {
-            if (res.status == 0) {
-                var data = res.data;
-                $('#newPasswd').val(data.newPassword);
-            }
-        }, 'json');
-    }
+//    function resetUserPassword() {
+//        document.getElementById('oldPasswd').style.display = "none";
+//        document.getElementById('newPasswd').style.display = "block";
+//        var passport_id = $("#passportId").val();
+//        $.post('/admin/resetPassword', {passportId: passport_id}, function (res) {
+//            if (res.status == 0) {
+//                var data = res.data;
+//                $('#newPasswd').val(data.newPassword);
+//            }
+//        }, 'json');
+//    }
 
     function showMsg() {
         <c:if test ="${msg!=null}">
