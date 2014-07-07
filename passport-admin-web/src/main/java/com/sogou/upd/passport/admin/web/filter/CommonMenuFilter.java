@@ -216,7 +216,7 @@ public class CommonMenuFilter implements Filter {
         if (isWindows) {
             // 如果是windows返回测试,系统的用户
 //      return "test_" + menuTypeId + "@sogou-inc.com";
-//            return "chenjiameng" + "@sogou-inc.com";//哎呦呦写死了~~~~
+//            return "chenjiameng" + "@sogou-inc.com";//写死了~~~~
             return "chengang" + "@sogou-inc.com";
         }
         String cookieStr = httpRequest.getHeader("Cookie");
