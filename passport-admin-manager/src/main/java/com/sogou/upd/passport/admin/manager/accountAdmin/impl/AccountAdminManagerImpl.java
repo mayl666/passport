@@ -176,76 +176,95 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     @Override
     public Result unbundlingMobile(String passportId, String mobile) {
         Result result = new APIResultSupport(false);
-        try {
-            //清除mobile_passport_id_mapping 映射
-            //根据传入的手机号、查询相应的passportId
-            String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
-            if (Strings.isNullOrEmpty(mobileMappingPassportId)) {
-                //根据给出的手机号、查询不到对应的账户
-                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST);
-                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST));
-                return result;
-            }
-            if (passportId.equals(mobileMappingPassportId)) {
-                //执行清除手机映射
-                boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
-                if (deleteMobileMapping) {
-                    //清除手机映射成功、清空account_info 用户mobile 信息
-                    Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
-                    if (account != null) {
-                        boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
-                        if (clearAccountBindMobile) {
-                            result.setSuccess(true);
+
+        //一期只支持搜狗账号
+        AccountDomainEnum domainEnum = AccountDomainEnum.getAccountDomain(passportId);
+        if (AccountDomainEnum.SOGOU == domainEnum) {
+            try { //清除mobile_passport_id_mapping 映射
+                //根据传入的手机号、查询相应的passportId
+                String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
+                if (Strings.isNullOrEmpty(mobileMappingPassportId)) {
+                    //根据给出的手机号、查询不到对应的账户
+                    result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST);
+                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST));
+                    return result;
+                }
+                if (passportId.equals(mobileMappingPassportId)) {
+                    //执行清除手机映射
+                    boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
+                    if (deleteMobileMapping) {
+                        //清除手机映射成功、清空account_info 用户mobile 信息
+                        Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
+                        if (account != null) {
+                            boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
+                            if (clearAccountBindMobile) {
+                                result.setSuccess(true);
+                            } else {
+                                result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                            }
                         } else {
-                            result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
-                            result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                            result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
+                            result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
                         }
                     } else {
-                        result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
-                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                        result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
                     }
                 } else {
-                    result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
-                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                    result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED);
+                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED));
                 }
-            } else {
-                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED);
-                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED));
+                result.setMessage(CommonConstant.UN_BIND_SUCCESS);
+            } catch (Exception e) {
+                logger.error("unbind Mobile error.passportId:" + passportId);
+                result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
             }
-        } catch (Exception e) {
-            logger.error("unbind Mobile error.passportId:" + passportId);
-            result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
+        } else {
+            result.setMessage(CommonConstant.UN_DO_BIND);
         }
-        result.setMessage(CommonConstant.UN_BIND_SUCCESS);
         return result;
     }
 
+
+    /**
+     * 解绑邮箱
+     *
+     * @param passportId
+     * @return
+     */
     @Override
     public Result unbundlingEmail(String passportId) {
         Result result = new APIResultSupport(false);
-        try {
-            //更新 account ,清空用户绑定的 email 信息
-            Account account = accountService.queryAccountByPassportId(passportId);
-            if (account != null) {
-                AccountInfo accountInfo = accountInfoService.queryAccountInfoByPassportId(passportId);
-                if (accountInfo != null && !Strings.isNullOrEmpty(accountInfo.getEmail())) {
-                    boolean clearBindEmail = accountInfoService.updateBindMEmail(accountInfo, StringUtils.EMPTY);
-                    if (!clearBindEmail) {
-                        result.setCode(ErrorUtil.ERR_CODE_EMAIL_UNBIND_FAIL);
-                        result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.ERR_CODE_EMAIL_UNBIND_FAIL));
+        //一期只支持搜狗账号
+        AccountDomainEnum domainEnum = AccountDomainEnum.getAccountDomain(passportId);
+        if (AccountDomainEnum.SOGOU == domainEnum) {
+            try {
+                //更新 account ,清空用户绑定的 email 信息
+                Account account = accountService.queryAccountByPassportId(passportId);
+                if (account != null) {
+                    AccountInfo accountInfo = accountInfoService.queryAccountInfoByPassportId(passportId);
+                    if (accountInfo != null && !Strings.isNullOrEmpty(accountInfo.getEmail())) {
+                        boolean clearBindEmail = accountInfoService.updateBindMEmail(accountInfo, StringUtils.EMPTY);
+                        if (!clearBindEmail) {
+                            result.setCode(ErrorUtil.ERR_CODE_EMAIL_UNBIND_FAIL);
+                            result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.ERR_CODE_EMAIL_UNBIND_FAIL));
+                        }
                     }
+                } else {
+                    result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
+                    result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                    return result;
                 }
-            } else {
-                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
-                result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
-                return result;
+            } catch (Exception e) {
+                logger.error("unbind email  error.passportId:" + passportId);
+                result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
             }
-        } catch (Exception e) {
-            logger.error("unbind email  error.passportId:" + passportId);
-            result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
+            result.setSuccess(true);
+            result.setMessage(CommonConstant.UN_BIND_SUCCESS);
+        } else {
+            result.setMessage(CommonConstant.UN_DO_BIND);
         }
-        result.setSuccess(true);
-        result.setMessage(CommonConstant.UN_BIND_SUCCESS);
         return result;
     }
 
@@ -258,6 +277,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             if (!CollectionUtils.isEmpty(mobileList)) {
                 for (String mobile : mobileList) {
                     if (PhoneUtil.verifyPhoneNumberFormat(mobile)) {
+                        //TODO 方法需要替换成 deleteOrUnbindMobile 此方法包含：1、清除手机注册；2、清除手机绑定关系
                         String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
                         if (!Strings.isNullOrEmpty(mobileMappingPassportId)) {
                             //执行清除手机映射

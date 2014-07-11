@@ -19,6 +19,12 @@ public final class CommonConstant {
     public static final String UN_BIND_FAILURE = "解绑失败";
 
     /**
+     *  不予解绑
+     */
+    public static final String UN_DO_BIND ="不予解绑";
+
+
+    /**
      * 完成批量解绑手机操作
      */
     public static final String DONE_UN_BIND_MOBILE = "完成解绑操作";
