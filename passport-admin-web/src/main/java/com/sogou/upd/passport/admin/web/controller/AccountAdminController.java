@@ -7,6 +7,8 @@ import com.sogou.upd.passport.admin.common.CommonConstant;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.admin.web.BaseController;
+import com.sogou.upd.passport.admin.web.util.UserOperationLogUtil;
+import com.sogou.upd.passport.common.model.useroperationlog.UserOperationLog;
 import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.ErrorUtil;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -64,13 +67,24 @@ public class AccountAdminController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPwd(@RequestParam("passportId") String passportId, Model model) throws Exception {
+    public String resetPwd(@RequestParam("passportId") String passportId, Model model,HttpServletRequest request) throws Exception {
         try {
+
+            String sff = request.getHeader("X-Forwarded-For");// 根据nginx的配置，获取相应的ip
+            if (Strings.isNullOrEmpty(sff)) {
+                sff = request.getHeader("X-Real-IP");
+            }
+            if (Strings.isNullOrEmpty(sff)) {
+                return Strings.isNullOrEmpty(request.getRemoteAddr()) ? "" : request.getRemoteAddr();
+            }
+
             Result result = accountAdminManager.resetUserPassword(passportId, true);
             if (result.isSuccess()) {
                 model.addAttribute("newPwd", result.getModels().get("newPassword"));
                 model.addAttribute("passportId", passportId);
             }
+            UserOperationLog userOperationLog = new UserOperationLog(passportId, "", "", result.getCode());
+            UserOperationLogUtil.log(userOperationLog);
         } catch (Exception e) {
             logger.error("resetPassword error.", e);
         }
