@@ -4,6 +4,8 @@ package com.sogou.upd.passport.admin.web.controller;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.sogou.upd.passport.admin.common.CommonConstant;
+import com.sogou.upd.passport.admin.common.utils.IPUtil;
+import com.sogou.upd.passport.admin.common.utils.RequestUtils;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.admin.web.BaseController;
@@ -67,23 +69,15 @@ public class AccountAdminController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPwd(@RequestParam("passportId") String passportId, Model model,HttpServletRequest request) throws Exception {
+    public String resetPwd(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         try {
-
-            String sff = request.getHeader("X-Forwarded-For");// 根据nginx的配置，获取相应的ip
-            if (Strings.isNullOrEmpty(sff)) {
-                sff = request.getHeader("X-Real-IP");
-            }
-            if (Strings.isNullOrEmpty(sff)) {
-                return Strings.isNullOrEmpty(request.getRemoteAddr()) ? "" : request.getRemoteAddr();
-            }
-
             Result result = accountAdminManager.resetUserPassword(passportId, true);
             if (result.isSuccess()) {
                 model.addAttribute("newPwd", result.getModels().get("newPassword"));
                 model.addAttribute("passportId", passportId);
             }
-            UserOperationLog userOperationLog = new UserOperationLog(passportId, "", "", result.getCode());
+            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
             UserOperationLogUtil.log(userOperationLog);
         } catch (Exception e) {
             logger.error("resetPassword error.", e);
@@ -109,6 +103,10 @@ public class AccountAdminController extends BaseController {
             }
             model.addAttribute("account", account);
 
+//            UserOperationLog userOperationLog = new UserOperationLog(passportId, "", result.getCode(), IPUtil.getIP(request));
+//            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+//            UserOperationLogUtil.log(userOperationLog);
+
         } catch (Exception e) {
             logger.error("unBind error.", e);
         }
@@ -126,7 +124,7 @@ public class AccountAdminController extends BaseController {
      */
     @RequestMapping(value = "/unBindEmail", method = RequestMethod.POST)
     @ResponseBody
-    public Object unBindEmail(@RequestParam("passportId") String passportId, Model model) throws Exception {
+    public Object unBindEmail(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         Result result = new APIResultSupport(false);
         try {
             result = accountAdminManager.unbundlingEmail(passportId);
@@ -136,6 +134,10 @@ public class AccountAdminController extends BaseController {
                 model.addAttribute("msg", CommonConstant.UN_BIND_FAILURE);
             }
             model.addAttribute("passportId", passportId);
+
+            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            UserOperationLogUtil.log(userOperationLog);
         } catch (Exception e) {
             logger.error("unBindEmail error.", e);
         }
@@ -154,7 +156,7 @@ public class AccountAdminController extends BaseController {
      */
     @RequestMapping(value = "/unBindPhone", method = RequestMethod.POST)
     @ResponseBody
-    public Object unBindPhone(@RequestParam("passportId") String passportId, @RequestParam("mobile") String mobile, Model model) throws Exception {
+    public Object unBindPhone(@RequestParam("passportId") String passportId, @RequestParam("mobile") String mobile, Model model, HttpServletRequest request) throws Exception {
         Result result = new APIResultSupport(false);
         try {
             result = accountAdminManager.unbundlingMobile(passportId, mobile);
@@ -164,6 +166,11 @@ public class AccountAdminController extends BaseController {
                 model.addAttribute("msg", CommonConstant.UN_BIND_FAILURE);
             }
             model.addAttribute("passportId", passportId);
+
+            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            UserOperationLogUtil.log(userOperationLog);
+
         } catch (Exception e) {
             logger.error("unBindEmail error.", e);
         }
@@ -180,7 +187,7 @@ public class AccountAdminController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/unBindPhones", method = RequestMethod.POST)
-    public String unBindPhones(@RequestParam("mobiles") String mobiles, Model model) throws Exception {
+    public String unBindPhones(@RequestParam("mobiles") String mobiles, Model model, HttpServletRequest request) throws Exception {
         try {
             if (Strings.isNullOrEmpty(mobiles)) {
                 model.addAttribute("msg", ErrorUtil.getERR_CODE_MSG_MAP().get("ERR_CODE_COM_REQURIE"));
@@ -204,6 +211,11 @@ public class AccountAdminController extends BaseController {
             }
             model.addAttribute("msg", CommonConstant.DONE_UN_BIND_MOBILE);
             model.addAttribute("failed", failUnBind);
+
+            UserOperationLog userOperationLog = new UserOperationLog(StringUtils.EMPTY, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            UserOperationLogUtil.log(userOperationLog);
+
         } catch (Exception e) {
             logger.error("unBindPhones error.", e);
         }
