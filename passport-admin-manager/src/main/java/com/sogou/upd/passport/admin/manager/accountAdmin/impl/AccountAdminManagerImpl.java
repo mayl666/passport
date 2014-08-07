@@ -298,7 +298,6 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             if (!CollectionUtils.isEmpty(mobileList)) {
                 for (String mobile : mobileList) {
                     if (PhoneUtil.verifyPhoneNumberFormat(mobile)) {
-                        //TODO 方法需要替换成 deleteOrUnbindMobile 此方法包含：1、清除手机注册；2、清除手机绑定关系
                         String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
                         if (!Strings.isNullOrEmpty(mobileMappingPassportId)) {
                             //执行清除手机映射

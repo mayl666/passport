@@ -228,9 +228,49 @@ public class AccountAdminController extends BaseController {
     }
 
 
+    /**
+     * 批量删除注册手机号，仅供开发和测试同学使用，不对外开放
+     *
+     * @param mobiles
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/deleteRegMobiles", method = RequestMethod.POST)
+    public String deleteRegMobiles(@RequestParam("mobiles") String mobiles, Model model, HttpServletRequest request) throws Exception {
+        try {
+            if (Strings.isNullOrEmpty(mobiles)) {
+                model.addAttribute("msg", ErrorUtil.getERR_CODE_MSG_MAP().get("ERR_CODE_COM_REQURIE"));
+                return "/pages/admin/account/deleteRegMobiles.jsp";
+            }
 
+            List<String> mobileList = Lists.newArrayList();
+            String[] mobileArrays = StringUtils.split(mobiles, CommonConstant.COMMON_STRING_SPLIT_RETURN);
+            if (mobileArrays.length > 0) {
+                for (String mobile : mobileArrays) {
+                    if (!Strings.isNullOrEmpty(mobile)) {
+                        mobileList.add(mobile);
+                    }
+                }
+            }
+            Result result = accountAdminManager.deleteRegMobiles(mobileList);
+            //解除绑定失败结果
+            String failUnBind = StringUtils.EMPTY;
+            if (result.isSuccess()) {
+                failUnBind = String.valueOf(result.getModels().get("failed"));
+            }
+            model.addAttribute("msg", CommonConstant.DONE_UN_BIND_MOBILE);
+            model.addAttribute("failed", failUnBind);
 
+            UserOperationLog userOperationLog = new UserOperationLog(StringUtils.EMPTY, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            UserOperationLogUtil.log(userOperationLog);
 
+        } catch (Exception e) {
+            logger.error("deleteRegMobiles error.", e);
+        }
+        return "/pages/admin/account/deleteRegMobiles.jsp";
+    }
 
 
     /**
