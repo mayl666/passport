@@ -7,6 +7,7 @@ import com.sogou.upd.passport.admin.common.CommonConstant;
 import com.sogou.upd.passport.admin.common.utils.IPUtil;
 import com.sogou.upd.passport.admin.common.utils.RequestUtils;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
+import com.sogou.upd.passport.admin.manager.form.AccountSearchParam;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.admin.web.BaseController;
 import com.sogou.upd.passport.admin.web.util.UserOperationLogUtil;
@@ -42,15 +43,17 @@ public class AccountAdminController extends BaseController {
 
     /**
      * 用户账号信息查询
+     * <p/>
+     * 查询条件：用户账号（手机号）或者用户昵称
      *
-     * @param username
+     * @param accountSearchParam
      * @param model
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/alterAccount/queryAccount", method = RequestMethod.POST)
-    public String queryAccount(@RequestParam("username") String username, Model model) throws Exception {
-        AccountDetailInfo account = accountAdminManager.getAccountDetailInfo(username);
+    public String queryAccount(AccountSearchParam accountSearchParam, Model model) throws Exception {
+        AccountDetailInfo account = accountAdminManager.getAccountDetailInfo(accountSearchParam);
         if (account == null) {
             model.addAttribute("exist", false);
             return "/pages/admin/account/accountAdmin.jsp";
@@ -96,7 +99,9 @@ public class AccountAdminController extends BaseController {
     @RequestMapping(value = "/unBind", method = RequestMethod.POST)
     public String unBind(@RequestParam("passportId") String passportId, Model model) throws Exception {
         try {
-            AccountDetailInfo account = accountAdminManager.getAccountDetailInfo(passportId);
+            AccountSearchParam accountSearchParam = new AccountSearchParam();
+            accountSearchParam.setUserName(passportId);
+            AccountDetailInfo account = accountAdminManager.getAccountDetailInfo(accountSearchParam);
             if (account == null) {
                 model.addAttribute("exist", false);
                 return "/pages/admin/account/unbind.jsp";
@@ -221,6 +226,11 @@ public class AccountAdminController extends BaseController {
         }
         return "/pages/admin/account/unbindMobiles.jsp";
     }
+
+
+
+
+
 
 
     /**

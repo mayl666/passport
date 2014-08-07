@@ -55,10 +55,17 @@
                 </div>
                 <h2 id="pageTitle">用户账号管理</h2>
 
-                <form action="/admin/alterAccount/queryAccount" method="post">
-                    请输入用户名，如(example@sogou.com)或手机号：
-                    <input type="text" name="username"/>
-                    <span class="button button-main"><input type="submit" value="提交" class="button"/></span>
+                <form class="navbar-form navbar-left" role="search" action="/admin/alterAccount/queryAccount"
+                      method="post">
+                    请输入
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="用户账号" name="userName"/>
+                    </div>
+                    或
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="用户昵称" name="nickName"/>
+                    </div>
+                    <button type="submit" class="btn btn-default" onclick="checkParam()">Submit</button>
                     <c:if test="${exist==false}">
                         <div style="color:#ff0000">账号不存在</div>
                     </c:if>
@@ -74,10 +81,13 @@
                         <!-- Table -->
                         <table class="table">
                             <tbody>
-                            <input type="hidden" id="passportId" name="passportId" value="<c:out value="${account.passportId}"/>"/>
-                            <input type="hidden" id="newState" name="newState" value="<c:out value="${account.flag}"/>"/>
+                            <input type="hidden" id="passportId" name="passportId"
+                                   value="<c:out value="${account.passportId}"/>"/>
+                            <input type="hidden" id="newState" name="newState"
+                                   value="<c:out value="${account.flag}"/>"/>
                             <tr>
                                 <td style="color: #005AA0">用户名</td>
+                                <td style="color: #005AA0">昵称</td>
                                 <td style="color: #005AA0">绑定手机</td>
                                 <td style="color: #005AA0">绑定邮箱</td>
                                 <td style="color: #005AA0">注册时间</td>
@@ -87,11 +97,19 @@
                             <tr>
                                 <td><c:out value="${account.passportId}"/></td>
                                 <td>
+                                    <c:if test="${account.uniqname!=null && account.uniqname!=''}">
+                                        <c:out value="${account.uniqname}"/>
+                                    </c:if>
+                                    <c:if test="${account.uniqname==null && account.uniqname==''}">
+                                        未设置
+                                    </c:if>
+                                </td>
+                                <td>
                                     <c:if test="${account.mobile!=null && account.mobile!=''}">
                                         <c:out value="${account.mobile}"/>
                                     </c:if>
                                     <c:if test="${account.mobile==null || account.mobile==''}">
-                                       未设置
+                                        未设置
                                     </c:if>
                                 </td>
                                 <td>
@@ -122,45 +140,56 @@
 <!-- page End -->
 
 <script type="text/javascript">
-//    function forbid() {
-//        document.getElementById('newState').value = 3;
-//        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
-//        document.getElementById('accountForm').submit();
-//    }
-//    function unForbid() {
-//        document.getElementById('newState').value = 1;
-//        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
-//        document.getElementById('accountForm').submit();
-//    }
-//    function resetPassword() {
-//        document.getElementById('oldPasswd').style.display = "none";
-//        document.getElementById('newPasswd').style.display = "block";
-//        document.getElementById('oldPasswdBtn').style.display = "none";
-//        document.getElementById('newPasswdBtn').style.display = "block";
-//    }
-//    function savePassword() {
-//        var newpasswdstr = document.getElementById('newPasswd').value;
-//        if (newpasswdstr == "") {
-//            alert("请输入新密码！");
-//            return;
-//        }
-//            newpasswdstr = $.md5(newpasswdstr);
-//        document.getElementById('newPasswd').value = newpasswdstr;
-//        document.getElementById('accountForm').action = '/admin/alterAccount/resetPassword';
-//        document.getElementById('accountForm').submit();
-//    }
+    //    function forbid() {
+    //        document.getElementById('newState').value = 3;
+    //        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
+    //        document.getElementById('accountForm').submit();
+    //    }
+    //    function unForbid() {
+    //        document.getElementById('newState').value = 1;
+    //        document.getElementById('accountForm').action = '/admin/alterAccount/updateState';
+    //        document.getElementById('accountForm').submit();
+    //    }
+    //    function resetPassword() {
+    //        document.getElementById('oldPasswd').style.display = "none";
+    //        document.getElementById('newPasswd').style.display = "block";
+    //        document.getElementById('oldPasswdBtn').style.display = "none";
+    //        document.getElementById('newPasswdBtn').style.display = "block";
+    //    }
+    //    function savePassword() {
+    //        var newpasswdstr = document.getElementById('newPasswd').value;
+    //        if (newpasswdstr == "") {
+    //            alert("请输入新密码！");
+    //            return;
+    //        }
+    //            newpasswdstr = $.md5(newpasswdstr);
+    //        document.getElementById('newPasswd').value = newpasswdstr;
+    //        document.getElementById('accountForm').action = '/admin/alterAccount/resetPassword';
+    //        document.getElementById('accountForm').submit();
+    //    }
 
-//    function resetUserPassword() {
-//        document.getElementById('oldPasswd').style.display = "none";
-//        document.getElementById('newPasswd').style.display = "block";
-//        var passport_id = $("#passportId").val();
-//        $.post('/admin/resetPassword', {passportId: passport_id}, function (res) {
-//            if (res.status == 0) {
-//                var data = res.data;
-//                $('#newPasswd').val(data.newPassword);
-//            }
-//        }, 'json');
-//    }
+    //    function resetUserPassword() {
+    //        document.getElementById('oldPasswd').style.display = "none";
+    //        document.getElementById('newPasswd').style.display = "block";
+    //        var passport_id = $("#passportId").val();
+    //        $.post('/admin/resetPassword', {passportId: passport_id}, function (res) {
+    //            if (res.status == 0) {
+    //                var data = res.data;
+    //                $('#newPasswd').val(data.newPassword);
+    //            }
+    //        }, 'json');
+    //    }
+
+    //参数校验
+    function checkParam() {
+        //参数校验
+        var userName = $("#userName").val();
+        var nickName = $("#nickName").val();
+        if ((userName == null || userName == "") && (nickName == null || nickName == "")) {
+            alert("请输入用户账号或者用户昵称进行查询！");
+            return;
+        }
+    }
 
     function showMsg() {
         <c:if test ="${msg!=null}">

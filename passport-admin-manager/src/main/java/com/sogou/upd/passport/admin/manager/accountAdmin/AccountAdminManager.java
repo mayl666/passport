@@ -1,5 +1,6 @@
 package com.sogou.upd.passport.admin.manager.accountAdmin;
 
+import com.sogou.upd.passport.admin.manager.form.AccountSearchParam;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.model.account.Account;
@@ -26,10 +27,10 @@ public interface AccountAdminManager {
     /**
      * 根据用户名获取用户账号信息
      *
-     * @param username
+     * @param accountSearchParam
      * @return
      */
-    public AccountDetailInfo getAccountDetailInfo(String username);
+    public AccountDetailInfo getAccountDetailInfo(AccountSearchParam accountSearchParam);
 
 
     /**
@@ -66,6 +67,15 @@ public interface AccountAdminManager {
      * @return
      */
     public Result unBindMobiles(List<String> mobileList);
+
+
+    /**
+     * 批量删除注册手机号
+     *
+     * @param regMobileList
+     * @return
+     */
+    public Result deleteRegMobiles(List<String> regMobileList);
 
 
 }

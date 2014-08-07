@@ -7,6 +7,7 @@ import com.sogou.upd.passport.admin.common.enums.AccountTypeMappingEnum;
 import com.sogou.upd.passport.admin.common.utils.MessageUtil;
 import com.sogou.upd.passport.admin.common.utils.UuidUtil;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
+import com.sogou.upd.passport.admin.manager.form.AccountSearchParam;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.common.lang.StringUtil;
 import com.sogou.upd.passport.common.parameter.AccountDomainEnum;
@@ -20,6 +21,7 @@ import com.sogou.upd.passport.model.account.AccountInfo;
 import com.sogou.upd.passport.service.account.AccountInfoService;
 import com.sogou.upd.passport.service.account.AccountService;
 import com.sogou.upd.passport.service.account.MobilePassportMappingService;
+import com.sogou.upd.passport.service.account.UniqNamePassportMappingService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -49,6 +51,10 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
 
     @Autowired
     private MobilePassportMappingService mobilePassportMappingService;
+
+
+    @Autowired
+    private UniqNamePassportMappingService uniqNamePassportMappingService;
 
     @Override
     public Account queryAccountByUserName(String username) {
@@ -91,16 +97,23 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     }
 
     @Override
-    public AccountDetailInfo getAccountDetailInfo(String username) {
+    public AccountDetailInfo getAccountDetailInfo(AccountSearchParam accountSearchParam) {
         AccountDetailInfo accountDetail = new AccountDetailInfo();
-
+        String passportId = StringUtils.EMPTY;
         try {
-            String passportId = username;
+            if (accountSearchParam != null && !Strings.isNullOrEmpty(accountSearchParam.getUserName())) {
+                passportId = accountSearchParam.getUserName();
+            } else if (accountSearchParam != null && !Strings.isNullOrEmpty(accountSearchParam.getNickName())) {
+                passportId = uniqNamePassportMappingService.checkUniqName(accountSearchParam.getNickName());
+            } else {
+                return accountDetail;
+            }
+
             //判断登录用户类型
-            AccountDomainEnum accountDomainEnum = AccountDomainEnum.getAccountDomain(username);
+            AccountDomainEnum accountDomainEnum = AccountDomainEnum.getAccountDomain(passportId);
             //默认是sogou.com
             if (AccountDomainEnum.PHONE.equals(accountDomainEnum)) {
-                passportId = mobilePassportMappingService.queryPassportIdByUsername(username);
+                passportId = mobilePassportMappingService.queryPassportIdByUsername(passportId);
             } else if (AccountDomainEnum.UNKNOWN.equals(accountDomainEnum)) {
                 passportId = passportId + "@sogou.com";
             }
@@ -130,7 +143,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 accountDetail.setPersonalid(Strings.isNullOrEmpty(accountInfo.getPersonalid()) ? StringUtils.EMPTY : accountInfo.getPersonalid());
             }
         } catch (Exception e) {
-            logger.error("getAccountDetailInfo error,passportId:" + username, e);
+            logger.error("getAccountDetailInfo error,passportId:" + passportId, e);
         }
         return accountDetail;
     }
@@ -145,6 +158,10 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_COM_REQURIE));
                 return result;
             }
+
+            /*AccountDomainEnum accountDomainEnum = AccountDomainEnum.getAccountDomain(passportId);
+            //写分离上线完成前、只支持搜狗账号重置密码
+            if (accountDomainEnum == AccountDomainEnum.SOGOU) {*/
             Account account = accountService.queryAccountByPassportId(passportId);
             if (account != null) {
                 //重置密码
@@ -159,6 +176,10 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 result.setCode(ErrorUtil.INVALID_ACCOUNT);
                 return result;
             }
+            /*} else {
+                //外域、手机账号暂不支持重置密码
+                result.setMessage(CommonConstant.UN_DO_RESET_PWD);
+            }*/
         } catch (Exception e) {
             logger.error("resetPassword error.passportId:" + passportId);
             result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
@@ -178,51 +199,51 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
         Result result = new APIResultSupport(false);
 
         //一期只支持搜狗账号
-        AccountDomainEnum domainEnum = AccountDomainEnum.getAccountDomain(passportId);
-        if (AccountDomainEnum.SOGOU == domainEnum) {
-            try { //清除mobile_passport_id_mapping 映射
-                //根据传入的手机号、查询相应的passportId
-                String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
-                if (Strings.isNullOrEmpty(mobileMappingPassportId)) {
-                    //根据给出的手机号、查询不到对应的账户
-                    result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST);
-                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST));
-                    return result;
-                }
-                if (passportId.equals(mobileMappingPassportId)) {
-                    //执行清除手机映射
-                    boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
-                    if (deleteMobileMapping) {
-                        //清除手机映射成功、清空account_info 用户mobile 信息
-                        Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
-                        if (account != null) {
-                            boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
-                            if (clearAccountBindMobile) {
-                                result.setSuccess(true);
-                            } else {
-                                result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
-                                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
-                            }
+//        AccountDomainEnum domainEnum = AccountDomainEnum.getAccountDomain(passportId);
+//        if (AccountDomainEnum.SOGOU == domainEnum) {
+        try { //清除mobile_passport_id_mapping 映射
+            //根据传入的手机号、查询相应的passportId
+            String mobileMappingPassportId = mobilePassportMappingService.queryPassportIdByMobile(mobile);
+            if (Strings.isNullOrEmpty(mobileMappingPassportId)) {
+                //根据给出的手机号、查询不到对应的账户
+                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST);
+                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_BIND_NOTEXIST));
+                return result;
+            }
+            if (passportId.equals(mobileMappingPassportId)) {
+                //执行清除手机映射
+                boolean deleteMobileMapping = mobilePassportMappingService.deleteMobilePassportMapping(mobile);
+                if (deleteMobileMapping) {
+                    //清除手机映射成功、清空account_info 用户mobile 信息
+                    Account account = accountService.queryAccountByPassportId(mobileMappingPassportId);
+                    if (account != null) {
+                        boolean clearAccountBindMobile = accountService.modifyMobile(account, StringUtils.EMPTY);
+                        if (clearAccountBindMobile) {
+                            result.setSuccess(true);
                         } else {
-                            result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
-                            result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                            result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                            result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
                         }
                     } else {
-                        result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
-                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
+                        result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
+                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
                     }
                 } else {
-                    result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED);
-                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED));
+                    result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
+                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
                 }
-                result.setMessage(CommonConstant.UN_BIND_SUCCESS);
-            } catch (Exception e) {
-                logger.error("unbind Mobile error.passportId:" + passportId);
-                result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
+            } else {
+                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED);
+                result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_PHONE_BINDED));
             }
-        } else {
-            result.setMessage(CommonConstant.UN_DO_BIND);
+            result.setMessage(CommonConstant.UN_BIND_SUCCESS);
+        } catch (Exception e) {
+            logger.error("unbind Mobile error.passportId:" + passportId);
+            result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
         }
+        /*} else {
+            result.setMessage(CommonConstant.UN_DO_BIND);
+        }*/
         return result;
     }
 
@@ -323,4 +344,38 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
         result.setMessage(CommonConstant.UN_BIND_SUCCESS);
         return result;
     }
+
+    @Override
+    public Result deleteRegMobiles(List<String> regMobileList) {
+        Result result = new APIResultSupport(false);
+        List<String> failed = Lists.newArrayList();//解除绑定失败结果
+        String failDelMobiles = StringUtils.EMPTY;
+        try {
+            if (!CollectionUtils.isEmpty(regMobileList)) {
+                for (String mobile : regMobileList) {
+                    if (PhoneUtil.verifyPhoneNumberFormat(mobile)) {
+                        boolean deleteSuccess = accountService.deleteOrUnbindMobile(mobile);
+                        if (!deleteSuccess) {
+                            failed.add(mobile);
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+            }
+            if (failed != null && !failed.isEmpty()) {
+                failDelMobiles = StringUtils.join(failed, ",");
+            }
+        } catch (Exception e) {
+            logger.error("deleteRegMobiles error.", e);
+            result.setCode(ErrorUtil.SYSTEM_UNKNOWN_EXCEPTION);
+        }
+        result.getModels().put("failed", failDelMobiles);
+        result.setSuccess(true);
+        result.setMessage(CommonConstant.UN_BIND_SUCCESS);
+        return result;
+    }
+
+
 }
