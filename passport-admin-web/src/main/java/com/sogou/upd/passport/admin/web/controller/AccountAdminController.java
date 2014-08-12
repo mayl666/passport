@@ -261,6 +261,8 @@ public class AccountAdminController extends BaseController {
                         mobileList.add(mobile);
                     }
                 }
+            } else {
+                return "/pages/admin/account/deleteRegMobiles.jsp";
             }
             Result result = accountAdminManager.deleteRegMobiles(mobileList);
             //解除绑定失败结果
