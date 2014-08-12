@@ -388,6 +388,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             if (!CollectionUtils.isEmpty(regMobileList)) {
                 for (String mobile : regMobileList) {
                     if (PhoneUtil.verifyPhoneNumberFormat(mobile)) {
+                        //TODO 清除昵称表
                         boolean deleteSuccess = accountService.deleteOrUnbindMobile(mobile);
                         if (!deleteSuccess) {
                             failed.add(mobile);

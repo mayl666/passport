@@ -66,14 +66,14 @@ public class CommonMenuFilter implements Filter {
         GetJsonType getJsonType = (GetJsonType) httpRequest.getSession()
                 .getAttribute("GetJsonTypeCache");
 
-        System.out.println(cacheTime);
-        System.out.println(System.currentTimeMillis() / 60000);
+//        System.out.println(cacheTime);
+//        System.out.println(System.currentTimeMillis() / 60000);
         // System.out.println("userMenuHtml:" + userMenuHtml);
-        System.out.println("getJsonType:" + getJsonType);
+//        System.out.println("getJsonType:" + getJsonType);
 
         // 获得用户Email
         String userEmail = getPassportEmail(httpRequest);
-        System.out.println("userEmail:" + userEmail);
+//        System.out.println("userEmail:" + userEmail);
 
         // 3分钟更新一次缓存.***************开始***************
         if (cacheTime != System.currentTimeMillis() / 60000

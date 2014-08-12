@@ -59,11 +59,11 @@
                       method="post">
                     请输入
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="用户账号" name="userName"/>
+                        <input type="text" class="form-control" placeholder="用户账号" name="userName" id="userName"/>
                     </div>
                     或
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="用户昵称" name="nickName"/>
+                        <input type="text" class="form-control" placeholder="用户昵称" name="nickName" id="nickName"/>
                     </div>
                     <button type="submit" class="btn btn-default" onclick="checkParam()">Submit</button>
                     <c:if test="${exist==false}">
@@ -77,7 +77,9 @@
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
                         <div class="panel-heading">用户账号信息</div>
-                        <c:if test="${account != null}">
+
+                        <c:if test="${account!=null && account!=''}">
+
                         <!-- Table -->
                         <table class="table">
                             <tbody>
@@ -100,25 +102,25 @@
                                     <c:if test="${account.uniqname!=null && account.uniqname!=''}">
                                         <c:out value="${account.uniqname}"/>
                                     </c:if>
-                                    <c:if test="${account.uniqname==null || account.uniqname==''}">
-                                        未设置
-                                    </c:if>
+                                        <%--<c:if test="${account.uniqname==null}">
+                                            未设置
+                                        </c:if>--%>
                                 </td>
                                 <td>
                                     <c:if test="${account.mobile!=null && account.mobile!=''}">
                                         <c:out value="${account.mobile}"/>
                                     </c:if>
-                                    <c:if test="${account.mobile==null || account.mobile==''}">
-                                        未设置
-                                    </c:if>
+                                        <%--<c:if test="${account.mobile==null}">
+                                            未设置
+                                        </c:if>--%>
                                 </td>
                                 <td>
                                     <c:if test="${account.email!=null && account.email!=''}">
                                         <c:out value="${account.email}"/>
                                     </c:if>
-                                    <c:if test="${account.email==null || account.email==''}">
-                                        未设置
-                                    </c:if>
+                                        <%--<c:if test="${account.email==null}">
+                                            未设置
+                                        </c:if>--%>
                                 </td>
                                 <td><c:out value="${account.regTime}"/></td>
                                 <td><c:out value="${account.regIp}"/></td>
@@ -185,7 +187,7 @@
         //参数校验
         var userName = $("#userName").val();
         var nickName = $("#nickName").val();
-        if ((userName == null || userName == "") && (nickName == null || nickName == "")) {
+        if (userName == "" || nickName == "") {
             alert("请输入用户账号或者用户昵称进行查询！");
             return false;
         }
