@@ -16,6 +16,7 @@ import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.ErrorUtil;
 import com.sogou.upd.passport.model.account.Account;
+import com.sogou.upd.passport.model.operatelog.OperateHistoryLog;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,14 +75,18 @@ public class AccountAdminController extends BaseController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public String resetPwd(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         try {
-            Result result = accountAdminManager.resetUserPassword(passportId, true);
+            OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
+            Result result = accountAdminManager.resetUserPassword(Boolean.TRUE, operateHistoryLog);
             if (result.isSuccess()) {
                 model.addAttribute("newPwd", result.getModels().get("newPassword"));
                 model.addAttribute("passportId", passportId);
             }
+
             UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
             userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
             UserOperationLogUtil.log(userOperationLog);
+
+
         } catch (Exception e) {
             logger.error("resetPassword error.", e);
         }
@@ -132,7 +137,8 @@ public class AccountAdminController extends BaseController {
     public Object unBindEmail(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         Result result = new APIResultSupport(false);
         try {
-            result = accountAdminManager.unbundlingEmail(passportId);
+            OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
+            result = accountAdminManager.unbundlingEmail(operateHistoryLog);
             if (result.isSuccess()) {
                 model.addAttribute("msg", CommonConstant.UN_BIND_SUCCESS);
             } else {
@@ -164,7 +170,8 @@ public class AccountAdminController extends BaseController {
     public Object unBindPhone(@RequestParam("passportId") String passportId, @RequestParam("mobile") String mobile, Model model, HttpServletRequest request) throws Exception {
         Result result = new APIResultSupport(false);
         try {
-            result = accountAdminManager.unbundlingMobile(passportId, mobile);
+            OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
+            result = accountAdminManager.unbundlingMobile(mobile, operateHistoryLog);
             if (result.isSuccess()) {
                 model.addAttribute("msg", CommonConstant.UN_BIND_SUCCESS);
             } else {
@@ -174,6 +181,7 @@ public class AccountAdminController extends BaseController {
 
             UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
             userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            userOperationLog.putOtherMessage("mobile", mobile);
             UserOperationLogUtil.log(userOperationLog);
 
         } catch (Exception e) {
@@ -219,6 +227,7 @@ public class AccountAdminController extends BaseController {
 
             UserOperationLog userOperationLog = new UserOperationLog(StringUtils.EMPTY, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
             userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            userOperationLog.putOtherMessage("unBindPhones", mobileList.toString());
             UserOperationLogUtil.log(userOperationLog);
 
         } catch (Exception e) {
@@ -264,6 +273,7 @@ public class AccountAdminController extends BaseController {
 
             UserOperationLog userOperationLog = new UserOperationLog(StringUtils.EMPTY, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
             userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            userOperationLog.putOtherMessage("deleteMobiles", mobileList.toString());
             UserOperationLogUtil.log(userOperationLog);
 
         } catch (Exception e) {

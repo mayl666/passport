@@ -100,7 +100,7 @@
                                     <c:if test="${account.uniqname!=null && account.uniqname!=''}">
                                         <c:out value="${account.uniqname}"/>
                                     </c:if>
-                                    <c:if test="${account.uniqname==null && account.uniqname==''}">
+                                    <c:if test="${account.uniqname==null || account.uniqname==''}">
                                         未设置
                                     </c:if>
                                 </td>
@@ -187,7 +187,7 @@
         var nickName = $("#nickName").val();
         if ((userName == null || userName == "") && (nickName == null || nickName == "")) {
             alert("请输入用户账号或者用户昵称进行查询！");
-            return;
+            return false;
         }
     }
 

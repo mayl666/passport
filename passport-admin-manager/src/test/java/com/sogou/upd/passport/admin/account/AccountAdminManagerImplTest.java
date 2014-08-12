@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.sogou.upd.passport.admin.BaseTest;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.common.result.Result;
+import com.sogou.upd.passport.model.operatelog.OperateHistoryLog;
 import junit.framework.Assert;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Ignore;
@@ -32,7 +33,10 @@ public class AccountAdminManagerImplTest extends BaseTest {
 
 //        String newPp = UuidUtil.generatePassword();
 
-        Result result = accountAdminManager.resetUserPassword(passportId, true);
+        OperateHistoryLog operateHistoryLog = new OperateHistoryLog();
+        operateHistoryLog.setOperate_user(passportId);
+
+        Result result = accountAdminManager.resetUserPassword(true, operateHistoryLog);
 //        Assert.assertNotNull(result);
 //        Assert.assertEquals(true, result.isSuccess());
         System.out.println(" ===== result " + result.toString());

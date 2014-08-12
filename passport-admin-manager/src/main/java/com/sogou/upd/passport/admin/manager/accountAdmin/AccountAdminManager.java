@@ -4,6 +4,7 @@ import com.sogou.upd.passport.admin.manager.form.AccountSearchParam;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.model.account.Account;
+import com.sogou.upd.passport.model.operatelog.OperateHistoryLog;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,28 +37,28 @@ public interface AccountAdminManager {
     /**
      * 重置用户密码
      *
-     * @param passportId
      * @param needMD5
+     * @param operateHistoryLog 操作历史记录
      * @return
      */
-    public Result resetUserPassword(String passportId, boolean needMD5);
+    public Result resetUserPassword(boolean needMD5, OperateHistoryLog operateHistoryLog);
 
     /**
      * 解绑绑定手机
      *
-     * @param passportId
      * @param mobile
+     * @param operateHistoryLog
      * @return
      */
-    public Result unbundlingMobile(String passportId, String mobile);
+    public Result unbundlingMobile(String mobile, OperateHistoryLog operateHistoryLog);
 
     /**
      * 解绑绑定邮箱
      *
-     * @param passportId
+     * @param operateHistoryLog
      * @return
      */
-    public Result unbundlingEmail(String passportId);
+    public Result unbundlingEmail(OperateHistoryLog operateHistoryLog);
 
 
     /**
