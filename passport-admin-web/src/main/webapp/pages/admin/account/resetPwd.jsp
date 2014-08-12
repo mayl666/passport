@@ -61,7 +61,7 @@
 
                         <div class="col-sm-10">
                             <input type="email" class="form-control" id="passportId" name="passportId" value="<c:out value="${passportId}"/>"
-                                   placeholder="ÇëÊäÈëÕËºÅ">
+                                   placeholder="ÇëÊäÈëÍ¨ÐÐÖ¤ÕÊºÅ">
                         </div>
                     </div>
                     <div class="form-group">

@@ -59,7 +59,7 @@
                       method="post">
                     请输入
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="用户账号" name="userName" id="userName"/>
+                        <input type="text" class="form-control" placeholder="通行证帐号" name="userName" id="userName"/>
                     </div>
                     或
                     <div class="form-group">
@@ -187,8 +187,8 @@
         //参数校验
         var userName = $("#userName").val();
         var nickName = $("#nickName").val();
-        if (userName == "" || nickName == "") {
-            alert("请输入用户账号或者用户昵称进行查询！");
+        if (userName == '' && nickName == '') {
+            alert("请输入通行证帐号或者用户昵称进行查询！");
             return false;
         }
     }

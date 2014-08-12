@@ -118,7 +118,7 @@ public class AccountAdminController extends BaseController {
 //            UserOperationLogUtil.log(userOperationLog);
 
         } catch (Exception e) {
-            logger.error("unBind error.", e);
+            logger.error("unBind error.passportId:" + passportId, e);
         }
         return "/pages/admin/account/unbind.jsp";
     }
@@ -261,8 +261,6 @@ public class AccountAdminController extends BaseController {
                         mobileList.add(mobile);
                     }
                 }
-            } else {
-                return "/pages/admin/account/deleteRegMobiles.jsp";
             }
             Result result = accountAdminManager.deleteRegMobiles(mobileList);
             //解除绑定失败结果

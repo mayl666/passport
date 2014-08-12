@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <input type="text" id="passportId" name="passportId" value="${account.passportId}"
                                class="form-control"
-                               placeholder="用户账号">
+                               placeholder="通行证帐号">
                     </div>
                     <button type="submit" class="btn btn-default">查询</button>
                 </form>
@@ -96,26 +96,28 @@
                                         </c:choose>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-phone">密保手机</span>
-                                        <c:choose>
-                                            <c:when test="${account.mobile!=null && account.mobile!=''}">
-                                                <c:out value="${account.mobile}"></c:out>
-                                                <span class="label label-success">已经绑定</span>
+                                <c:if test="${account.accountType!=3}"><!--手机注册账号不能解除绑定手机 -->
+                                    <tr>
+                                        <td>
+                                            <span class="glyphicon glyphicon-phone">密保手机</span>
+                                            <c:choose>
+                                                <c:when test="${account.mobile!=null && account.mobile!=''}">
+                                                    <c:out value="${account.mobile}"></c:out>
+                                                    <span class="label label-success">已经绑定</span>
 
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default"
-                                                            onclick="unbindMobile()">解绑
-                                                    </button>
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="label label-danger">未设置</span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default"
+                                                                onclick="unbindMobile()">解绑
+                                                        </button>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="label label-danger">未设置</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                 </tr>
+                                </c:if>
                                 </tbody>
                             </table>
                         </c:if>
