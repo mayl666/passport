@@ -33,7 +33,7 @@ public final class CommonConstant {
     /**
      * 完成批量解绑手机操作
      */
-    public static final String DONE_UN_BIND_MOBILE = "完成解绑操作";
+    public static final String DONE_UN_BIND_MOBILE = "操作完成";
 
 
     /**

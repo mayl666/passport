@@ -68,8 +68,10 @@
                         <label for="newPwd" class="col-sm-2 control-label">新密码</label>
 
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="newPwd" name="newPwd" value="<c:out value="${newPwd}"/>"
-                                   placeholder="温馨提示:点击重置密码,新密码自动生成">
+                            <%--<input type="email" class="form-control" id="newPwd" name="newPwd" value="<c:out value="${newPwd}"/>"
+                                   placeholder="温馨提示:点击重置密码,新密码自动生成">--%>
+                            <%--<span id="newPwd"><c:out value="${newPwd}"/></span>--%>
+                            <h3><span id="newPwd" class="label label-default"><c:out value="${newPwd}"/></span></h3>
                         </div>
                     </div>
 

@@ -75,6 +75,9 @@ public class AccountAdminController extends BaseController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public String resetPwd(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         try {
+
+            //TODO 安全起见 增加操作人IP白名单限制
+
             OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
             Result result = accountAdminManager.resetUserPassword(Boolean.TRUE, operateHistoryLog);
             if (result.isSuccess()) {
@@ -104,6 +107,9 @@ public class AccountAdminController extends BaseController {
     @RequestMapping(value = "/unBind", method = RequestMethod.POST)
     public String unBind(@RequestParam("passportId") String passportId, Model model) throws Exception {
         try {
+
+            //TODO 安全起见 增加操作人IP白名单限制
+
             AccountSearchParam accountSearchParam = new AccountSearchParam();
             accountSearchParam.setUserName(passportId);
             AccountDetailInfo account = accountAdminManager.getAccountDetailInfo(accountSearchParam);
@@ -137,6 +143,9 @@ public class AccountAdminController extends BaseController {
     public Object unBindEmail(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         Result result = new APIResultSupport(false);
         try {
+
+            //TODO 安全起见 增加操作人IP白名单限制，待业务线提供IP
+
             OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
             result = accountAdminManager.unbundlingEmail(operateHistoryLog);
             if (result.isSuccess()) {
@@ -170,6 +179,9 @@ public class AccountAdminController extends BaseController {
     public Object unBindPhone(@RequestParam("passportId") String passportId, @RequestParam("mobile") String mobile, Model model, HttpServletRequest request) throws Exception {
         Result result = new APIResultSupport(false);
         try {
+
+            //TODO 安全起见 增加操作人IP白名单限制，待业务线提供IP
+
             OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
             result = accountAdminManager.unbundlingMobile(mobile, operateHistoryLog);
             if (result.isSuccess()) {
@@ -252,6 +264,9 @@ public class AccountAdminController extends BaseController {
                 model.addAttribute("msg", ErrorUtil.getERR_CODE_MSG_MAP().get("ERR_CODE_COM_REQURIE"));
                 return "/pages/admin/account/deleteRegMobiles.jsp";
             }
+
+            //TODO 安全起见 增加手机号白名单限制，只是处理在白名单之内的手机号
+            //TODO 安全起见 增加操作人IP白名单限制，待提供开发测试同学IP
 
             List<String> mobileList = Lists.newArrayList();
             String[] mobileArrays = StringUtils.split(mobiles, CommonConstant.COMMON_STRING_SPLIT_RETURN);
