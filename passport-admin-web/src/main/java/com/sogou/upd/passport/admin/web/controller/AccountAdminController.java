@@ -39,6 +39,7 @@ public class AccountAdminController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountAdminController.class);
 
+
     @Autowired
     private AccountAdminManager accountAdminManager;
 
@@ -76,7 +77,12 @@ public class AccountAdminController extends BaseController {
     public String resetPwd(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         try {
 
+            String userIp = IPUtil.getIP(request);
             //TODO 安全起见 增加操作人IP白名单限制
+            if (!checkHasOperatePower(userIp)) {
+                logger.warn("resetPwd user hasn't power operate! userIp:" + userIp);
+                return CommonConstant.NO_OPERATE_POWER;
+            }
 
             OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
             Result result = accountAdminManager.resetUserPassword(Boolean.TRUE, operateHistoryLog);
@@ -85,7 +91,7 @@ public class AccountAdminController extends BaseController {
                 model.addAttribute("passportId", passportId);
             }
 
-            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), userIp);
             userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
             UserOperationLogUtil.log(userOperationLog);
 
@@ -144,7 +150,13 @@ public class AccountAdminController extends BaseController {
         Result result = new APIResultSupport(false);
         try {
 
+            String userIp = IPUtil.getIP(request);
             //TODO 安全起见 增加操作人IP白名单限制，待业务线提供IP
+            if (!checkHasOperatePower(userIp)) {
+                logger.warn(" unBindEmail user hasn't power operate! userIp:" + userIp);
+                result.setMessage(CommonConstant.NO_OPERATE_POWER);
+                return result;
+            }
 
             OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
             result = accountAdminManager.unbundlingEmail(operateHistoryLog);
@@ -155,7 +167,7 @@ public class AccountAdminController extends BaseController {
             }
             model.addAttribute("passportId", passportId);
 
-            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), userIp);
             userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
             UserOperationLogUtil.log(userOperationLog);
         } catch (Exception e) {
@@ -180,7 +192,13 @@ public class AccountAdminController extends BaseController {
         Result result = new APIResultSupport(false);
         try {
 
+            String userIp = IPUtil.getIP(request);
             //TODO 安全起见 增加操作人IP白名单限制，待业务线提供IP
+            if (!checkHasOperatePower(userIp)) {
+                logger.warn(" unBindPhone user hasn't power operate! userIp:" + userIp);
+                result.setMessage(CommonConstant.NO_OPERATE_POWER);
+                return result;
+            }
 
             OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, passportId);
             result = accountAdminManager.unbundlingMobile(mobile, operateHistoryLog);
@@ -191,7 +209,7 @@ public class AccountAdminController extends BaseController {
             }
             model.addAttribute("passportId", passportId);
 
-            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
+            UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), userIp);
             userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
             userOperationLog.putOtherMessage("mobile", mobile);
             UserOperationLogUtil.log(userOperationLog);

@@ -21,6 +21,11 @@ public class BaseController {
 
     protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
 
+
+    //TODO IP白名单 暂写死
+    private static final String WHITE_IP_LIST = "10.129.192.97,10.129.192.58,10.1.99.31,10.129.192.201,10.129.192.194,10.129.192.160,10.129.192.114,10.129.192.45,10.129.192.211,10.129.192.186";
+
+
     /**
      * 判断是否是服务端签名
      */
@@ -93,6 +98,17 @@ public class BaseController {
         operateHistoryLog.setOperate_user(passportId);
         operateHistoryLog.setAccount_type(AccountDomainEnum.getAccountDomain(passportId).getValue());
         return operateHistoryLog;
+    }
+
+
+    /**
+     * 判断是否有操作权限
+     *
+     * @param userIp
+     * @return
+     */
+    protected boolean checkHasOperatePower(String userIp) {
+        return StringUtils.contains(WHITE_IP_LIST, userIp);
     }
 
 

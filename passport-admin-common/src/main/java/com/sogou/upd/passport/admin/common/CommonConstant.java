@@ -57,5 +57,10 @@ public final class CommonConstant {
      */
     public static final String COMMON_STRING_SPLIT_RETURN = "\r\n";
 
+    /**
+     * 不具备操作权限
+     */
+    public static final String NO_OPERATE_POWER = "不具备操作权限";
+
 
 }

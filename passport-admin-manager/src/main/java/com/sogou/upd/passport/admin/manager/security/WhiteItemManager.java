@@ -15,6 +15,7 @@ public interface WhiteItemManager {
 
     /**
      * 遍历白名单Set
+     *
      * @return
      * @throws Exception
      */
@@ -22,6 +23,7 @@ public interface WhiteItemManager {
 
     /**
      * 从白名单中删除
+     *
      * @param ipOrUsername
      * @return
      * @throws Exception
@@ -30,6 +32,7 @@ public interface WhiteItemManager {
 
     /**
      * 增加ipOrUsername到白名单列表
+     *
      * @param ipOrUsername
      * @return
      * @throws Exception
@@ -38,9 +41,42 @@ public interface WhiteItemManager {
 
     /**
      * 根据name取白名单列表
+     *
      * @param name
      * @return
      * @throws Exception
      */
     public Set<String> getWhiteListByName(String name) throws Exception;
+
+
+    /**
+     * 根据缓存key 获取对应的白名单列表
+     *
+     * @param cacheKey
+     * @return
+     * @throws Exception
+     */
+    public Set<String> getWhiteList(String cacheKey) throws Exception;
+
+    /**
+     * 增加相应业务的白名单
+     *
+     * @param cacheKey
+     * @param cacheValue
+     * @return
+     */
+    public Result addWhiteList(String cacheKey, String cacheValue);
+
+
+    /**
+     * 检查白名单中是否存在
+     *
+     * @param cacheKey
+     * @param cacheValue
+     * @return
+     * @throws Exception
+     */
+    public boolean checkWhiteListExist(String cacheKey, String cacheValue) throws Exception;
+
+
 }
