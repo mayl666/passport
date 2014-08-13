@@ -172,7 +172,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 accountDetail.setEmailOriginal(Strings.isNullOrEmpty(accountInfo.getEmail()) ? StringUtils.EMPTY : accountInfo.getEmail());
                 accountDetail.setProvince(ProvinceAndCityUtil.getProvinceByPCode(accountInfo.getProvince()));
                 accountDetail.setCity(ProvinceAndCityUtil.getCityByCityCode(accountInfo.getCity()));
-                accountDetail.setGender(accountInfo.getGender().equalsIgnoreCase("0") ? "女" : "男");
+                accountDetail.setGender(!Strings.isNullOrEmpty(accountInfo.getGender()) && accountInfo.getGender().equalsIgnoreCase("0") ? "女" : "男");
                 accountDetail.setFullname(Strings.isNullOrEmpty(accountInfo.getFullname()) ? StringUtils.EMPTY : accountInfo.getFullname());
                 accountDetail.setPersonalid(Strings.isNullOrEmpty(accountInfo.getPersonalid()) ? StringUtils.EMPTY : accountInfo.getPersonalid());
             }
