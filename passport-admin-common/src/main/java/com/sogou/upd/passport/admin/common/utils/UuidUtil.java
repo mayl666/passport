@@ -1,6 +1,5 @@
 package com.sogou.upd.passport.admin.common.utils;
 
-import com.sogou.upd.passport.common.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -36,5 +35,20 @@ public final class UuidUtil {
     public static String generatePassword() {
         return StringUtils.splitByWholeSeparator(generateUuid(), STR_SPLIT)[0];
     }
+
+    /**
+     * 生成不带分隔符的uuid
+     *
+     * @return
+     */
+    public static String genreateUUidWithOutSplit() {
+        return generateUuid().replaceAll("-", "");
+    }
+
+    public static void main(String args[]) {
+        System.out.println(generateUuid());
+        System.out.println(genreateUUidWithOutSplit() +" | "+ genreateUUidWithOutSplit().length());
+    }
+
 
 }
