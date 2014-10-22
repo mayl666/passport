@@ -137,9 +137,9 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
         try {
             if (accountSearchParam != null && !Strings.isNullOrEmpty(accountSearchParam.getUserName())) {
                 passportId = accountSearchParam.getUserName();
-            } else if (accountSearchParam != null && !Strings.isNullOrEmpty (accountSearchParam.getNickName())) {
+            } else if (accountSearchParam != null && !Strings.isNullOrEmpty(accountSearchParam.getNickName())) {
                 passportId = uniqNamePassportMappingService.checkUniqName(accountSearchParam.getNickName());
-            } else {
+            } else if (Strings.isNullOrEmpty(passportId)) {
                 return accountDetail;
             }
 
