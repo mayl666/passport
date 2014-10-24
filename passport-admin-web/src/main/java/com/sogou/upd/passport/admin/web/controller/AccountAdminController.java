@@ -77,9 +77,18 @@ public class AccountAdminController extends BaseController {
     public String resetPwd(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         try {
 
+            //操作者ip
             String userIp = IPUtil.getIP(request);
+            //操作者
+            String operator = RequestUtils.getPassportEmail(request);
+
             //TODO 安全起见 增加操作人IP白名单限制
-            if (!checkHasOperatePower(userIp)) {
+//            if (!checkHasOperatePower(userIp)) {
+//                logger.warn("resetPwd user hasn't power operate! userIp:" + userIp);
+//                return CommonConstant.NO_OPERATE_POWER;
+//            }
+
+            if (!checkUserOrIpInWhiteList(operator, userIp)) {
                 logger.warn("resetPwd user hasn't power operate! userIp:" + userIp);
                 return CommonConstant.NO_OPERATE_POWER;
             }
@@ -92,7 +101,7 @@ public class AccountAdminController extends BaseController {
             }
 
             UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), userIp);
-            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            userOperationLog.putOtherMessage("operator", operator);
             UserOperationLogUtil.log(userOperationLog);
 
 
@@ -150,9 +159,17 @@ public class AccountAdminController extends BaseController {
         Result result = new APIResultSupport(false);
         try {
 
+            //操作者ip
             String userIp = IPUtil.getIP(request);
-            //TODO 安全起见 增加操作人IP白名单限制，待业务线提供IP
-            if (!checkHasOperatePower(userIp)) {
+            //操作者
+            String operator = RequestUtils.getPassportEmail(request);
+//            if (!checkHasOperatePower(userIp)) {
+//                logger.warn(" unBindEmail user hasn't power operate! userIp:" + userIp);
+//                result.setMessage(CommonConstant.NO_OPERATE_POWER);
+//                return result;
+//            }
+
+            if (!checkUserOrIpInWhiteList(operator, userIp)) {
                 logger.warn(" unBindEmail user hasn't power operate! userIp:" + userIp);
                 result.setMessage(CommonConstant.NO_OPERATE_POWER);
                 return result;
@@ -168,7 +185,7 @@ public class AccountAdminController extends BaseController {
             model.addAttribute("passportId", passportId);
 
             UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), userIp);
-            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            userOperationLog.putOtherMessage("operator", operator);
             UserOperationLogUtil.log(userOperationLog);
         } catch (Exception e) {
             logger.error("unBindEmail error.", e);
@@ -192,9 +209,17 @@ public class AccountAdminController extends BaseController {
         Result result = new APIResultSupport(false);
         try {
 
+            //操作者ip
             String userIp = IPUtil.getIP(request);
-            //TODO 安全起见 增加操作人IP白名单限制，待业务线提供IP
-            if (!checkHasOperatePower(userIp)) {
+            //操作者
+            String operator = RequestUtils.getPassportEmail(request);
+//            if (!checkHasOperatePower(userIp)) {
+//                logger.warn(" unBindPhone user hasn't power operate! userIp:" + userIp);
+//                result.setMessage(CommonConstant.NO_OPERATE_POWER);
+//                return result;
+//            }
+
+            if (!checkUserOrIpInWhiteList(operator, userIp)) {
                 logger.warn(" unBindPhone user hasn't power operate! userIp:" + userIp);
                 result.setMessage(CommonConstant.NO_OPERATE_POWER);
                 return result;
@@ -210,7 +235,7 @@ public class AccountAdminController extends BaseController {
             model.addAttribute("passportId", passportId);
 
             UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), userIp);
-            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            userOperationLog.putOtherMessage("operator", operator);
             userOperationLog.putOtherMessage("mobile", mobile);
             UserOperationLogUtil.log(userOperationLog);
 

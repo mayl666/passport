@@ -1,12 +1,15 @@
 package com.sogou.upd.passport.admin.web;
 
+import com.google.common.base.Strings;
 import com.sogou.upd.passport.admin.common.utils.IPUtil;
 import com.sogou.upd.passport.admin.common.utils.RequestUtils;
+import com.sogou.upd.passport.admin.manager.operate.OperateManager;
 import com.sogou.upd.passport.common.parameter.AccountDomainEnum;
 import com.sogou.upd.passport.model.operatelog.OperateHistoryLog;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 
@@ -14,19 +17,21 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BaseController {
 
-    public static final
-    String
-            INTERNAL_HOST =
-            "api.id.sogou.com.z.sogou-op.org;dev01.id.sogou.com;test01.id.sogou.com";
+    public static final String INTERNAL_HOST = "api.id.sogou.com.z.sogou-op.org;dev01.id.sogou.com;test01.id.sogou.com";
 
     protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
 
+    @Autowired
+    private OperateManager operateManager;
 
     //TODO IP白名单 暂写死、之后改到后台进行添加
     private static final String WHITE_IP_LIST = "10.129.192.118,10.129.192.58,10.129.192.145,10.129.192.201,10.129.192.194," +
             "10.129.192.160,10.129.192.114,10.129.192.45,10.129.192.211,10.129.192.186,10.129.192.220,10.129.40.203,10.129.40.198," +
             "10.129.41.14,10.129.41.21,10.129.40.166,10.129.40.210,10.129.41.51,10.129.40.64,10.129.192.103";
 
+
+    //操作人员：韩旭
+    private static final String OPERATOR_HANXU = "hanxu200946@sogou-inc.com";
 
     /**
      * 判断是否是服务端签名
@@ -111,6 +116,23 @@ public class BaseController {
      */
     protected boolean checkHasOperatePower(String userIp) {
         return StringUtils.contains(WHITE_IP_LIST, userIp);
+    }
+
+    /**
+     * 检查操作者、ip是否在白名单中
+     *
+     * @param userName
+     * @param userIp
+     * @return
+     */
+    protected boolean checkUserOrIpInWhiteList(String userName, String userIp) {
+        if (!Strings.isNullOrEmpty(userName) && userName.equals(OPERATOR_HANXU)) {
+            boolean checkIp = IPUtil.checkIpForOperator(userIp);
+            if (checkIp) {
+                return true;
+            }
+        }
+        return operateManager.checkUserOrIpInWhiteList(userName, userIp);
     }
 
 
