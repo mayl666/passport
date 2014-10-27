@@ -193,6 +193,15 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                 return result;
             }
 
+            //搜狐域账号，密码重置需要到搜狐重置
+            AccountDomainEnum domain = AccountDomainEnum.getAccountDomain(operateHistoryLog.getOperate_user());
+            if (domain == AccountDomainEnum.SOHU) {
+                result.setCode(ErrorUtil.ERR_CODE_COM_REQURIE);
+                result.setSuccess(false);
+                result.setMessage(CommonConstant.NOT_HANDLED_REST_PWD_FOR_SOHU);
+                return result;
+            }
+
             Account account = accountService.queryAccountByPassportId(operateHistoryLog.getOperate_user());
             if (account != null) {
                 //重置密码

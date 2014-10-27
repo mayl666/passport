@@ -76,7 +76,6 @@ public class AccountAdminController extends BaseController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public String resetPwd(@RequestParam("passportId") String passportId, Model model, HttpServletRequest request) throws Exception {
         try {
-
             //操作者ip
             String userIp = IPUtil.getIP(request);
             //操作者
@@ -98,12 +97,16 @@ public class AccountAdminController extends BaseController {
             if (result.isSuccess()) {
                 model.addAttribute("newPwd", result.getModels().get("newPassword"));
                 model.addAttribute("passportId", passportId);
+            } else {
+                if (result.getMessage().equals(CommonConstant.NOT_HANDLED_REST_PWD_FOR_SOHU)) {
+                    model.addAttribute("msg", CommonConstant.NOT_HANDLED_REST_PWD_FOR_SOHU);
+                    model.addAttribute("data", result.toString());
+                }
             }
 
             UserOperationLog userOperationLog = new UserOperationLog(passportId, StringUtils.EMPTY, result.getCode(), userIp);
             userOperationLog.putOtherMessage("operator", operator);
             UserOperationLogUtil.log(userOperationLog);
-
 
         } catch (Exception e) {
             logger.error("resetPassword error.", e);

@@ -29,6 +29,11 @@ public final class CommonConstant {
      */
     public static final String UN_DO_RESET_PWD = "手机、外域账号类型暂不支持重置密码";
 
+    /**
+     * souhu域账号，重置密码，需要到搜狐passport申请重置
+     */
+    public static final String NOT_HANDLED_REST_PWD_FOR_SOHU = "搜狐域账号不支持重置密码，请到搜狐passport申请重置";
+
 
     /**
      * 完成批量解绑手机操作

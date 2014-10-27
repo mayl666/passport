@@ -60,7 +60,8 @@
                         <label for="passportId" class="col-sm-2 control-label">账号</label>
 
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="passportId" name="passportId" value="<c:out value="${passportId}"/>"
+                            <input type="email" class="form-control" id="passportId" name="passportId"
+                                   value="<c:out value="${passportId}"/>"
                                    placeholder="请输入通行证帐号">
                         </div>
                     </div>
@@ -98,9 +99,18 @@
             alert("用户账号不能为空");
             return false;
         }
-        document.forms["resetForm"].submit();
+//        document.forms["resetForm"].submit();
+        $.post('/admin/resetPassword', {passportId: passportId}, function (data) {
+//            alert(data.statusText);
+        }, 'json');
+        showMsg();
     }
 
+    function showMsg() {
+        <c:if test ="${msg!=null}">
+            alert("${msg}");
+        </c:if>
+    }
 </script>
 </body>
 </html>
