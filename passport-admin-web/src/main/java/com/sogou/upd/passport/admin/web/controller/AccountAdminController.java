@@ -319,7 +319,7 @@ public class AccountAdminController extends BaseController {
             if (mobileArrays.length > 0) {
                 for (String mobile : mobileArrays) {
                     if (!Strings.isNullOrEmpty(mobile)) {
-                        mobileList.add(mobile);
+                        mobileList.add(mobile.trim());
                     }
                 }
             }
