@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户账号信息单元测试
@@ -57,6 +58,31 @@ public class AccountAdminManagerImplTest extends BaseTest {
         Result result = accountAdminManager.unBindMobiles(mobileList);
         Assert.assertNotNull(result);
         System.out.println(" testUnBindMobiles result:" + result.toString());
+    }
+
+
+    /**
+     * 删除测试环境 注册手机号
+     */
+    @Test
+    public void deleteRegPhonesOnDev() {
+        //13581505229  18500465920 13521227720 18511589750
+        List<String> regMobileList = Lists.newArrayList();
+//        regMobileList.add("13581505229");
+//        regMobileList.add("18500465920");
+//        regMobileList.add("13521227720");
+//        regMobileList.add("18511589750");
+
+        Result result = accountAdminManager.deleteRegMobiles(regMobileList);
+
+        Object fail = result.getModels().get("failed");
+        if (fail != null) {
+            fail = String.valueOf(fail);
+            System.out.println("failed delete mobiles :" + fail);
+        } else {
+            System.out.println("delete mobiles success:" + regMobileList.toString());
+        }
+
     }
 
 
