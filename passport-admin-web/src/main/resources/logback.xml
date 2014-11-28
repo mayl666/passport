@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reference Manual http://logback.qos.ch/manual/index.html -->
 <configuration>
-    <property name="log.path" value="/search/passport/log" />
+    <property name="log.path" value="/search/passport_admin/log" />
 
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
