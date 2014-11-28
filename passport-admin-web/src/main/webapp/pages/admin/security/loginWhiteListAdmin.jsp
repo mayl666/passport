@@ -1,69 +1,69 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>passportºóÌ¨</title>
+<title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp"%>
 
 
 <style>
 div#header { display:none; background-color: #f5f5dc; }
 div#logo { width:130px; height:37px; background: url(/img/admin/logo.png); }
-#menu_name { display: none; } /* È¥µô²Ëµ¥±êÌâÀ¸ */
+#menu_name { display: none; } /* å»æ‰èœå•æ ‡é¢˜æ  */
 iframe#main { margin:0; padding:0; }
 </style>
 </head>
 <body>
 	<div id="page">
-		<!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+		<!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
 		<%@ include file="/pages/admin/include_top.jsp"%>
 		<div id="pageBd">
-			<!-- ÒıÈë²Ëµ¥ -->
+			<!-- å¼•å…¥èœå• -->
 			<%@ include file="/pages/admin/include_menu.jsp"%>
 			<div id="pageCanvas" class="canvas">
 				<div id="pageCanvasInt" class="canvasInt">
 					<div id="pageCrumbs" class="crumbs">
-						µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                        <span class="step">&gt;</span><strong>°²È«ĞÔ¹ÜÀí</strong>
+						å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                        <span class="step">&gt;</span><strong>å®‰å…¨æ€§ç®¡ç†</strong>
                     </div>
-					<h2 id="pageTitle">°×Ãûµ¥¹ÜÀí</h2>
+					<h2 id="pageTitle">ç™½åå•ç®¡ç†</h2>
 
 
                     <hr>
 
 
                     <form action="/admin/security/getWhiteItemByName" method="post">
-                        ÇëÊäÈëip»òÕßusername£º
+                        è¯·è¾“å…¥ipæˆ–è€…usernameï¼š
                         <input type="text" name="ipOrUsername"/>
                                 <span class="button button-main">
-                                  <input type="submit" value="²éÑ¯" class="button"/>
+                                  <input type="submit" value="æŸ¥è¯¢" class="button"/>
                                 </span>
                         <c:if test="${curIpExist==false}">
-                            <div style="color:#ff0000">´ËIPÔÚºÚÃûÖĞ²»´æÔÚ</div>
+                            <div style="color:#ff0000">æ­¤IPåœ¨é»‘åä¸­ä¸å­˜åœ¨</div>
                         </c:if>
                     </form>
                     <hr>
                     <form action="/admin/security/loginWhiteList" method="post">
                         <span class="button button-main">
-                             <input type="submit" value="ÏÔÊ¾ËùÓĞ°×Ãûµ¥ÁĞ±í" class="button"/>
+                             <input type="submit" value="æ˜¾ç¤ºæ‰€æœ‰ç™½åå•åˆ—è¡¨" class="button"/>
                         </span>
                     </form>
                     <hr>
 
-                    ÇëÊäÈëip»òÕßusername£º
+                    è¯·è¾“å…¥ipæˆ–è€…usernameï¼š
                     <input type="text" id="ipOrUsername" name="ipOrUsername"/>
                                 <span class="button button-main">
-                                  <input type="submit" value="Ôö¼Ó" class="button" onclick="onAdd()"/>
+                                  <input type="submit" value="å¢åŠ " class="button" onclick="onAdd()"/>
                                 </span>
                     <hr>
 
                     <table style="font-size:13px" class="question-table">
                         <thead>
                         <tr style="background-color:#ADDA27;">
-                            <th width="7%"><div>ip»òÕßusername </div></th>
-                            <th width="8%"><div>´Ó°×Ãûµ¥ÖĞÌŞ³ı</div></th>
+                            <th width="7%"><div>ipæˆ–è€…username </div></th>
+                            <th width="8%"><div>ä»ç™½åå•ä¸­å‰”é™¤</div></th>
                         </tr>
                         </thead>
                         <c:if test ="${loginWhiteList!=null}">
@@ -73,7 +73,7 @@ iframe#main { margin:0; padding:0; }
                                             ${loginWhiteValue}
                                     </td>
                                     <td style="text-align:center;">
-                                        <input type="button" value="É¾³ı" onclick="onDel('${loginWhiteValue}')" />
+                                        <input type="button" value="åˆ é™¤" onclick="onDel('${loginWhiteValue}')" />
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -90,7 +90,7 @@ iframe#main { margin:0; padding:0; }
 	</div><!-- page End -->
 
     <script type="text/javascript">
-        function trim(str){ //É¾³ı×óÓÒÁ½¶ËµÄ¿Õ¸ñ
+        function trim(str){ //åˆ é™¤å·¦å³ä¸¤ç«¯çš„ç©ºæ ¼
             return str.replace(/(^\s*)|(\s*$)/g, "");
         }
 
@@ -112,7 +112,7 @@ iframe#main { margin:0; padding:0; }
             var ipOrUsername =  document.getElementById('ipOrUsername').value;
 
             if(!ipOrUsername){
-                alert("Ôö¼ÓÏî²»ÄÜÎª¿Õ");
+                alert("å¢åŠ é¡¹ä¸èƒ½ä¸ºç©º");
                 return;
             }
             ipOrUsername = trim(ipOrUsername);

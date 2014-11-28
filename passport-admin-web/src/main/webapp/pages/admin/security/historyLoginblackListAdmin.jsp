@@ -1,34 +1,34 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>passportºóÌ¨</title>
+<title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp"%>
 
 
 <style>
 div#header { display:none; background-color: #f5f5dc; }
 div#logo { width:130px; height:37px; background: url(/img/admin/logo.png); }
-#menu_name { display: none; } /* È¥µô²Ëµ¥±êÌâÀ¸ */
+#menu_name { display: none; } /* å»æ‰èœå•æ ‡é¢˜æ  */
 iframe#main { margin:0; padding:0; }
 </style>
 </head>
 <body>
 	<div id="page">
-		<!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+		<!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
 		<%@ include file="/pages/admin/include_top.jsp"%>
 		<div id="pageBd">
-			<!-- ÒıÈë²Ëµ¥ -->
+			<!-- å¼•å…¥èœå• -->
 			<%@ include file="/pages/admin/include_menu.jsp"%>
 			<div id="pageCanvas" class="canvas">
 				<div id="pageCanvasInt" class="canvasInt">
 					<div id="pageCrumbs" class="crumbs">
-						µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                        <span class="step">&gt;</span><strong>µÇÂ½ºÚ°×Ãûµ¥¹ÜÀí</strong>
+						å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                        <span class="step">&gt;</span><strong>ç™»é™†é»‘ç™½åå•ç®¡ç†</strong>
                     </div>
-					<h2 id="pageTitle">ÀúÊ·µÇÂ½ºÚÃûµ¥</h2>
+					<h2 id="pageTitle">å†å²ç™»é™†é»‘åå•</h2>
 
 
                     <hr>
@@ -36,7 +36,7 @@ iframe#main { margin:0; padding:0; }
                     <form id="queryProblemForm" action="/admin/security/queryHistroyLoginBlackItem" method="post">
                         <table>
                             <tr>
-                                <td>Ñ¡ÔñÈÕÆÚ</td>
+                                <td>é€‰æ‹©æ—¥æœŸ</td>
                                 <td>
                                     <input type="text" id="startDateStr" name="startDateStr" value="" data-input="date">
                                     &nbsp;<input type="text" id="endDateStr" name="endDateStr" value="" data-input="date">
@@ -44,10 +44,10 @@ iframe#main { margin:0; padding:0; }
                             </tr>
 
                             <tr>
-                                <td>Ñ¡ÔñÏŞÖÆÏî</td>
+                                <td>é€‰æ‹©é™åˆ¶é¡¹</td>
                                 <td>
                                     <select id="sortId" name="sortId" class="sql_where" size=1>
-                                        <option  value="-1" selected >ËùÓĞ</option>
+                                        <option  value="-1" selected >æ‰€æœ‰</option>
                                         <option  value="0">username</option>
                                         <option  value="1">ip</option>
                                     </select>
@@ -55,26 +55,26 @@ iframe#main { margin:0; padding:0; }
                             </tr>
 
                             <tr>
-                                <td>Ñ¡ÔñÏŞÖÆÀàĞÍ</td>
+                                <td>é€‰æ‹©é™åˆ¶ç±»å‹</td>
                                 </td>
                                 <td>
                                     <select id="typeId" name="typeId" class="sql_where" size=1>
-                                        <option  value="-1" selected >ËùÓĞÀàĞÍ</option>
-                                        <option  value="0">Ê§°Ü</option>
-                                        <option  value="1">³É¹¦</option>
-                                        <option  value="2">ºóÌ¨Ìí¼Ó</option>
+                                        <option  value="-1" selected >æ‰€æœ‰ç±»å‹</option>
+                                        <option  value="0">å¤±è´¥</option>
+                                        <option  value="1">æˆåŠŸ</option>
+                                        <option  value="2">åå°æ·»åŠ </option>
                                     </select>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td>Í³¼Æ³ÖĞøÊ±¼ä×î´óÖµ</td>
+                                <td>ç»Ÿè®¡æŒç»­æ—¶é—´æœ€å¤§å€¼</td>
                                 <td>
                                     <div class="input-append">
                                         <input id="maxDuration" name="maxDuration"  class="span2" type="text">
                                     </div>
                                 </td>
-                                <td>Í³¼Æ³ÖĞøÊ±¼ä×îĞ¡Öµ</td>
+                                <td>ç»Ÿè®¡æŒç»­æ—¶é—´æœ€å°å€¼</td>
                                 <td>
                                     <div class="input-append">
                                         <input id="minDuration" name="minDuration" class="span2" type="text">
@@ -82,7 +82,7 @@ iframe#main { margin:0; padding:0; }
                                 </td>
                             </tr>
                             <tr>
-                                <td>ip»òÕßusername</td>
+                                <td>ipæˆ–è€…username</td>
                                 <td>
                                     <div class="input-append">
                                         <input id="name" name="name" class="span2" type="text">
@@ -90,7 +90,7 @@ iframe#main { margin:0; padding:0; }
                                 </td>
                             </tr>
                             <input id="pageNum" name="pageNum" value="1" type="hidden">
-                            <tr><td><span class="button button-main"><button type="submit" class="button">¿ªÊ¼²éÑ¯</button></span>
+                            <tr><td><span class="button button-main"><button type="submit" class="button">å¼€å§‹æŸ¥è¯¢</button></span>
                             </td></tr>
                             <table>
                     </form>
@@ -100,12 +100,12 @@ iframe#main { margin:0; padding:0; }
                         <thead>
                         <tr style="background-color:#ADDA27;">
                             <th width="7%"><div>ID </div></th>
-                            <th width="7%"><div>½øÈëÊ±¼ä</div></th>
+                            <th width="7%"><div>è¿›å…¥æ—¶é—´</div></th>
                             <th width="4%"><div>ip</div></th>
-                            <th width="6%"><div>ÏŞÖÆ</div></th>
-                            <th width="4%"><div>Í³¼Æ³ÖĞøÊ±¼ä</div></th>
-                            <th width="8%"><div>½øÈëºÚÃûµ¥Ê±ËùÔÚ·şÎñÆ÷</div></th>
-                            <th width="8%"><div>´ÓºÚÃûµ¥ÖĞÌŞ³ı</div></th>
+                            <th width="6%"><div>é™åˆ¶</div></th>
+                            <th width="4%"><div>ç»Ÿè®¡æŒç»­æ—¶é—´</div></th>
+                            <th width="8%"><div>è¿›å…¥é»‘åå•æ—¶æ‰€åœ¨æœåŠ¡å™¨</div></th>
+                            <th width="8%"><div>ä»é»‘åå•ä¸­å‰”é™¤</div></th>
                         </tr>
                         </thead>
                         <c:if test ="${loginBlackIpList!=null}">
@@ -122,13 +122,13 @@ iframe#main { margin:0; padding:0; }
                                     </td>
                                     <td style="text-align:center;">
                                                 <c:if test ="${loginBlackIp.limitSort == 0}">
-                                                    Ê§°ÜÏŞÖÆ
+                                                    å¤±è´¥é™åˆ¶
                                                 </c:if>
                                                 <c:if test ="${loginBlackIp.limitSort == 1}">
-                                                    ³É¹¦ÏŞÖÆ
+                                                    æˆåŠŸé™åˆ¶
                                                 </c:if>
                                                 <c:if test ="${loginBlackIp.limitSort == 2}">
-                                                    ºóÌ¨Ìí¼Ó
+                                                    åå°æ·»åŠ 
                                                 </c:if>
                                     </td>
                                     <td style="text-align:center;">
@@ -138,7 +138,7 @@ iframe#main { margin:0; padding:0; }
                                             ${loginBlackIp.insertServer}
                                     </td>
                                     <td style="text-align:center;">
-                                        <input type="button" value="É¾³ı" onclick="onDel('${loginBlackIp.id}','${loginBlackIp.name}')" />
+                                        <input type="button" value="åˆ é™¤" onclick="onDel('${loginBlackIp.id}','${loginBlackIp.name}')" />
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -146,11 +146,11 @@ iframe#main { margin:0; padding:0; }
                         </c:if>
                     </table>
 
-                    µÚ${currentPage}/${totalPageNum}Ò³
-                    <a href="javascript:onProblemPage(1);" class="btn_save">µÚÒ»Ò³</a>
-                    <a href="javascript:onProblemPage(${currentPage}-1);" class="btn_save"> ÉÏÒ»Ò³</a>
-                    <a href="javascript:onProblemPage(${currentPage}+1);" class="btn_save"> ÏÂÒ»Ò³</a>
-                    <a href="javascript:onProblemPage(${totalPageNum});" class="btn_save"> Î²Ò³</a>
+                    ç¬¬${currentPage}/${totalPageNum}é¡µ
+                    <a href="javascript:onProblemPage(1);" class="btn_save">ç¬¬ä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage(${currentPage}-1);" class="btn_save"> ä¸Šä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage(${currentPage}+1);" class="btn_save"> ä¸‹ä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage(${totalPageNum});" class="btn_save"> å°¾é¡µ</a>
 
 				</div><!-- pageCanvasInt End -->
 
@@ -166,7 +166,7 @@ iframe#main { margin:0; padding:0; }
             var form =  document.getElementById('addProblemTypeForm');
             var _typeName = form.typeName.value;
             if ( _typeName== "") {
-                alert("ÇëÊäÈëÀàĞÍÃû³Æ£¡");
+                alert("è¯·è¾“å…¥ç±»å‹åç§°ï¼");
                 form.typeName.focus();
                 return false;
             }

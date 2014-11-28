@@ -1,5 +1,5 @@
-<%@ page pageEncoding="gbk" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <style type="text/css">
 pre { padding-left: 20px; background: url(/img/admin/intro.jpg) no-repeat; }
 </style>
-»¶Ó­Ê¹ÓÃpassportºóÌ¨¹ÜÀíÏµÍ³¡£
+æ¬¢è¿ä½¿ç”¨passportåå°ç®¡ç†ç³»ç»Ÿã€‚

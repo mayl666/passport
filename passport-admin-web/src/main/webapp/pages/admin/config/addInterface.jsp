@@ -2,16 +2,16 @@
   Created by IntelliJ IDEA.
   User: liuling
   Date: 13-11-12
-  Time: ÏÂÎç12:22
+  Time: ä¸‹åˆ12:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passportºóÌ¨</title>
+    <title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp" %>
 
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
@@ -36,7 +36,7 @@
             display: none;
         }
 
-            /* È¥µô²Ëµ¥±êÌâÀ¸ */
+            /* å»æ‰èœå•æ ‡é¢˜æ  */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -45,38 +45,38 @@
 </head>
 <body>
 <div id="page">
-    <!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+    <!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- ÒıÈë²Ëµ¥ -->
+        <!-- å¼•å…¥èœå• -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                    <span class="step">&gt;</span><strong>½Ó¿ÚÆµ´ÎÅäÖÃ¹ÜÀí</strong>
+                    å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                    <span class="step">&gt;</span><strong>æ¥å£é¢‘æ¬¡é…ç½®ç®¡ç†</strong>
                 </div>
-                <h2 id="pageTitle">½Ó¿ÚÆµ´ÎÅäÖÃ¹ÜÀí</h2>
+                <h2 id="pageTitle">æ¥å£é¢‘æ¬¡é…ç½®ç®¡ç†</h2>
 
                 <hr>
             </div>
             <!-- pageCanvasInt End -->
 
             <div>
-                <a href="/admin/interface/queryinterfacelist">·µ»Ø</a>
+                <a href="/admin/interface/queryinterfacelist">è¿”å›</a>
 
                 <form id="addInterfaceForm" method="post" action="/admin/interface/saveinterface">
-                    ½Ó¿ÚÃû³Æ£º
+                    æ¥å£åç§°ï¼š
                     <c:choose>
                         <c:when test="${interfaceVO!=null}">
                             <div>
                                 <input type="text" name="interfaceName"
                                        value="<c:out value="${interfaceVO.interfaceName}" />"/>
-                                ³õ¼¶£º<input type="text" name="primaryLevelCount"
+                                åˆçº§ï¼š<input type="text" name="primaryLevelCount"
                                           value="<c:out value="${interfaceVO.primaryLevelCount}" />"/>
-                                ÖĞ¼¶:<input type="text" name="middleLevelCount"
+                                ä¸­çº§:<input type="text" name="middleLevelCount"
                                           value="<c:out value="${interfaceVO.middleLevelCount}" />"/>
-                                ¸ß¼¶:<input type="text" name="highLevelCount"
+                                é«˜çº§:<input type="text" name="highLevelCount"
                                           value="<c:out value="${interfaceVO.highLevelCount}" />"/>
                                 <input type="hidden" name="interId" value="<c:out value="${interfaceVO.id}"/>"/>
                             </div>
@@ -85,9 +85,9 @@
                         <c:otherwise>
                             <div>
                                 <input type="text" name="interfaceName"/>
-                                ³õ¼¶:<input type="text" name="primaryLevelCount"/>
-                                ÖĞ¼¶£º<input type="text" name="middleLevelCount"/>
-                                ¸ß¼¶:<input type="text" name="highLevelCount"/>
+                                åˆçº§:<input type="text" name="primaryLevelCount"/>
+                                ä¸­çº§ï¼š<input type="text" name="middleLevelCount"/>
+                                é«˜çº§:<input type="text" name="highLevelCount"/>
                             </div>
                             <input type="hidden" value="" name="interId"/>
                         </c:otherwise>
@@ -95,12 +95,12 @@
                     <p>
                         <label>
                             <span class="button button-main"><button type="submit">
-                                ±£´æ
+                                ä¿å­˜
                             </button></span>
                         </label>
                         <label>
                             <span class="button button-main"> <button type="button" onclick="onCancelInterfaceSubmit()">
-                                È¡Ïû
+                                å–æ¶ˆ
                             </button></span>
                         </label>
                     </p>
@@ -118,22 +118,22 @@
 //        var _highLevelCount = form.highLevelCount.value;
 ////        alert("interfaceName is" + _interfaceName);
 //        if (_interfaceName == "") {
-//            alert("ÇëÊäÈë½Ó¿ÚÃû³Æ£¡");
+//            alert("è¯·è¾“å…¥æ¥å£åç§°ï¼");
 //            form.interfaceName.focus();
 //            return 0;
 //        }
 //        if (_primaryLevelCount == "") {
-//            alert("ÇëÉèÖÃ½Ó¿Ú³õ¼¶Æµ´Î£¡");
+//            alert("è¯·è®¾ç½®æ¥å£åˆçº§é¢‘æ¬¡ï¼");
 //            form.primaryLevelCount.focus();
 //            return 0;
 //        }
 //        if (_middleLevelCount == "") {
-//            alert("ÇëÉèÖÃ½Ó¿ÚÖĞ¼¶Æµ´Î£¡");
+//            alert("è¯·è®¾ç½®æ¥å£ä¸­çº§é¢‘æ¬¡ï¼");
 //            form.middleLevelCount.focus();
 //            return 0;
 //        }
 //        if (_highLevelCount == "") {
-//            alert("ÇëÉèÖÃ½Ó¿Ú¸ß¼¶Æµ´Î£¡");
+//            alert("è¯·è®¾ç½®æ¥å£é«˜çº§é¢‘æ¬¡ï¼");
 //            form.highLevelCount.focus();
 //            return 0;
 //        }

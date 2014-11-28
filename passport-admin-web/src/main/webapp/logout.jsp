@@ -1,6 +1,6 @@
-<%@ page language="java" pageEncoding="GBK" contentType="text/html;charset=GBK"%>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8"%>
 <%
-//Çå³ý±¾µØcookie
+//æ¸…é™¤æœ¬åœ°cookie
 response.setHeader("Cache-Control","no-cache"); 
 response.setHeader("Cache-Control","no-store");
 response.setDateHeader("Expires", 0); 
@@ -12,7 +12,7 @@ cookie.setPath(request.getContextPath());
 
 response.addCookie(cookie);
 
-//Í¨ÖªpassportÍ¬²½ÆäËüÓ¦ÓÃÍË³ö×´Ì¬
+//é€šçŸ¥passportåŒæ­¥å…¶å®ƒåº”ç”¨é€€å‡ºçŠ¶æ€
 //String webUrl = "http://passport-app.upd.sogou-inc.com";
 response.sendRedirect("https://passport.sogou-inc.com/logout.jsp");
 %>

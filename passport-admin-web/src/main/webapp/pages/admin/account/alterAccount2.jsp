@@ -1,13 +1,13 @@
-<%@ page language="java" pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
-    <title>ÕËºÅ¹ÜÀí</title>
+    <title>è´¦å·ç®¡ç†</title>
     <style type="text/css">
         form {
-            font: 14px "ºÚÌå", "Microsoft YaHei", Verdana, Arial, Helvetica, sans-serif;
+            font: 14px "é»‘ä½“", "Microsoft YaHei", Verdana, Arial, Helvetica, sans-serif;
         }
         input {
             font: bold 11px "Microsoft YaHei", Verdana, Arial, Helvetica, sans-serif;
@@ -36,7 +36,7 @@
             border-right: 1px solid #C1DAD7;
             border-bottom: 1px solid #C1DAD7;
             background: #fff;
-            font: 12px "Î¢ÈíÑÅºÚ", "Microsoft YaHei", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+            font: 12px "å¾®è½¯é›…é»‘", "Microsoft YaHei", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
             padding: 6px 6px 6px 12px;
             color: #4f6b72;
         }
@@ -94,14 +94,14 @@
 <body>
 <div id="step1" class="class1">
     <form action="/admin/alterAccount/queryAccount" method="post">
-        <p>ÇëÊäÈëÓÃ»§Ãû£¬Èç(example@sogou.com)»òÊÖ»úºÅ£º</p>
+        <p>è¯·è¾“å…¥ç”¨æˆ·åï¼Œå¦‚(example@sogou.com)æˆ–æ‰‹æœºå·ï¼š</p>
         <table>
             <tbody>
             <tr>
                 <input type="text" name="username"/>
-                <input type="submit" value="Ìá½»"/>
+                <input type="submit" value="æäº¤"/>
                 <c:if test="${exist==false}">
-                    <div id="hasuser">ÕËºÅ²»´æÔÚ</div>
+                    <div id="hasuser">è´¦å·ä¸å­˜åœ¨</div>
                 </c:if>
             </tr>
             </tbody>
@@ -115,8 +115,8 @@
                 <tbody>
                 <input type="hidden" id="passportId" name="passportId" value="$account.passportId"/>
                 <input type="hidden" id="newState" name="newState" value="$account.state"/>
-                <tr><td>ID</td><td>ÓÃ»§Ãû</td><td>ÃÜÂë</td><td>°ó¶¨ÊÖ»ú</td><td>×¢²áÊ±¼ä</td><td>×¢²áIP</td>
-                    <td>°æ±¾</td><td>ÕËºÅÀàĞÍ</td><td>·â/½â½û</td><td>ÖØÖÃÃÜÂë</td></tr>
+                <tr><td>ID</td><td>ç”¨æˆ·å</td><td>å¯†ç </td><td>ç»‘å®šæ‰‹æœº</td><td>æ³¨å†Œæ—¶é—´</td><td>æ³¨å†ŒIP</td>
+                    <td>ç‰ˆæœ¬</td><td>è´¦å·ç±»å‹</td><td>å°/è§£ç¦</td><td>é‡ç½®å¯†ç </td></tr>
                 <tr>
                     <td>$account.id</td><td>$account.passportId</td>
                     <td><input type="text" id="oldPasswd" value="$account.passwd" disabled="false"/>
@@ -126,15 +126,15 @@
                     <td>$account.accountType</td>
                     <td>
                         <c:if test ="${account.status == 1}">
-                            <input type="button" value="·â½û" onclick="forbid()"/>
+                            <input type="button" value="å°ç¦" onclick="forbid()"/>
                         </c:if>
                         <c:if test ="${account.status == 3}">
-                            <input type="button"  value="½â½û" onclick="unForbid()"/>
+                            <input type="button"  value="è§£ç¦" onclick="unForbid()"/>
                         </c:if>
                     </td>
                     <td>
-                        <input id="oldPasswdBtn" type="button" value="ÖØÖÃ" onclick="resetPassword()"/>
-                        <input id="newPasswdBtn" type="button" value="±£´æ" onclick="savePassword()" style="display: none"/>
+                        <input id="oldPasswdBtn" type="button" value="é‡ç½®" onclick="resetPassword()"/>
+                        <input id="newPasswdBtn" type="button" value="ä¿å­˜" onclick="savePassword()" style="display: none"/>
                     </td>
                 </tr>
                 </tbody>

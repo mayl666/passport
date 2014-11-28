@@ -1,43 +1,43 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>passportºóÌ¨</title>
+<title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp"%>
 
 
 <style>
 div#header { display:none; background-color: #f5f5dc; }
 div#logo { width:130px; height:37px; background: url(/img/admin/logo.png); }
-#menu_name { display: none; } /* È¥µô²Ëµ¥±êÌâÀ¸ */
+#menu_name { display: none; } /* å»æ‰èœå•æ ‡é¢˜æ  */
 iframe#main { margin:0; padding:0; }
 </style>
 </head>
 <body>
 <%@ include file="problem_answer.jsp" %>
 	<div id="page">
-		<!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+		<!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
 		<%@ include file="/pages/admin/include_top.jsp"%>
 		<div id="pageBd">
-			<!-- ÒıÈë²Ëµ¥ -->
+			<!-- å¼•å…¥èœå• -->
 			<%@ include file="/pages/admin/include_menu.jsp"%>
 			<div id="pageCanvas" class="canvas">
 				<div id="pageCanvasInt" class="canvasInt">
 					<div id="pageCrumbs" class="crumbs">
-						µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                        <span class="step">&gt;</span><strong>ÓÃ»§·´À¡¹ÜÀí</strong>
+						å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                        <span class="step">&gt;</span><strong>ç”¨æˆ·åé¦ˆç®¡ç†</strong>
                     </div>
-					<h2 id="pageTitle">ÓÃ»§·´À¡¹ÜÀí</h2>
+					<h2 id="pageTitle">ç”¨æˆ·åé¦ˆç®¡ç†</h2>
 
 
                     <hr>
-                    <h3 >Ôö¼Ó·´À¡ÀàĞÍ</h3>
+                    <h3 >å¢åŠ åé¦ˆç±»å‹</h3>
                     <form id="addProblemTypeForm" action="/admin/adminProblem/addProblemType" method="post">
                         <table>
                             <tr>
-                                <td>ÀàĞÍÃû³Æ</td>
+                                <td>ç±»å‹åç§°</td>
                                 <td>
                                     <div class="input-append">
                                     <input id="typeName" name="typeName"  class="span2" type="text">
@@ -46,7 +46,7 @@ iframe#main { margin:0; padding:0; }
                             </tr>
 
                             <tr align="center">
-                                <td><span class="button button-main"> <a href="javascript:onAddProblemTypeSubmit();" class="btn_save">Ìí¼Ó</a></span>
+                                <td><span class="button button-main"> <a href="javascript:onAddProblemTypeSubmit();" class="btn_save">æ·»åŠ </a></span>
                             </td></tr>
                         <table>
                     </form>
@@ -54,11 +54,11 @@ iframe#main { margin:0; padding:0; }
 
                     <hr>
 
-                    <h3 >É¾³ı·´À¡ÀàĞÍ</h3>
+                    <h3 >åˆ é™¤åé¦ˆç±»å‹</h3>
                     <form id="deleteProblemTypeForm" action="/admin/adminProblem/deleteProblemType" method="post">
                         <table>
                             <tr>
-                                <td>ÀàĞÍÃû³Æ</td>
+                                <td>ç±»å‹åç§°</td>
                                 <td>
                                     <div class="input-append">
                                         <input id="deltypeName" name="deltypeName"  class="span2" type="text">
@@ -67,7 +67,7 @@ iframe#main { margin:0; padding:0; }
                             </tr>
 
                             <tr align="center">
-                                <td> <span class="button button-main "> <a href="javascript:onDelProblemTypeSubmit();" class="btn_save">É¾³ı</a>  </span>
+                                <td> <span class="button button-main "> <a href="javascript:onDelProblemTypeSubmit();" class="btn_save">åˆ é™¤</a>  </span>
 
                                 </td></tr>
                             <table>
@@ -86,7 +86,7 @@ iframe#main { margin:0; padding:0; }
             var form =  document.getElementById('addProblemTypeForm');
             var _typeName = form.typeName.value;
             if ( _typeName== "") {
-                alert("ÇëÊäÈëÀàĞÍÃû³Æ£¡");
+                alert("è¯·è¾“å…¥ç±»å‹åç§°ï¼");
                 form.typeName.focus();
                 return false;
             }
@@ -109,7 +109,7 @@ iframe#main { margin:0; padding:0; }
             var form =  document.getElementById('deleteProblemTypeForm');
             var _typeName = form.deltypeName.value;
             if ( _typeName== "") {
-                alert("ÇëÊäÈëÀàĞÍÃû³Æ£¡");
+                alert("è¯·è¾“å…¥ç±»å‹åç§°ï¼");
                 form.deltypeName.focus();
                 return false;
             }

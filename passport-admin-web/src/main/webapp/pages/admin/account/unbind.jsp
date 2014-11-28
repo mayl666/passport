@@ -1,21 +1,21 @@
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passport∫ÛÃ®</title>
+    <title>passportÂêéÂè∞</title>
     <%@ include file="/pages/admin/head.jsp" %>
     <%--<script src="/js/jquery.md5.js" type="text/javascript"></script>--%>
 
-    <!-- ◊Ó–¬ Bootstrap ∫À–ƒ CSS Œƒº˛ -->
+    <!-- ÊúÄÊñ∞ Bootstrap Ê†∏ÂøÉ CSS Êñá‰ª∂ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
 
-    <!-- ø…—°µƒBootstrap÷˜Ã‚Œƒº˛£®“ª∞„≤ª”√“˝»Î£© -->
+    <!-- ÂèØÈÄâÁöÑBootstrap‰∏ªÈ¢òÊñá‰ª∂Ôºà‰∏ÄËà¨‰∏çÁî®ÂºïÂÖ•Ôºâ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
-    <!-- jQueryŒƒº˛°£ŒÒ±ÿ‘⁄bootstrap.min.js ÷Æ«∞“˝»Î -->
+    <!-- jQueryÊñá‰ª∂„ÄÇÂä°ÂøÖÂú®bootstrap.min.js ‰πãÂâçÂºïÂÖ• -->
     <%--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>--%>
 
-    <!-- ◊Ó–¬µƒ Bootstrap ∫À–ƒ JavaScript Œƒº˛ -->
+    <!-- ÊúÄÊñ∞ÁöÑ Bootstrap Ê†∏ÂøÉ JavaScript Êñá‰ª∂ -->
     <%--<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>--%>
     <style>
         div#header {
@@ -33,7 +33,7 @@
             display: none;
         }
 
-            /* »•µÙ≤Àµ•±ÍÃ‚¿∏ */
+            /* ÂéªÊéâËèúÂçïÊ†áÈ¢òÊ†è */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -42,32 +42,32 @@
 </head>
 <body>
 <div id="page">
-    <!-- “˝»Î∂•≤ø–≈œ¢ -->
+    <!-- ÂºïÂÖ•È°∂ÈÉ®‰ø°ÊÅØ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- “˝»Î≤Àµ• -->
+        <!-- ÂºïÂÖ•ËèúÂçï -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±«∞Œª÷√£∫<strong>∫ÛÃ®π‹¿Ì</strong>
-                    <span class="step">&gt;</span><strong>”√ªßπ‹¿Ì</strong>
+                    ÂΩìÂâç‰ΩçÁΩÆÔºö<strong>ÂêéÂè∞ÁÆ°ÁêÜ</strong>
+                    <span class="step">&gt;</span><strong>Áî®Êà∑ÁÆ°ÁêÜ</strong>
                 </div>
-                <h2 id="pageTitle">Ω‚≥˝∞Û∂®</h2>
+                <h2 id="pageTitle">Ëß£Èô§ÁªëÂÆö</h2>
 
                 <form class="navbar-form navbar-left" role="search" action="/admin/unBind" method="post">
                     <div class="form-group">
                         <input type="text" id="passportId" name="passportId" value="${account.passportId}"
                                class="form-control"
-                               placeholder="Õ®––÷§’ ∫≈">
+                               placeholder="ÈÄöË°åËØÅÂ∏êÂè∑">
                     </div>
-                    <button type="submit" class="btn btn-default">≤È—Ø</button>
+                    <button type="submit" class="btn btn-default">Êü•ËØ¢</button>
                 </form>
 
 
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">∞Û∂®–≈œ¢</div>
+                    <div class="panel-heading">ÁªëÂÆö‰ø°ÊÅØ</div>
                     <form class="navbar-form navbar-left" id="unBindForm" name="unBindForm" action="" method="post">
                         <c:if test="${account!=null && account!=''}">
                             <table class="table">
@@ -78,41 +78,41 @@
                                        value="<c:out value="${account.mobileOriginal}"/>"/>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-envelope">√‹±£” œ‰</span>
+                                        <span class="glyphicon glyphicon-envelope">ÂØÜ‰øùÈÇÆÁÆ±</span>
                                         <c:choose>
                                             <c:when test="${account.email!=null && account.email!=''}">
                                                 <c:out value="${account.email}"></c:out>
-                                                <span class="label label-success">“—æ≠∞Û∂®</span>
+                                                <span class="label label-success">Â∑≤ÁªèÁªëÂÆö</span>
 
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-default"
-                                                            onclick="unbindEmail()">Ω‚∞Û
+                                                            onclick="unbindEmail()">Ëß£Áªë
                                                     </button>
                                                 </div>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="label label-danger">Œ¥…Ë÷√</span>
+                                                <span class="label label-danger">Êú™ËÆæÁΩÆ</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
                                 </tr>
-                                <c:if test="${account.accountType!=3}"><!-- ÷ª˙◊¢≤·’À∫≈≤ªƒ‹Ω‚≥˝∞Û∂® ÷ª˙ -->
+                                <c:if test="${account.accountType!=3}"><!--ÊâãÊú∫Ê≥®ÂÜåË¥¶Âè∑‰∏çËÉΩËß£Èô§ÁªëÂÆöÊâãÊú∫ -->
                                     <tr>
                                         <td>
-                                            <span class="glyphicon glyphicon-phone">√‹±£ ÷ª˙</span>
+                                            <span class="glyphicon glyphicon-phone">ÂØÜ‰øùÊâãÊú∫</span>
                                             <c:choose>
                                                 <c:when test="${account.mobile!=null && account.mobile!=''}">
                                                     <c:out value="${account.mobile}"></c:out>
-                                                    <span class="label label-success">“—æ≠∞Û∂®</span>
+                                                    <span class="label label-success">Â∑≤ÁªèÁªëÂÆö</span>
 
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default"
-                                                                onclick="unbindMobile()">Ω‚∞Û
+                                                                onclick="unbindMobile()">Ëß£Áªë
                                                         </button>
                                                     </div>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <span class="label label-danger">Œ¥…Ë÷√</span>
+                                                    <span class="label label-danger">Êú™ËÆæÁΩÆ</span>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
@@ -133,7 +133,7 @@
 <!-- page End -->
 <script type="text/javascript">
 
-    //Ω‚∞Û” œ‰
+    //Ëß£ÁªëÈÇÆÁÆ±
     function unbindEmail() {
         var passportId = $("#ppId").val();
         $.post('/admin/unBindEmail', {passportId: passportId}, function (data) {
@@ -141,7 +141,7 @@
         }, 'json');
     }
 
-    //Ω‚∞Û ÷ª˙
+    //Ëß£ÁªëÊâãÊú∫
     function unbindMobile() {
         var passportId = $("#ppId").val();
         var mobile = $("#phone").val();

@@ -1,21 +1,21 @@
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passportºóÌ¨</title>
+    <title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp" %>
     <%--<script src="/js/jquery.md5.js" type="text/javascript"></script>--%>
 
-    <!-- ×îĞÂ Bootstrap ºËĞÄ CSS ÎÄ¼ş -->
+    <!-- æœ€æ–° Bootstrap æ ¸å¿ƒ CSS æ–‡ä»¶ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
 
-    <!-- ¿ÉÑ¡µÄBootstrapÖ÷ÌâÎÄ¼ş£¨Ò»°ã²»ÓÃÒıÈë£© -->
+    <!-- å¯é€‰çš„Bootstrapä¸»é¢˜æ–‡ä»¶ï¼ˆä¸€èˆ¬ä¸ç”¨å¼•å…¥ï¼‰ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
-    <!-- jQueryÎÄ¼ş¡£Îñ±ØÔÚbootstrap.min.js Ö®Ç°ÒıÈë -->
+    <!-- jQueryæ–‡ä»¶ã€‚åŠ¡å¿…åœ¨bootstrap.min.js ä¹‹å‰å¼•å…¥ -->
     <%--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>--%>
 
-    <!-- ×îĞÂµÄ Bootstrap ºËĞÄ JavaScript ÎÄ¼ş -->
+    <!-- æœ€æ–°çš„ Bootstrap æ ¸å¿ƒ JavaScript æ–‡ä»¶ -->
     <%--<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>--%>
     <style>
         div#header {
@@ -33,7 +33,7 @@
             display: none;
         }
 
-            /* È¥µô²Ëµ¥±êÌâÀ¸ */
+            /* å»æ‰èœå•æ ‡é¢˜æ  */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -42,32 +42,32 @@
 </head>
 <body>
 <div id="page">
-    <!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+    <!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- ÒıÈë²Ëµ¥ -->
+        <!-- å¼•å…¥èœå• -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                    <span class="step">&gt;</span><strong>ÓÃ»§ÕËºÅ¹ÜÀí</strong>
+                    å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                    <span class="step">&gt;</span><strong>ç”¨æˆ·è´¦å·ç®¡ç†</strong>
                 </div>
-                <h2 id="pageTitle">ÓÃ»§ÕËºÅ¹ÜÀí</h2>
+                <h2 id="pageTitle">ç”¨æˆ·è´¦å·ç®¡ç†</h2>
 
                 <form class="navbar-form navbar-left" role="search" action="/admin/alterAccount/queryAccount"
                       method="post">
-                    ÇëÊäÈë
+                    è¯·è¾“å…¥
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Í¨ĞĞÖ¤ÕÊºÅ" name="userName" id="userName"/>
+                        <input type="text" class="form-control" placeholder="é€šè¡Œè¯å¸å·" name="userName" id="userName"/>
                     </div>
-                    »ò
+                    æˆ–
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="ÓÃ»§êÇ³Æ" name="nickName" id="nickName"/>
+                        <input type="text" class="form-control" placeholder="ç”¨æˆ·æ˜µç§°" name="nickName" id="nickName"/>
                     </div>
                     <button type="submit" class="btn btn-default" onclick="checkParam()">Submit</button>
                     <c:if test="${exist==false}">
-                        <div style="color:#ff0000">ÕËºÅ²»´æÔÚ</div>
+                        <div style="color:#ff0000">è´¦å·ä¸å­˜åœ¨</div>
                     </c:if>
                 </form>
 
@@ -76,7 +76,7 @@
 
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
-                        <div class="panel-heading">ÓÃ»§ÕËºÅĞÅÏ¢</div>
+                        <div class="panel-heading">ç”¨æˆ·è´¦å·ä¿¡æ¯</div>
 
                         <c:if test="${account!=null && account!=''}">
 
@@ -88,13 +88,13 @@
                             <input type="hidden" id="newState" name="newState"
                                    value="<c:out value="${account.flag}"/>"/>
                             <tr>
-                                <td style="color: #005AA0">ÓÃ»§Ãû</td>
-                                <td style="color: #005AA0">êÇ³Æ</td>
-                                <td style="color: #005AA0">°ó¶¨ÊÖ»ú</td>
-                                <td style="color: #005AA0">°ó¶¨ÓÊÏä</td>
-                                <td style="color: #005AA0">×¢²áÊ±¼ä</td>
-                                <td style="color: #005AA0">×¢²áIP</td>
-                                <td style="color: #005AA0">ÕËºÅÀàĞÍ</td>
+                                <td style="color: #005AA0">ç”¨æˆ·å</td>
+                                <td style="color: #005AA0">æ˜µç§°</td>
+                                <td style="color: #005AA0">ç»‘å®šæ‰‹æœº</td>
+                                <td style="color: #005AA0">ç»‘å®šé‚®ç®±</td>
+                                <td style="color: #005AA0">æ³¨å†Œæ—¶é—´</td>
+                                <td style="color: #005AA0">æ³¨å†ŒIP</td>
+                                <td style="color: #005AA0">è´¦å·ç±»å‹</td>
                             </tr>
                             <tr>
                                 <td><c:out value="${account.passportId}"/></td>
@@ -103,7 +103,7 @@
                                         <c:out value="${account.uniqname}"/>
                                     </c:if>
                                         <%--<c:if test="${account.uniqname==null}">
-                                            Î´ÉèÖÃ
+                                            æœªè®¾ç½®
                                         </c:if>--%>
                                 </td>
                                 <td>
@@ -111,7 +111,7 @@
                                         <c:out value="${account.mobile}"/>
                                     </c:if>
                                         <%--<c:if test="${account.mobile==null}">
-                                            Î´ÉèÖÃ
+                                            æœªè®¾ç½®
                                         </c:if>--%>
                                 </td>
                                 <td>
@@ -119,7 +119,7 @@
                                         <c:out value="${account.email}"/>
                                     </c:if>
                                         <%--<c:if test="${account.email==null}">
-                                            Î´ÉèÖÃ
+                                            æœªè®¾ç½®
                                         </c:if>--%>
                                 </td>
                                 <td><c:out value="${account.regTime}"/></td>
@@ -161,7 +161,7 @@
     //    function savePassword() {
     //        var newpasswdstr = document.getElementById('newPasswd').value;
     //        if (newpasswdstr == "") {
-    //            alert("ÇëÊäÈëĞÂÃÜÂë£¡");
+    //            alert("è¯·è¾“å…¥æ–°å¯†ç ï¼");
     //            return;
     //        }
     //            newpasswdstr = $.md5(newpasswdstr);
@@ -182,13 +182,13 @@
     //        }, 'json');
     //    }
 
-    //²ÎÊıĞ£Ñé
+    //å‚æ•°æ ¡éªŒ
     function checkParam() {
-        //²ÎÊıĞ£Ñé
+        //å‚æ•°æ ¡éªŒ
         var userName = $("#userName").val();
         var nickName = $("#nickName").val();
         if (userName == '' && nickName == '') {
-            alert("ÇëÊäÈëÍ¨ĞĞÖ¤ÕÊºÅ»òÕßÓÃ»§êÇ³Æ½øĞĞ²éÑ¯£¡");
+            alert("è¯·è¾“å…¥é€šè¡Œè¯å¸å·æˆ–è€…ç”¨æˆ·æ˜µç§°è¿›è¡ŒæŸ¥è¯¢ï¼");
             return false;
         }
     }

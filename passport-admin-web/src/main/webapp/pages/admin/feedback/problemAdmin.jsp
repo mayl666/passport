@@ -1,10 +1,10 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>passportºóÌ¨</title>
+<title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp"%>
 
     <!--<link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
@@ -18,59 +18,59 @@
 <style>
 div#header { display:none; background-color: #f5f5dc; }
 div#logo { width:130px; height:37px; background: url(/img/admin/logo.png); }
-#menu_name { display: none; } /* È¥µô²Ëµ¥±êÌâÀ¸ */
+#menu_name { display: none; } /* å»æ‰èœå•æ ‡é¢˜æ  */
 iframe#main { margin:0; padding:0; }
 </style>
 </head>
 <body>
 <%@ include file="problem_answer.jsp" %>
 	<div id="page">
-		<!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+		<!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
 		<%@ include file="/pages/admin/include_top.jsp"%>
 		<div id="pageBd">
-			<!-- ÒıÈë²Ëµ¥ -->
+			<!-- å¼•å…¥èœå• -->
 			<%@ include file="/pages/admin/include_menu.jsp"%>
 			<div id="pageCanvas" class="canvas">
 				<div id="pageCanvasInt" class="canvasInt">
 					<div id="pageCrumbs" class="crumbs">
-						µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                        <span class="step">&gt;</span><strong>ÓÃ»§·´À¡¹ÜÀí</strong>
+						å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                        <span class="step">&gt;</span><strong>ç”¨æˆ·åé¦ˆç®¡ç†</strong>
                     </div>
-					<h2 id="pageTitle">ÓÃ»§·´À¡¹ÜÀí</h2>
+					<h2 id="pageTitle">ç”¨æˆ·åé¦ˆç®¡ç†</h2>
 
 
                     <hr>
                     <form id="queryProblemForm" action="/admin/adminProblem/queryProblem" method="post">
                         <table>
                             <tr>
-                                <td>Ñ¡ÔñÈÕÆÚ</td>
+                                <td>é€‰æ‹©æ—¥æœŸ</td>
                                 <td>
                                     <input type="text" id="startDateStr" name="startDateStr" value="" data-input="date">
                                     &nbsp;<input type="text" id="endDateStr" name="endDateStr" value="" data-input="date">
                                 </td>
                             </tr>
                             <tr>
-                                <td>Ñ¡Ôñ×´Ì¬</td>
+                                <td>é€‰æ‹©çŠ¶æ€</td>
                                 <td>
-                                    <label class="check"><input name="ckStatus0" id="ckStatus0" class="chkStatus" type="checkbox">Î´»Ø¸´</label>
-                                    <label class="check"><input name="ckStatus1" id="ckStatus1" class="chkStatus" type="checkbox">ÒÑ»Ø¸´</label>
-                                    <label class="check"><input name="ckStatus2" id="ckStatus2" class="chkStatus" type="checkbox">ÒÑ¹Ø±Õ</label>
+                                    <label class="check"><input name="ckStatus0" id="ckStatus0" class="chkStatus" type="checkbox">æœªå›å¤</label>
+                                    <label class="check"><input name="ckStatus1" id="ckStatus1" class="chkStatus" type="checkbox">å·²å›å¤</label>
+                                    <label class="check"><input name="ckStatus2" id="ckStatus2" class="chkStatus" type="checkbox">å·²å…³é—­</label>
                                     <input name="status" id="status"  type="hidden" value="0">
                                 </td>
                             </tr>
                             <tr>
-                                <td>Ñ¡ÔñÎÊÌâÀàĞÍ</td>
+                                <td>é€‰æ‹©é—®é¢˜ç±»å‹</td>
                                 </td>
                                 <td>
                                     <select id="typeId" name="typeId" class="sql_where" size=1>
-                                        <option  value="0" selected >ËùÓĞÀàĞÍ</option>
+                                        <option  value="0" selected >æ‰€æœ‰ç±»å‹</option>
                                         <c:forEach items="${typeList}" var="problemType" varStatus="status">
                                         <option  value="${problemType.id}">${problemType.typeName}</option>
                                         </c:forEach>
                                 </td>
                             </tr>
                             <tr>
-                                <td>·´À¡±êÌâ</td>
+                                <td>åé¦ˆæ ‡é¢˜</td>
                                 <td>
                                     <div class="input-append">
                                         <input id="title" name="title"  class="span2" type="text">
@@ -78,7 +78,7 @@ iframe#main { margin:0; padding:0; }
                                 </td>
                             </tr>
                             <tr>
-                                <td>·´À¡ÄÚÈİ</td>
+                                <td>åé¦ˆå†…å®¹</td>
                                 <td>
                                     <div class="input-append">
                                         <input id="content" name="content" class="span2" type="text">
@@ -86,7 +86,7 @@ iframe#main { margin:0; padding:0; }
                                 </td>
                             </tr>
                             <input id="pageNum" name="pageNum" value="1" type="hidden">
-                            <tr><td><span class="button button-main"><button type="submit" onclick="onQueryProblemSubmit();" class="button">¿ªÊ¼²éÑ¯</button></span>
+                            <tr><td><span class="button button-main"><button type="submit" onclick="onQueryProblemSubmit();" class="button">å¼€å§‹æŸ¥è¯¢</button></span>
                             </td></tr>
                         <table>
                     </form>
@@ -100,18 +100,18 @@ iframe#main { margin:0; padding:0; }
                     <table style="font-size:13px" class="question-table">
                         <thead>
                         <tr style="background-color:#ADDA27;">
-                            <th width="7%"><div>ÈÕÆÚ</div></th>
-                            <th width="4%"><div>ÎÊÌâID</div></th>
-                            <th width="6%"><div>ÓÃ»§ID</div></th>
+                            <th width="7%"><div>æ—¥æœŸ</div></th>
+                            <th width="4%"><div>é—®é¢˜ID</div></th>
+                            <th width="6%"><div>ç”¨æˆ·ID</div></th>
                             <th width="4%"><div>clientID</div></th>
-                            <th width="6%"><div>ÓÃ»§ÓÊÏä</div></th>
-                            <th width="8%"><div>ÎÊÌâÀàĞÍ</div></th>
-                            <th width="12%"><div>·´À¡±êÌâ</div></th>
-                            <th width="16%"><div>·´À¡ÄÚÈİ</div></th>
-                            <th width="8%"><div>×´Ì¬</div></th>
+                            <th width="6%"><div>ç”¨æˆ·é‚®ç®±</div></th>
+                            <th width="8%"><div>é—®é¢˜ç±»å‹</div></th>
+                            <th width="12%"><div>åé¦ˆæ ‡é¢˜</div></th>
+                            <th width="16%"><div>åé¦ˆå†…å®¹</div></th>
+                            <th width="8%"><div>çŠ¶æ€</div></th>
 
-                            <th width="8%"><div>»Ø¸´</div></th>
-                            <th width="12%"><div>¸ü¸Ä×´Ì¬</div></th>
+                            <th width="8%"><div>å›å¤</div></th>
+                            <th width="12%"><div>æ›´æ”¹çŠ¶æ€</div></th>
                         </tr>
                         </thead>
                         <c:if test ="${problemVOList!=null}">
@@ -145,22 +145,22 @@ iframe#main { margin:0; padding:0; }
                                     ${problemVO.stateName}
                             </td>
                             <td style="text-align:center;">
-                               <input type="button" value="»Ø¸´" onclick="onAnswer('${problemVO.id}','${problemVO.email}','${UserPassportId}')" />
+                               <input type="button" value="å›å¤" onclick="onAnswer('${problemVO.id}','${problemVO.email}','${UserPassportId}')" />
                             </td>
                             <td style="text-align:center;">
-                                <input type="button" value="ÒÑ»Ø¸´" onclick="onChanageState('${problemVO.id}','1','${UserPassportId}')" />
-                                <input type="button" value="¹Ø±Õ" onclick="onChanageState('${problemVO.id}','2','${UserPassportId}')" />
+                                <input type="button" value="å·²å›å¤" onclick="onChanageState('${problemVO.id}','1','${UserPassportId}')" />
+                                <input type="button" value="å…³é—­" onclick="onChanageState('${problemVO.id}','2','${UserPassportId}')" />
                             </td>
                         </tr>
                         </c:forEach>
 
                         </c:if>
                      </table>
-                     µÚ${currentPage}/${totalPageNum}Ò³
-                    <a href="javascript:onProblemPage('${queryConditonStr}',1);" class="btn_save">µÚÒ»Ò³</a>
-                    <a href="javascript:onProblemPage('${queryConditonStr}',${currentPage}-1);" class="btn_save"> ÉÏÒ»Ò³</a>
-                    <a href="javascript:onProblemPage('${queryConditonStr}',${currentPage}+1);" class="btn_save"> ÏÂÒ»Ò³</a>
-                    <a href="javascript:onProblemPage('${queryConditonStr}',${totalPageNum});" class="btn_save"> Î²Ò³</a>
+                     ç¬¬${currentPage}/${totalPageNum}é¡µ
+                    <a href="javascript:onProblemPage('${queryConditonStr}',1);" class="btn_save">ç¬¬ä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage('${queryConditonStr}',${currentPage}-1);" class="btn_save"> ä¸Šä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage('${queryConditonStr}',${currentPage}+1);" class="btn_save"> ä¸‹ä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage('${queryConditonStr}',${totalPageNum});" class="btn_save"> å°¾é¡µ</a>
 
                 </div>
 			</div><!-- pageCanvas End -->
@@ -204,7 +204,7 @@ iframe#main { margin:0; padding:0; }
 
             jQuery("#floatProblemAnswer").dialog({
                 autoOpen : true,
-                title : '¸øÓÃ»§·¢ËÍ»Ø´ğ',
+                title : 'ç»™ç”¨æˆ·å‘é€å›ç­”',
                 modal: true,
                 draggable: false,
                 resizable : false,
@@ -220,7 +220,7 @@ iframe#main { margin:0; padding:0; }
             var form =  document.getElementById('answerForm');
             var _ansContent = form._ansContent.value;
             if ( _ansContent== "") {
-                alert("ÇëÊäÈë»Ø´ğÄÚÈİ£¡");
+                alert("è¯·è¾“å…¥å›ç­”å†…å®¹ï¼");
                 form._ansContent.focus();
                 return false;
             }

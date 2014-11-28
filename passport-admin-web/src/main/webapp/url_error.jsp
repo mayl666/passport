@@ -1,4 +1,4 @@
-<%@ page pageEncoding="gbk" %>
+<%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -6,7 +6,7 @@
 <body>
 <div>
 	<p>&nbsp;</p>
-	<p>对不起，您没有权限！</p>
+	<p>瀵逛笉璧凤紝鎮ㄦ病鏈夋潈闄愶紒</p>
 	<p>&nbsp;</p>
 </div>
 </body>

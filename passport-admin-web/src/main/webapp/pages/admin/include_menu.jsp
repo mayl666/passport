@@ -1,11 +1,11 @@
 <%@page import="java.util.List" %>
 <%@page import="java.util.Arrays" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ page isELIgnored="false" %>
 <div id="pageNav">
     <ul id="pageNavList" class="tree">
         <li class="expanded">
-            <h4><a href="#"><span class="icon i-home"></span>÷˜≤Àµ•</a></h4>
+            <h4><a href="#"><span class="icon i-home"></span>‰∏ªËèúÂçï</a></h4>
         </li>
     </ul>
 </div>
@@ -14,7 +14,7 @@
 
 
     <%--<script type="text/javascript">--%>
-        <%--//¡Ÿ ±ÃÌº”’€µ˛≤Àµ•.--%>
+        <%--//‰∏¥Êó∂Ê∑ªÂä†ÊäòÂè†ËèúÂçï.--%>
         <%--$(document).ready(function () {--%>
             <%--zTree1.expandAll(false);--%>
         <%--});--%>

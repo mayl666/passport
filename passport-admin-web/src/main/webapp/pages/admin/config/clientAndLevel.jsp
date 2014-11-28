@@ -2,17 +2,17 @@
   Created by IntelliJ IDEA.
   User: liuling
   Date: 13-11-8
-  Time: ÏÂÎç7:13
+  Time: ä¸‹åˆ7:13
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="script" uri="http://struts.apache.org/tags-html" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passportºóÌ¨</title>
+    <title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp" %>
 
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
@@ -39,7 +39,7 @@
             display: none;
         }
 
-            /* È¥µô²Ëµ¥±êÌâÀ¸ */
+            /* å»æ‰èœå•æ ‡é¢˜æ  */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -48,43 +48,43 @@
 </head>
 <body>
 <div id="page">
-    <!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+    <!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- ÒıÈë²Ëµ¥ -->
+        <!-- å¼•å…¥èœå• -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                    <span class="step">&gt;</span><strong>½Ó¿ÚÆµ´ÎÅäÖÃ¹ÜÀí</strong>
+                    å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                    <span class="step">&gt;</span><strong>æ¥å£é¢‘æ¬¡é…ç½®ç®¡ç†</strong>
                 </div>
-                <h2 id="pageTitle">½Ó¿ÚÆµ´ÎÅäÖÃ¹ÜÀí</h2>
+                <h2 id="pageTitle">æ¥å£é¢‘æ¬¡é…ç½®ç®¡ç†</h2>
 
                 <hr>
             </div>
             <!-- pageCanvasInt End -->
 
             <div>
-                <a href="/admin/interface/getinterfaceandlevellist">´øÎÒ»ØÖ÷Ò³Ãæ</a>
+                <a href="/admin/interface/getinterfaceandlevellist">å¸¦æˆ‘å›ä¸»é¡µé¢</a>
 
                 <form id="clientLevelForm" method="post" action="/admin/interface/saveclientlevel">
                     <table>
                         <tr>
-                            <td>ÇëÑ¡ÔñÓ¦ÓÃ</td>
+                            <td>è¯·é€‰æ‹©åº”ç”¨</td>
                             <td>
                                 <select id="clientId" name="clientId" class="sql_where" size=1
                                         onchange="IFeelGood(this)">
-                                    <option value="-1" selected>ÇëÑ¡Ôñ</option>
+                                    <option value="-1" selected>è¯·é€‰æ‹©</option>
                                     <c:forEach items="${clientVOList}" var="client" varStatus="status">
                                     <option value="<c:out value="${client.clientId}"/>"><c:out
                                             value="${client.clientName}"/></option>
                                     </c:forEach>
                             </td>
-                            <td>ÇëÑ¡ÔñµÈ¼¶</td>
+                            <td>è¯·é€‰æ‹©ç­‰çº§</td>
                             <td>
                                 <select id="levelId" name="levelId" class="sql_where" size=1>
-                                    <option value="-1" selected>ÇëÑ¡Ôñ</option>
+                                    <option value="-1" selected>è¯·é€‰æ‹©</option>
                                     <c:forEach items="${levelVOList}" var="level" varStatus="status">
                                     <option value="<c:out value="${level.levelId}"/>"><c:out
                                             value="${level.levelName}"/></option>
@@ -94,7 +94,7 @@
                         <input id="pageNum" name="pageNum" value="1" type="hidden">
                         <tr>
                             <td><span class="button button-main"><button type="button" onclick="saveClientAndLevel()">
-                                ±£´æ
+                                ä¿å­˜
                             </button></span>
                             </td>
                         </tr>
@@ -142,10 +142,10 @@
         var client_id = document.getElementById("clientId").value;
         var level_info = document.getElementById("levelId").value;
         if (client_id == "" || client_id == -1) {
-            alert("ÇëÑ¡ÔñÓ¦ÓÃ£¡");
+            alert("è¯·é€‰æ‹©åº”ç”¨ï¼");
             return false;
         } else if (level_info == "" || level_info == -1) {
-            alert("ÇëÑ¡ÔñµÈ¼¶£¡");
+            alert("è¯·é€‰æ‹©ç­‰çº§ï¼");
             return false;
         }
         var url = "/admin/interface/saveclientlevel";

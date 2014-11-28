@@ -1,21 +1,21 @@
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passportºóÌ¨</title>
+    <title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp" %>
     <%--<script src="/js/jquery.md5.js" type="text/javascript"></script>--%>
 
-    <!-- ×îĞÂ Bootstrap ºËĞÄ CSS ÎÄ¼ş -->
+    <!-- æœ€æ–° Bootstrap æ ¸å¿ƒ CSS æ–‡ä»¶ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
 
-    <!-- ¿ÉÑ¡µÄBootstrapÖ÷ÌâÎÄ¼ş£¨Ò»°ã²»ÓÃÒıÈë£© -->
+    <!-- å¯é€‰çš„Bootstrapä¸»é¢˜æ–‡ä»¶ï¼ˆä¸€èˆ¬ä¸ç”¨å¼•å…¥ï¼‰ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
-    <!-- jQueryÎÄ¼ş¡£Îñ±ØÔÚbootstrap.min.js Ö®Ç°ÒıÈë -->
+    <!-- jQueryæ–‡ä»¶ã€‚åŠ¡å¿…åœ¨bootstrap.min.js ä¹‹å‰å¼•å…¥ -->
     <%--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>--%>
 
-    <!-- ×îĞÂµÄ Bootstrap ºËĞÄ JavaScript ÎÄ¼ş -->
+    <!-- æœ€æ–°çš„ Bootstrap æ ¸å¿ƒ JavaScript æ–‡ä»¶ -->
     <%--<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>--%>
     <style>
         div#header {
@@ -33,7 +33,7 @@
             display: none;
         }
 
-            /* È¥µô²Ëµ¥±êÌâÀ¸ */
+            /* å»æ‰èœå•æ ‡é¢˜æ  */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -42,42 +42,42 @@
 </head>
 <body>
 <div id="page">
-    <!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+    <!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- ÒıÈë²Ëµ¥ -->
+        <!-- å¼•å…¥èœå• -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                    <span class="step">&gt;</span><strong>ÓÃ»§¹ÜÀí</strong>
+                    å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                    <span class="step">&gt;</span><strong>ç”¨æˆ·ç®¡ç†</strong>
                 </div>
-                <h2 id="pageTitle">ÅúÁ¿É¾³ı×¢²áÊÖ»úºÅ</h2>
+                <h2 id="pageTitle">æ‰¹é‡åˆ é™¤æ³¨å†Œæ‰‹æœºå·</h2>
 
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">ÅúÁ¿É¾³ı</div>
+                    <div class="panel-heading">æ‰¹é‡åˆ é™¤</div>
                     <form class="navbar-form navbar-left" id="deleteRegMobileForm" name="deleteRegMobileForm" action="/admin/deleteRegMobiles" method="post">
                         <table class="table">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <textarea class="form-control" id="mobiles" name="mobiles" rows="10" cols="40" placeholder="ÇëÊäÈëÒªÉ¾³ıÊÖ»úºÅ"></textarea>
+                                    <textarea class="form-control" id="mobiles" name="mobiles" rows="10" cols="40" placeholder="è¯·è¾“å…¥è¦åˆ é™¤æ‰‹æœºå·"></textarea>
                                 </div>
                             </div>
                             <div class="input-group">
                                 <p>
-                                    <button type="submit" class="btn btn-default">½â³ı</button>
+                                    <button type="submit" class="btn btn-default">è§£é™¤</button>
                                 </p>
                             </div>
                             <c:if test="${failed!=null && failed!=''}">
                             <div class="list-group">
                                 <div class="input-group">
-                                    <span class="label label-danger">É¾³ı×¢²áÊÖ»úºÅÊ§°Ü½á¹û</span>
+                                    <span class="label label-danger">åˆ é™¤æ³¨å†Œæ‰‹æœºå·å¤±è´¥ç»“æœ</span>
                                 </div>
                             </div>
 
-                            <!-- ½â°óÊ§°Ü½á¹û -->
+                            <!-- è§£ç»‘å¤±è´¥ç»“æœ -->
                             <div class="list-group">
                                 <div class="input-group">
                                     <textarea class="form-control" id="failed" name="failed" rows="10" cols="40"><c:out value="${failed}"/></textarea>
@@ -97,7 +97,7 @@
 </div>
 <!-- page End -->
 <script type="text/javascript">
-    //ÅúÁ¿½â°óÊÖ»ú
+    //æ‰¹é‡è§£ç»‘æ‰‹æœº
     function deleteRegMobiles() {
         var mobiles = $("#mobiles").val();
         $.post('/admin/deleteRegMobiles', {mobiles: mobiles}, function (data) {

@@ -2,16 +2,16 @@
   Created by IntelliJ IDEA.
   User: liuling
   Date: 13-11-8
-  Time: œ¬ŒÁ7:13
+  Time: ‰∏ãÂçà7:13
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passport∫ÛÃ®</title>
+    <title>passportÂêéÂè∞</title>
     <%@ include file="/pages/admin/head.jsp" %>
 
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
@@ -38,7 +38,7 @@
             display: none;
         }
 
-            /* »•µÙ≤Àµ•±ÍÃ‚¿∏ */
+            /* ÂéªÊéâËèúÂçïÊ†áÈ¢òÊ†è */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -64,51 +64,51 @@
 </head>
 <body>
 <div id="page">
-    <!-- “˝»Î∂•≤ø–≈œ¢ -->
+    <!-- ÂºïÂÖ•È°∂ÈÉ®‰ø°ÊÅØ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- “˝»Î≤Àµ• -->
+        <!-- ÂºïÂÖ•ËèúÂçï -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±«∞Œª÷√£∫<strong>∫ÛÃ®π‹¿Ì</strong>
-                    <span class="step">&gt;</span><strong>Ω”ø⁄∆µ¥Œ≈‰÷√π‹¿Ì</strong>
+                    ÂΩìÂâç‰ΩçÁΩÆÔºö<strong>ÂêéÂè∞ÁÆ°ÁêÜ</strong>
+                    <span class="step">&gt;</span><strong>Êé•Âè£È¢ëÊ¨°ÈÖçÁΩÆÁÆ°ÁêÜ</strong>
                 </div>
-                <h2 id="pageTitle">Ω”ø⁄∆µ¥Œ≈‰÷√π‹¿Ì</h2>
+                <h2 id="pageTitle">Êé•Âè£È¢ëÊ¨°ÈÖçÁΩÆÁÆ°ÁêÜ</h2>
 
                 <hr>
             </div>
             <!-- pageCanvasInt End -->
 
             <div>
-                <a href="/admin/interface/getclientandlevel">≈‰÷√”¶”√”Îµ»º∂</a>
-                <a href="/admin/interface/queryinterfacelist">Ω”ø⁄≤Ÿ◊˜</a>
+                <a href="/admin/interface/getclientandlevel">ÈÖçÁΩÆÂ∫îÁî®‰∏éÁ≠âÁ∫ß</a>
+                <a href="/admin/interface/queryinterfacelist">Êé•Âè£Êìç‰Ωú</a>
                 <table style="font-size:13px" class="question-table" border="1">
                     <thead>
                     <tr align="center" style="background-color:#ADDA27;">
                         <td width="8%">
-                            <div>º∂±</div>
+                            <div>Á∫ßÂà´</div>
                         </td>
                         <td width="15%">
-                            <div>Ω”ø⁄√˚≥∆</div>
+                            <div>Êé•Âè£ÂêçÁß∞</div>
                         </td>
                         <td width="5%">
-                            <div>Ω”ø⁄≥ı º∆µ¥Œ</div>
+                            <div>Êé•Âè£ÂàùÂßãÈ¢ëÊ¨°</div>
                         </td>
                         <td width="10%">
-                            <div>≤Ÿ◊˜¿‡–Õ</div>
+                            <div>Êìç‰ΩúÁ±ªÂûã</div>
                         </td>
                     </tr>
                     </thead>
                     <c:if test="${interfaceVOList!=null}">
 
-                        <%--<td style="text-align:center;" rowspan="${rowCount}">≥ıº∂</td>--%>
+                        <%--<td style="text-align:center;" rowspan="${rowCount}">ÂàùÁ∫ß</td>--%>
                         <c:forEach items="${interfaceVOList}" var="primaryVO" varStatus="i">
                             <tr align="center" data-pri="0" data-row-index="${i.index}">
                                 <c:if test="${i.index==0}">
                                     <td rowspan="${rowCount}" width="8%">
-                                        ≥ıº∂
+                                        ÂàùÁ∫ß
                                     </td>
                                 </c:if>
                                 <c:if test="${1!=0}">
@@ -123,13 +123,13 @@
                                     <td style="text-align:center;" width="20%">
                                         <input
                                                 name="<c:out value="${primaryVO.primaryLevelCount}"/>" type="button"
-                                                value="–ﬁ∏ƒ" class="modify"/>
+                                                value="‰øÆÊîπ" class="modify"/>
                                         <input type="hidden" value="<c:out value="${primaryVO.id}"/>"
                                                class="modifyId"/>
                                         <input type="hidden" value="<c:out value="${primaryVO.interfaceName}"/>"
                                                class="modifyInterfaceName"/>
                                         <input type="hidden" value="0" class="modifyLevel"/>
-                                        <input type="button" value="±£¥Ê" class="save"
+                                        <input type="button" value="‰øùÂ≠ò" class="save"
                                                style="display: none"/>
                                     </td>
                                 </c:if>
@@ -137,12 +137,12 @@
                         </c:forEach>
 
 
-                        <%--<td style="text-align:center;" rowspan="${rowCount}">÷–º∂</td>--%>
+                        <%--<td style="text-align:center;" rowspan="${rowCount}">‰∏≠Á∫ß</td>--%>
                         <c:forEach items="${interfaceVOList}" var="middleVO" varStatus="j">
                             <tr align="center" data-pri="1" data-row-index="${j.index}">
                                 <c:if test="${j.index==0}">
                                     <td rowspan="${rowCount}">
-                                        ÷–º∂
+                                        ‰∏≠Á∫ß
                                     </td>
                                 </c:if>
                                 <c:if test="${1!=0}">
@@ -155,12 +155,12 @@
                                     <td style="text-align:center;">
                                         <input name="<c:out value="${middleVO.middleLevelCount}"/>"
                                                type="button"
-                                               value="–ﬁ∏ƒ" class="modify"/>
+                                               value="‰øÆÊîπ" class="modify"/>
                                         <input type="hidden" value="<c:out value="${middleVO.id}"/>" class="modifyId"/>
                                         <input type="hidden" value="<c:out value="${middleVO.interfaceName}"/>"
                                                class="modifyInterfaceName"/>
                                         <input type="hidden" value="1" class="modifyLevel"/>
-                                        <input type="button" value="±£¥Ê"
+                                        <input type="button" value="‰øùÂ≠ò"
                                                style="display: none" class="save"/>
                                     </td>
                                 </c:if>
@@ -168,12 +168,12 @@
                         </c:forEach>
 
 
-                        <%--<td style="text-align:center;" rowspan="${rowCount}">∏ﬂº∂</td>--%>
+                        <%--<td style="text-align:center;" rowspan="${rowCount}">È´òÁ∫ß</td>--%>
                         <c:forEach items="${interfaceVOList}" var="highVO" varStatus="k">
                             <tr align="center" data-pri="2" data-row-index="${k.index}">
                                 <c:if test="${k.index==0}">
                                     <td rowspan="${rowCount}">
-                                        ∏ﬂº∂
+                                        È´òÁ∫ß
                                     </td>
                                 </c:if>
                                 <c:if test="${1!=0}">
@@ -186,12 +186,12 @@
                                     <td style="text-align:center;">
                                         <input name="<c:out value="${highVO.highLevelCount}"/>"
                                                type="button"
-                                               value="–ﬁ∏ƒ" class="modify">
+                                               value="‰øÆÊîπ" class="modify">
                                         <input type="hidden" value="<c:out value="${highVO.id}"/>" class="modifyId"/>
                                         <input type="hidden" value="<c:out value="${highVO.interfaceName}"/>"
                                                class="modifyInterfaceName"/>
                                         <input type="hidden" value="2" class="modifyLevel"/>
-                                        <input class="save" type="button" value="±£¥Ê"
+                                        <input class="save" type="button" value="‰øùÂ≠ò"
                                                style="display: none"/>
                                     </td>
                                 </c:if>

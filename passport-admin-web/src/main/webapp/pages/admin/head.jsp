@@ -5,7 +5,7 @@
 <%@page import="org.apache.commons.lang3.time.DateFormatUtils"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
@@ -25,8 +25,8 @@
 <style type="text/css">
 body, h1, h2, ul, dl, dt, dd, p,form  {margin:0;padding:0;}
 body {color:#333;font:12px/20px Tahoma,Verdana,Arial,sans-serif;}
-/* * { font-family:"Î¢ÈíÑÅºÚ" !important; } */
+/* * { font-family:"å¾®è½¯é›…é»‘" !important; } */
 img {border: 0;}
-.ui-jqgrid { font-size: 12px; } /* Ä¬ÈÏÊÇ11px */
+.ui-jqgrid { font-size: 12px; } /* é»˜è®¤æ˜¯11px */
 #loading {background: url('/img/admin/ajax-loader-sm.gif') no-repeat scroll 50% 50% transparent; height: 20px; width: 20px; float: left; margin-top: -29px; display: none; }
 </style>

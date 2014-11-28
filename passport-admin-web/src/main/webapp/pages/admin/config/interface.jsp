@@ -2,16 +2,16 @@
   Created by IntelliJ IDEA.
   User: liuling
   Date: 13-11-8
-  Time: ÏÂÎç7:13
+  Time: ä¸‹åˆ7:13
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passportºóÌ¨</title>
+    <title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp" %>
 
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
@@ -38,7 +38,7 @@
             display: none;
         }
 
-            /* È¥µô²Ëµ¥±êÌâÀ¸ */
+            /* å»æ‰èœå•æ ‡é¢˜æ  */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -47,37 +47,37 @@
 </head>
 <body>
 <div id="page">
-    <!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+    <!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- ÒıÈë²Ëµ¥ -->
+        <!-- å¼•å…¥èœå• -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                    <span class="step">&gt;</span><strong>½Ó¿ÚÆµ´ÎÅäÖÃ¹ÜÀí</strong>
+                    å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                    <span class="step">&gt;</span><strong>æ¥å£é¢‘æ¬¡é…ç½®ç®¡ç†</strong>
                 </div>
-                <h2 id="pageTitle">½Ó¿ÚÆµ´ÎÅäÖÃ¹ÜÀí</h2>
+                <h2 id="pageTitle">æ¥å£é¢‘æ¬¡é…ç½®ç®¡ç†</h2>
 
                 <hr>
             </div>
             <!-- pageCanvasInt End -->
 
             <div>
-                <a href="/pages/admin/config/addInterface.jsp">ĞÂÔö</a>
-                <a href="/admin/interface/getinterfaceandlevellist">´øÎÒ»ØÖ÷Ò³Ãæ</a>
+                <a href="/pages/admin/config/addInterface.jsp">æ–°å¢</a>
+                <a href="/admin/interface/getinterfaceandlevellist">å¸¦æˆ‘å›ä¸»é¡µé¢</a>
                 <table style="font-size:13px" class="question-table">
                     <thead>
                     <tr style="background-color:#ADDA27;">
                         <th width="3%">
-                            <div>±àºÅ</div>
+                            <div>ç¼–å·</div>
                         </th>
                         <th width="12%">
-                            <div>½Ó¿ÚÃû³Æ</div>
+                            <div>æ¥å£åç§°</div>
                         </th>
                         <th width="18%">
-                            <div>²Ù×÷ÀàĞÍ</div>
+                            <div>æ“ä½œç±»å‹</div>
                         </th>
 
                     </tr>
@@ -90,8 +90,8 @@
                                     <c:out value="${interfaceVO.interfaceName}"/>
                                 </td>
                                 <td style="text-align:center;"><a
-                                        href="/admin/interface/getinterface?id=<c:out value="${interfaceVO.id}"/>">ĞŞ¸Ä</a>
-                                    <a href="/admin/interface/delInterface?id=<c:out value="${interfaceVO.id}"/>">É¾³ı</a>
+                                        href="/admin/interface/getinterface?id=<c:out value="${interfaceVO.id}"/>">ä¿®æ”¹</a>
+                                    <a href="/admin/interface/delInterface?id=<c:out value="${interfaceVO.id}"/>">åˆ é™¤</a>
                                 </td>
                             </tr>
                         </c:forEach>

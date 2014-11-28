@@ -1,10 +1,10 @@
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <div id="floatProblemAnswer" style="display:none">
   <div id="problemAnswer">
 	   <form id="answerForm" method="post" style="margin: 0;">
            <table align="center" border="0">
                <tr>
-                   <TD align="right" >»Ø´ðÄÚÈÝ</td>
+                   <TD align="right" >å›žç­”å†…å®¹</td>
                    <td><textarea id="_ansContent" class="span2" name="_ansContent" style="width: 50; height:60;">
                        </textarea>
                    </td>
@@ -19,9 +19,9 @@
                </tr>
                <tr>
                    <td align="center" height="15" colspan="2">
-                      <!-- <input type="submit" name="submit" value="Ìá½»" onclick="answerFormSubmit()">-->
-                       <a href="javascript:answerFormSubmit();" class="btn_save">·¢ËÍ</a>
-                       <!--<input type="button" id="goback" value="·µ»Ø" onclick=""> -->
+                      <!-- <input type="submit" name="submit" value="æäº¤" onclick="answerFormSubmit()">-->
+                       <a href="javascript:answerFormSubmit();" class="btn_save">å‘é€</a>
+                       <!--<input type="button" id="goback" value="è¿”å›ž" onclick=""> -->
                    </td>
                </tr>
            </table>

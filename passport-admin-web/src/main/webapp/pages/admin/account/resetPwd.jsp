@@ -1,21 +1,21 @@
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>passportºóÌ¨</title>
+    <title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp" %>
     <%--<script src="/js/jquery.md5.js" type="text/javascript"></script>--%>
 
-    <!-- ×îĞÂ Bootstrap ºËĞÄ CSS ÎÄ¼ş -->
+    <!-- æœ€æ–° Bootstrap æ ¸å¿ƒ CSS æ–‡ä»¶ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
 
-    <!-- ¿ÉÑ¡µÄBootstrapÖ÷ÌâÎÄ¼ş£¨Ò»°ã²»ÓÃÒıÈë£© -->
+    <!-- å¯é€‰çš„Bootstrapä¸»é¢˜æ–‡ä»¶ï¼ˆä¸€èˆ¬ä¸ç”¨å¼•å…¥ï¼‰ -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
 
-    <!-- jQueryÎÄ¼ş¡£Îñ±ØÔÚbootstrap.min.js Ö®Ç°ÒıÈë -->
+    <!-- jQueryæ–‡ä»¶ã€‚åŠ¡å¿…åœ¨bootstrap.min.js ä¹‹å‰å¼•å…¥ -->
     <%--<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>--%>
 
-    <!-- ×îĞÂµÄ Bootstrap ºËĞÄ JavaScript ÎÄ¼ş -->
+    <!-- æœ€æ–°çš„ Bootstrap æ ¸å¿ƒ JavaScript æ–‡ä»¶ -->
     <%--<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>--%>
     <style>
         div#header {
@@ -33,7 +33,7 @@
             display: none;
         }
 
-            /* È¥µô²Ëµ¥±êÌâÀ¸ */
+            /* å»æ‰èœå•æ ‡é¢˜æ  */
         iframe#main {
             margin: 0;
             padding: 0;
@@ -42,35 +42,35 @@
 </head>
 <body>
 <div id="page">
-    <!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+    <!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
     <%@ include file="/pages/admin/include_top.jsp" %>
     <div id="pageBd">
-        <!-- ÒıÈë²Ëµ¥ -->
+        <!-- å¼•å…¥èœå• -->
         <%@ include file="/pages/admin/include_menu.jsp" %>
         <div id="pageCanvas" class="canvas">
             <div id="pageCanvasInt" class="canvasInt">
                 <div id="pageCrumbs" class="crumbs">
-                    µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                    <span class="step">&gt;</span><strong>ÖØÖÃÃÜÂë</strong>
+                    å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                    <span class="step">&gt;</span><strong>é‡ç½®å¯†ç </strong>
                 </div>
-                <h2 id="pageTitle">ÖØÖÃÃÜÂë</h2>
+                <h2 id="pageTitle">é‡ç½®å¯†ç </h2>
                 <hr>
                 <form class="form-horizontal" action="/admin/resetPassword" method="post">
                     <div class="form-group">
-                        <label for="passportId" class="col-sm-2 control-label">ÕËºÅ</label>
+                        <label for="passportId" class="col-sm-2 control-label">è´¦å·</label>
 
                         <div class="col-sm-10">
                             <input type="email" class="form-control" id="passportId" name="passportId"
                                    value="<c:out value="${passportId}"/>"
-                                   placeholder="ÇëÊäÈëÍ¨ĞĞÖ¤ÕÊºÅ">
+                                   placeholder="è¯·è¾“å…¥é€šè¡Œè¯å¸å·">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="newPwd" class="col-sm-2 control-label">ĞÂÃÜÂë</label>
+                        <label for="newPwd" class="col-sm-2 control-label">æ–°å¯†ç </label>
 
                         <div class="col-sm-10">
                             <%--<input type="email" class="form-control" id="newPwd" name="newPwd" value="<c:out value="${newPwd}"/>"
-                                   placeholder="ÎÂÜ°ÌáÊ¾:µã»÷ÖØÖÃÃÜÂë,ĞÂÃÜÂë×Ô¶¯Éú³É">--%>
+                                   placeholder="æ¸©é¦¨æç¤º:ç‚¹å‡»é‡ç½®å¯†ç ,æ–°å¯†ç è‡ªåŠ¨ç”Ÿæˆ">--%>
                             <%--<span id="newPwd"><c:out value="${newPwd}"/></span>--%>
                             <h3><span id="newPwd" class="label label-default"><c:out value="${newPwd}"/></span></h3>
                         </div>
@@ -78,7 +78,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default" onclick="submitResetForm()">ÖØÖÃÃÜÂë</button>
+                            <button type="submit" class="btn btn-default" onclick="submitResetForm()">é‡ç½®å¯†ç </button>
                         </div>
                     </div>
                 </form>
@@ -92,11 +92,11 @@
 <!-- page End -->
 
 <script type="text/javascript">
-    //Ìá½»
+    //æäº¤
     function submitResetForm() {
         var passportId = $("#passportId").val();
         if (passportId == null || passportId == "") {
-            alert("ÓÃ»§ÕËºÅ²»ÄÜÎª¿Õ");
+            alert("ç”¨æˆ·è´¦å·ä¸èƒ½ä¸ºç©º");
             return false;
         }
 //        document.forms["resetForm"].submit();

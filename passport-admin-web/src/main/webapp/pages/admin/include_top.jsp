@@ -1,11 +1,11 @@
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=utf-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="pageHd">
-	<h1>passportºóÌ¨¹ÜÀíÏµÍ³</h1>
+	<h1>passportåå°ç®¡ç†ç³»ç»Ÿ</h1>
 	<ul>
-		<li>»¶Ó­£º<strong>${UserName}</strong></li>
+		<li>æ¬¢è¿ï¼š<strong>${UserName}</strong></li>
 		<c:forEach items="${MenuTypeList}" var="menuType">
 		<li><a href="${menuType.url}" target="_blank">${menuType.name}</a></li>
 		</c:forEach>
