@@ -199,7 +199,8 @@ public class CommonMenuFilter implements Filter {
                 return "";
             }
             if (!isWindows) {
-                str = new String(str.getBytes("ISO8859_1"), "GBK");
+//                str = new String(str.getBytes("ISO8859_1"), "GBK");
+                return str;
             }
             str = str.replaceAll("\u003d", "=");
         } catch (Exception e) {
@@ -212,11 +213,9 @@ public class CommonMenuFilter implements Filter {
      * 获得sogou-inc passprot 的email
      */
     String getPassportEmail(HttpServletRequest httpRequest) {
-//        return "liuling" + "@sogou-inc.com";
         if (isWindows) {
             // 如果是windows返回测试,系统的用户
 //      return "test_" + menuTypeId + "@sogou-inc.com";
-//            return "chenjiameng" + "@sogou-inc.com";//写死了~~~~
             return "chengang" + "@sogou-inc.com";
         }
         String cookieStr = httpRequest.getHeader("Cookie");
@@ -502,7 +501,7 @@ public class CommonMenuFilter implements Filter {
             // （6）读取内容
             byte[] responseBody = getMethod.getResponseBody();
             // （7） 处理内容
-            return new String(responseBody);
+            return new String(responseBody, "GBK");
         } catch (HttpException e) {
             // 发生致命的异常，可能是协议不对或者返回的内容有问题
             System.out.println("Please check your provided http address!");
