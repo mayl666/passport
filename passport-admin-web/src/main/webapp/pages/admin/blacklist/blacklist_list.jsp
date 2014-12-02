@@ -1,8 +1,8 @@
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
+<%@ page pageEncoding="utf-8" contentType="text/html;charset=utf-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>passportºóÌ¨</title>
+<title>passportåå°</title>
     <%@ include file="/pages/admin/head.jsp"%>
 
     <!--<link rel="stylesheet" type="text/css" href="/css/jquery-ui-1.7.3.custom.css"/>
@@ -16,7 +16,7 @@
 <style>
 div#header { display:none; background-color: #f5f5dc; }
 div#logo { width:130px; height:37px; background: url(/img/admin/logo.png); }
-#menu_name { display: none; } /* È¥µô²Ëµ¥±êÌâÀ¸ */
+#menu_name { display: none; } /* å»æ‰èœå•æ ‡é¢˜æ  */
 iframe#main { margin:0; padding:0; }
 </style>
 <script>
@@ -45,62 +45,62 @@ iframe#main { margin:0; padding:0; }
             <form id="addForm" action="/admin/blackList/addBlackList"  method="post">
                 <table>
                     <tr>
-                        <td>ÕË ºÅ£º</td>
+                        <td>è´¦ å·ï¼š</td>
                         <td><input type="text" id="passportId_input" name="passportId_input"></td>
                     </tr>
                     <tr>
-                        <td>ÉúĞ§Ê±¼ä£º</td>
+                        <td>ç”Ÿæ•ˆæ—¶é—´ï¼š</td>
                         <td>
                             <select name="expire_time" id="expire_time">
-                                <option value="0" selected="selected">¼´Ê¹ÉúĞ§</option>
-                                <option value="1">1·ÖÖÓ</option>
-                                <option value="5">5·ÖÖÓ</option>
-                                <option value="10">10·ÖÖÓ</option>
-                                <option value="30">30·ÖÖÓ</option>
-                                <option value="60">60·ÖÖÓ</option>
+                                <option value="0" selected="selected">å³ä½¿ç”Ÿæ•ˆ</option>
+                                <option value="1">1åˆ†é’Ÿ</option>
+                                <option value="5">5åˆ†é’Ÿ</option>
+                                <option value="10">10åˆ†é’Ÿ</option>
+                                <option value="30">30åˆ†é’Ÿ</option>
+                                <option value="60">60åˆ†é’Ÿ</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="center"><input type="button" onclick="addBlackList()"  value="Ìá½»"/></td>
+                        <td colspan="2" align="center"><input type="button" onclick="addBlackList()"  value="æäº¤"/></td>
                     </tr>
                 </table>
             </form>
         </div>
-		<!-- ÒıÈë¶¥²¿ĞÅÏ¢ -->
+		<!-- å¼•å…¥é¡¶éƒ¨ä¿¡æ¯ -->
 		<%@ include file="/pages/admin/include_top.jsp"%>
 		<div id="pageBd">
-			<!-- ÒıÈë²Ëµ¥ -->
+			<!-- å¼•å…¥èœå• -->
 			<%@ include file="/pages/admin/include_menu.jsp"%>
-            <div id="dialog-message" title="ÌáÊ¾" style="display: none">
+            <div id="dialog-message" title="æç¤º" style="display: none">
                 <p>
                     <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-                    ĞŞ¸Ä³É¹¦£¡
+                    ä¿®æ”¹æˆåŠŸï¼
                 </p>
             </div>
-            <div id="dialog-addmessage" title="ÌáÊ¾" style="display: none">
+            <div id="dialog-addmessage" title="æç¤º" style="display: none">
                 <p>
                     <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-                    Ìí¼Ó³É¹¦£¡
+                    æ·»åŠ æˆåŠŸï¼
                 </p>
             </div>
-            <div id="dialog-confirm" title="¾¯¸æ£¡" style="display: none">
-                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>È·ÈÏĞŞ¸Ä¸ÃÕË»§×´Ì¬£¿</p>
+            <div id="dialog-confirm" title="è­¦å‘Šï¼" style="display: none">
+                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>ç¡®è®¤ä¿®æ”¹è¯¥è´¦æˆ·çŠ¶æ€ï¼Ÿ</p>
             </div>
 			<div id="pageCanvas" class="canvas">
 				<div id="pageCanvasInt" class="canvasInt">
 					<div id="pageCrumbs" class="crumbs">
-						µ±Ç°Î»ÖÃ£º<strong>ºóÌ¨¹ÜÀí</strong>
-                        <span class="step">&gt;</span><strong>ºÚÃûµ¥¹ÜÀí</strong>
+						å½“å‰ä½ç½®ï¼š<strong>åå°ç®¡ç†</strong>
+                        <span class="step">&gt;</span><strong>é»‘åå•ç®¡ç†</strong>
                     </div>
-					<h2 id="pageTitle">ºÚÃûµ¥¹ÜÀí</h2>
+					<h2 id="pageTitle">é»‘åå•ç®¡ç†</h2>
 
 
                     <hr>
                     <form id="queryProblemForm" action="/admin/blackList/queryBlackList" method="post">
                         <table>
                             <tr>
-                                <td>Í¨ĞĞÖ¤ÕËºÅ</td>
+                                <td>é€šè¡Œè¯è´¦å·</td>
                                 <td>
                                     <div class="input-append">
                                         <input id="passportId" name="passportId" value='${passportId}'  class="span2" type="text">
@@ -108,7 +108,7 @@ iframe#main { margin:0; padding:0; }
                                 </td>
                             </tr>
                             <%--<tr>--%>
-                                <%--<td>êÇ³Æ</td>--%>
+                                <%--<td>æ˜µç§°</td>--%>
                                 <%--<td>--%>
                                     <%--<div class="input-append">--%>
                                         <%--<input id="nickname" name="nickname" class="span2" type="text">--%>
@@ -118,8 +118,8 @@ iframe#main { margin:0; padding:0; }
                             <input id="pageNo" name="pageNo" value="1" type="hidden">
                             <tr>
                                 <td>
-                                    <span class="button button-main"><button type="submit" onclick="onQueryProblemSubmit();" class="button">¿ªÊ¼²éÑ¯</button></span>
-                                    <span class="button button-main"><button type="button" onclick="onDisplayAddFrame();" class="button">ĞÂÔö</button></span>
+                                    <span class="button button-main"><button type="submit" onclick="onQueryProblemSubmit();" class="button">å¼€å§‹æŸ¥è¯¢</button></span>
+                                    <span class="button button-main"><button type="button" onclick="onDisplayAddFrame();" class="button">æ–°å¢</button></span>
                                 </td>
                             </tr>
                         <table>
@@ -134,13 +134,13 @@ iframe#main { margin:0; padding:0; }
                     <table style="font-size:13px" class="question-table">
                         <thead>
                         <tr style="background-color:#ADDA27;">
-                            <th width="6%"><div>ÓÃ»§ID</div></th>
-                            <th width="8%"><div>ÓÃ»§ÀàĞÍ</div></th>
-                            <th width="12%"><div>Ê±Ğ§ĞÔ</div></th>
-                            <th width="8%"><div>´´½¨Ê±¼ä</div></th>
-                            <th width="8%"><div>ĞŞ¸ÄÊ±¼ä</div></th>
-                            <th width="4%"><div>×´Ì¬</div></th>
-                            <th width="4%"><div>ÉèÖÃ</div></th>
+                            <th width="6%"><div>ç”¨æˆ·ID</div></th>
+                            <th width="8%"><div>ç”¨æˆ·ç±»å‹</div></th>
+                            <th width="12%"><div>æ—¶æ•ˆæ€§</div></th>
+                            <th width="8%"><div>åˆ›å»ºæ—¶é—´</div></th>
+                            <th width="8%"><div>ä¿®æ”¹æ—¶é—´</div></th>
+                            <th width="4%"><div>çŠ¶æ€</div></th>
+                            <th width="4%"><div>è®¾ç½®</div></th>
                         </tr>
                         </thead>
                         <c:forEach items="${page.items}" var="item" varStatus="status">
@@ -149,13 +149,13 @@ iframe#main { margin:0; padding:0; }
                                     ${item.userid}
                             </td>
                             <td style="text-align:center;">
-                                <c:if test="${item.account_type==0}">Î´Öª</c:if>
-                                <c:if test="${item.account_type==1}">ËÑ¹·</c:if>
-                                <c:if test="${item.account_type==2}">ËÑºü</c:if>
-                                <c:if test="${item.account_type==3}">ÊÖ»ú</c:if>
-                                <c:if test="${item.account_type==4}">ÍâÓò</c:if>
-                                <c:if test="${item.account_type==5}">µÚÈı·½</c:if>
-                                <c:if test="${item.account_type==6}">¸öĞÔ»¯</c:if>
+                                <c:if test="${item.account_type==0}">æœªçŸ¥</c:if>
+                                <c:if test="${item.account_type==1}">æœç‹—</c:if>
+                                <c:if test="${item.account_type==2}">æœç‹</c:if>
+                                <c:if test="${item.account_type==3}">æ‰‹æœº</c:if>
+                                <c:if test="${item.account_type==4}">å¤–åŸŸ</c:if>
+                                <c:if test="${item.account_type==5}">ç¬¬ä¸‰æ–¹</c:if>
+                                <c:if test="${item.account_type==6}">ä¸ªæ€§åŒ–</c:if>
                             </td>
                             <td style="text-align:center;" id="${item.userid}">
                                     <script>formatDate(${item.expire_time},'${item.userid}')</script>
@@ -167,22 +167,22 @@ iframe#main { margin:0; padding:0; }
                                     ${item.update_time}
                             </td>
                             <td style="text-align:center;">
-                                    <c:if test="${item.status}" var="test">ÉúĞ§</c:if>
-                                    <c:if test="${!test}">ÎŞĞ§</c:if>
+                                    <c:if test="${item.status}" var="test">ç”Ÿæ•ˆ</c:if>
+                                    <c:if test="${!test}">æ— æ•ˆ</c:if>
                             </td>
                             <td style="text-align:center;">
-                                <c:if test="${test}" ><a onclick="resetValid('${item.userid}',false)">ÖÃÎŞĞ§</a></c:if>
-                                <c:if test="${!test}"><a onclick="resetValid('${item.userid}',true)">ÖÃÓĞĞ§</a></c:if>
+                                <c:if test="${test}" ><a onclick="resetValid('${item.userid}',false)">ç½®æ— æ•ˆ</a></c:if>
+                                <c:if test="${!test}"><a onclick="resetValid('${item.userid}',true)">ç½®æœ‰æ•ˆ</a></c:if>
                             </td>
                         </tr>
                         </c:forEach>
 
                      </table>
-                     µÚ${page.pageIndex}/${page.maxPage}Ò³  ¹²${page.total}Ìõ
-                    <a href="javascript:onProblemPage(1);" class="btn_save">Ê×Ò³</a>
-                    <a href="javascript:onProblemPage(${page.pageIndex}-1);" class="btn_save"> ÉÏÒ»Ò³</a>
-                    <a href="javascript:onProblemPage(${page.pageIndex}+1);" class="btn_save"> ÏÂÒ»Ò³</a>
-                    <a href="javascript:onProblemPage(${page.maxPage});" class="btn_save"> Î²Ò³</a>
+                     ç¬¬${page.pageIndex}/${page.maxPage}é¡µ  å…±${page.total}æ¡
+                    <a href="javascript:onProblemPage(1);" class="btn_save">é¦–é¡µ</a>
+                    <a href="javascript:onProblemPage(${page.pageIndex}-1);" class="btn_save"> ä¸Šä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage(${page.pageIndex}+1);" class="btn_save"> ä¸‹ä¸€é¡µ</a>
+                    <a href="javascript:onProblemPage(${page.maxPage});" class="btn_save"> å°¾é¡µ</a>
 
                 </div>
 			</div><!-- pageCanvas End -->
@@ -248,7 +248,7 @@ iframe#main { margin:0; padding:0; }
                 height:140,
                 modal: true,
                 buttons: {
-                    "È·ÈÏ": function() {
+                    "ç¡®è®¤": function() {
                         $( this ).dialog( "close" );
                         $.post("/admin/blackList/updateBlackList",
                                 {
@@ -273,7 +273,7 @@ iframe#main { margin:0; padding:0; }
                                     }
                                 });
                     },
-                    È¡Ïû: function() {
+                    å–æ¶ˆ: function() {
                         $( this ).dialog( "close" );
                     }
                 }
