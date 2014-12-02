@@ -1,7 +1,4 @@
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jstl/sql" %>
-<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="GBK" contentType="text/html;charset=utf-8" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
