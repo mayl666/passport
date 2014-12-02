@@ -98,4 +98,8 @@ public final class Page<T> {
     public void setItems(List<T> items) {
         this.items = items;
     }
+
+    public int getMaxPage() {
+        return maxPage;
+    }
 }
