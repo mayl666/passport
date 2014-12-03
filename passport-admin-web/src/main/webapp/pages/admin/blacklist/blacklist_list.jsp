@@ -66,8 +66,7 @@ iframe#main { margin:0; padding:0; }
                         <td>生效时间：</td>
                         <td>
                             <select name="expire_time" id="expire_time">
-                                <option value="0" selected="selected">即使生效</option>
-                                <option value="5">5分钟</option>
+                                <option value="5" selected="selected">5分钟</option>
                                 <option value="60">1小时</option>
                                 <option value="120">2小时</option>
                                 <option value="360">6小时</option>
