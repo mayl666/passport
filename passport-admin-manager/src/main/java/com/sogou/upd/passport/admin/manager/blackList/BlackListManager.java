@@ -43,4 +43,5 @@ public interface BlackListManager {
      * @throws Exception
      */
     public boolean updateBlackListStatus(String passportId,boolean status) throws Exception;
+
 }

@@ -67,5 +67,10 @@ public final class CommonConstant {
      */
     public static final String NO_OPERATE_POWER = "不具备操作权限";
 
+    /**
+     * 黑名单redis key
+     */
+    public static final String CACHE_KEY_BLACKLIST = "BLACKLIST";
+
 
 }

@@ -2,9 +2,9 @@ package com.sogou.upd.passport.admin.blacklist;
 
 import com.sogou.upd.passport.admin.BaseTest;
 import com.sogou.upd.passport.admin.manager.blackList.BlackListManager;
+import com.sogou.upd.passport.common.utils.RedisUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,20 +19,24 @@ public class BlackListManagerImplTest extends BaseTest {
     private BlackListManager blackListManager;
 
     @Test
-    public void testInsertBlackListAccount(){
-        String passport = "1978121526119@sohu.com";
-//        blackListManager.insertBlackListAccount(passport,null);
+    public void testInsertBlackListAccount() {
+//        String passport = "1978121119@sohu.com";
+//        try {
+//            blackListManager.insertBlackList(passport, System.currentTimeMillis());
+//        } catch (Exception e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
     }
 
     @Test
-    public void testUpdateBlackListStatus(){
-        blackListManager.updateBlackListStatus("aaa.sogou.com",true);
+    public void testUpdateBlackListStatus() throws Exception {
+//        blackListManager.updateBlackListStatus("1978121526asdas119@sohu.com",false);
     }
 
     @Test
-    public void testInsertBlackList(){
-        System.out.print(blackListManager.insertBlackList("test4",Long.parseLong("1")));
-        System.out.print(blackListManager.insertBlackList("test",null));
+    public void testInsertBlackList() {
+//        System.out.print(blackListManager.insertBlackList("test4",Long.parseLong("1")));
+//        System.out.print(blackListManager.insertBlackList("test",null));
     }
 
     @Test
@@ -40,17 +44,18 @@ public class BlackListManagerImplTest extends BaseTest {
         String userid = null;
         Integer pageNo = 1;
         Integer pageSize = 10;
-        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
-        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getPageIndex());
-        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getMaxPage());
-        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getTotal());
-        Assert.notEmpty(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
-        userid = "1";
-        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
-        Assert.notEmpty(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
-        pageNo = 2;
-        pageSize = 1;
-        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
-        Assert.notNull(blackListManager.getBlackList(userid, pageNo, pageSize));
+//        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
+//        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getPageIndex());
+//        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getMaxPage());
+//        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getTotal());
+//        Assert.notEmpty(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
+//        userid = "1";
+//        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
+//        Assert.notEmpty(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
+//        pageNo = 2;
+//        pageSize = 1;
+//        System.out.println(blackListManager.getBlackList(userid, pageNo, pageSize).getItems());
+//        Assert.notNull(blackListManager.getBlackList(userid, pageNo, pageSize));
     }
+
 }

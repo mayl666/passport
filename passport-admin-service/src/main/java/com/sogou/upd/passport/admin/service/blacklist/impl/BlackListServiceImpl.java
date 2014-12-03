@@ -3,6 +3,7 @@ package com.sogou.upd.passport.admin.service.blacklist.impl;
 import com.sogou.upd.passport.admin.dao.blackList.BlackListDAO;
 import com.sogou.upd.passport.admin.model.blackList.BlackList;
 import com.sogou.upd.passport.admin.service.blacklist.BlackListService;
+import com.sogou.upd.passport.common.utils.RedisUtils;
 import com.sogou.upd.passport.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +26,14 @@ public class BlackListServiceImpl implements BlackListService {
     @Autowired
     private BlackListDAO blackListDAO;
 
-    public int insertBlackList(BlackList blackList) throws ServiceException{
-        return blackListDAO.insertBlackList(blackList);
+
+    public int insertBlackList(BlackList blackList) throws ServiceException {
+        return  blackListDAO.insertBlackList(blackList);
     }
 
     @Override
     public List<BlackList> getBlackList(String userid, Integer start, Integer end) throws ServiceException {
-        return blackListDAO.getBlackList(userid,start,end);
+        return blackListDAO.getBlackList(userid, start, end);
     }
 
     @Override
@@ -47,5 +49,10 @@ public class BlackListServiceImpl implements BlackListService {
     @Override
     public int updateBlackList(BlackList blackList) throws ServiceException {
         return blackListDAO.updateBlackList(blackList);
+    }
+
+    @Override
+    public List<BlackList> getBlackListByValid() {
+        return blackListDAO.getBlackListByValid();
     }
 }

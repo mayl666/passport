@@ -53,4 +53,6 @@ public interface BlackListService {
      * @throws ServiceException
      */
     public int updateBlackList(BlackList blackList) throws ServiceException;
+
+    public List<BlackList> getBlackListByValid();
 }

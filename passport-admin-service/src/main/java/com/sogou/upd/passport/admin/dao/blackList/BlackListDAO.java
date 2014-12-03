@@ -86,6 +86,15 @@ public interface BlackListDAO {
     )
     public BlackList getBlackListByUserID(@SQLParam("userid") String userid) throws DataAccessException;
 
+    @SQL("select " +
+            ALL_FIELD +
+            " from " +
+            TABLE_NAME +
+            " where status = 1 "
+    )
+    public List<BlackList> getBlackListByValid() throws DataAccessException;
+
+
     @SQL("select count(id)" +
             " from " +
             TABLE_NAME +
