@@ -59,7 +59,7 @@ public interface BlackListDAO {
                     "set " +
                     "#if(:module_user_blacklist.status != null){status=:module_user_blacklist.status,} " +
                     "#if(:module_user_blacklist.update_time != null){update_time=:module_user_blacklist.update_time} " +
-                    "where userid = :module_user_blacklist.userid "
+                    "where id = :module_user_blacklist.id "
             )
     public int updateBlackList(@SQLParam("module_user_blacklist") BlackList BlackList) throws DataAccessException;
 

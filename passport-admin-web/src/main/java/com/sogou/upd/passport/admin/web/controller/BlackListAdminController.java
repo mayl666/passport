@@ -99,10 +99,10 @@ public class BlackListAdminController extends BaseController {
      */
     @RequestMapping("/blackList/updateBlackList")
     @ResponseBody
-    public String updateBlackListStatus(String passportId,boolean status){
+    public String updateBlackListStatus(String id,boolean status){
         JSONObject json = new JSONObject();
         try{
-        boolean flag = blackListManager.updateBlackListStatus(passportId,status);
+        boolean flag = blackListManager.updateBlackListStatus(id,status);
         if(flag){
             json.put("success", true);
             json.put("message", "修改成功");

@@ -157,8 +157,8 @@ iframe#main { margin:0; padding:0; }
                                 <c:if test="${item.account_type==5}">第三方</c:if>
                                 <c:if test="${item.account_type==6}">个性化</c:if>
                             </td>
-                            <td style="text-align:center;" id="${item.userid}">
-                                    <script>formatDate(${item.expire_time},'${item.userid}')</script>
+                            <td style="text-align:center;" id="${item.id}">
+                                    <script>formatDate(${item.expire_time},'${item.id}')</script>
                             </td>
                             <td style="text-align:center;">
                                     ${item.create_time}
@@ -171,8 +171,8 @@ iframe#main { margin:0; padding:0; }
                                     <c:if test="${!test}">无效</c:if>
                             </td>
                             <td style="text-align:center;">
-                                <c:if test="${test}" ><a onclick="resetValid('${item.userid}',false)">置无效</a></c:if>
-                                <c:if test="${!test}"><a onclick="resetValid('${item.userid}',true)">置有效</a></c:if>
+                                <c:if test="${test}" ><a onclick="resetValid('${item.id}',false)">置无效</a></c:if>
+                                <c:if test="${!test}"><a onclick="resetValid('${item.id}',true)">置有效</a></c:if>
                             </td>
                         </tr>
                         </c:forEach>
@@ -242,7 +242,7 @@ iframe#main { margin:0; padding:0; }
                     });
         }
 
-        function resetValid(passportId,valid){
+        function resetValid(id,valid){
             $( "#dialog-confirm" ).dialog({
                 resizable: false,
                 height:140,
@@ -252,7 +252,7 @@ iframe#main { margin:0; padding:0; }
                         $( this ).dialog( "close" );
                         $.post("/admin/blackList/updateBlackList",
                                 {
-                                    passportId: passportId,
+                                    id: id,
                                     status:valid
                                 },
                                 function(data){

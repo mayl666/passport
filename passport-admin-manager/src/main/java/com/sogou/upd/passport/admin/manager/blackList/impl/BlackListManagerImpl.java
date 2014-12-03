@@ -64,9 +64,9 @@ public class BlackListManagerImpl implements BlackListManager {
     }
 
     @Override
-    public boolean updateBlackListStatus(String passportId, boolean status) throws Exception {
+    public boolean updateBlackListStatus(String id, boolean status) throws Exception {
         BlackList tmp = new BlackList();
-        tmp.setUserid(passportId);
+        tmp.setId(Integer.valueOf(id));
         tmp.setUpdate_time(new Date());
         tmp.setStatus(status);
         int i = blackListService.updateBlackList(tmp);
