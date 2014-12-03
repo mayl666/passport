@@ -22,7 +22,21 @@ iframe#main { margin:0; padding:0; }
 <script>
     function   formatDate(d,userid)   {
         var  now=new Date(d);
-        var   year=now.getYear()+1900;
+        reg=/^\d+$/;
+        if((d!='') && (reg.test(d))) {
+            var ymd=new Date();
+            ymd.setTime(d*1000);
+            var year=ymd.getFullYear().toString();
+            var month=(ymd.getMonth()+1).toString();
+            var date=ymd.getDate().toString();
+            var hour=ymd.getHours().toString();
+            var minute=ymd.getMinutes().toString();
+            var second=ymd.getSeconds().toString();
+            //$('#ymd').val(year+'-'+month+'-'+date+' '+hour+':'+minute+':'+second);
+            var tmp = document.getElementById(userid);
+            tmp.innerHTML=year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+        }
+       /* var   year=now.getYear()+1900;
         var   month=now.getMonth()+1;
         var   date=now.getDate();
         var   hour=now.getHours();
@@ -32,7 +46,7 @@ iframe#main { margin:0; padding:0; }
         var tmp = document.getElementById(userid);
         tmp.innerHTML=year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
         //$("#tda").append("AAAAA");
-        //return   year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+        //return   year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;*/
     }
 </script>
 </head>

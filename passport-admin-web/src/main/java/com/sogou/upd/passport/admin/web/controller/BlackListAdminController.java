@@ -73,7 +73,7 @@ public class BlackListAdminController extends BaseController {
                 json.put("success", false);
                 json.put("message","没有此用户");
             } else{
-                expire_time = System.currentTimeMillis() + expire_time * 60000 ;
+                expire_time = System.currentTimeMillis()/1000 + expire_time * 60 ;
                 boolean flag = blackListManager.insertBlackList(passportId_input,expire_time);
                 if(flag){
                     json.put("success", true);
