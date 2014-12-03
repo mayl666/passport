@@ -78,7 +78,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default" onclick="submitResetForm()">重置密码</button>
+                            <input type="button" class="btn btn-default" onclick="submitResetForm()">重置密码</input>
                         </div>
                     </div>
                 </form>
