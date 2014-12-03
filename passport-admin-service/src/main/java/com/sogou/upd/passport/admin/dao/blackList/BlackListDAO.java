@@ -90,7 +90,7 @@ public interface BlackListDAO {
             ALL_FIELD +
             " from " +
             TABLE_NAME +
-            " where status = 1 "
+            " where status = 1 and UNIX_TIMESTAMP(NOW())< expire_time"
     )
     public List<BlackList> getBlackListByValid() throws DataAccessException;
 
