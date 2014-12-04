@@ -98,8 +98,8 @@ public interface BlackListDAO {
             ALL_FIELD +
             " from " +
             TABLE_NAME +
-            " where status = 1 "
-            + "#if(:userid != null){and id = :id}"
+            " where 1 = 1 "
+            + "#if(:id != null){and id = :id}"
     )
     public BlackList getBlackListByID(@SQLParam("id") String id) throws DataAccessException;
 

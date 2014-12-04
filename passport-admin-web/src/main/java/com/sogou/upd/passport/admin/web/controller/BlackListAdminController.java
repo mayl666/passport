@@ -106,7 +106,7 @@ public class BlackListAdminController extends BaseController {
         JSONObject json = new JSONObject();
         try {
             boolean tag = blackListManager.isExpire(id);
-            if (tag) {
+            if (!tag) {
                 json.put("success", false);
                 json.put("message", "此记录已过期，不可置为有效！");
             } else {
