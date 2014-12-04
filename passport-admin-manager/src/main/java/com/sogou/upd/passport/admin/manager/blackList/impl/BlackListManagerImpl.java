@@ -55,6 +55,7 @@ public class BlackListManagerImpl implements BlackListManager {
 
     @Override
     public Page<BlackList> getBlackList(String userid, int pageNo, int pageSize) throws Exception {
+        blackListService.updateBlackListExpire();
         Page<BlackList> page = new Page<BlackList>(pageNo, pageSize);
         List<BlackList> list = blackListService.getBlackList(userid, pageSize * (pageNo - 1), pageSize);
         int total = blackListService.getBlackListCount(userid);
@@ -79,6 +80,14 @@ public class BlackListManagerImpl implements BlackListManager {
             return true;
         } else
             return false;
+    }
+
+    public boolean isExpire(String id) throws Exception {
+        BlackList tmp = blackListService.getBlackListByID(id);
+        if (tmp.getExpire_time() < System.currentTimeMillis() / 1000) {
+            return false;
+        }
+        return true;
     }
 
 }

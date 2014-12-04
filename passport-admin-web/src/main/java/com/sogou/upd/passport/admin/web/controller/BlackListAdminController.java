@@ -36,6 +36,7 @@ public class BlackListAdminController extends BaseController {
 
     /**
      * 查询黑名单列表（模糊查询）
+     *
      * @param passportId
      * @param pageNo
      * @param model
@@ -43,39 +44,40 @@ public class BlackListAdminController extends BaseController {
      */
     @RequestMapping(value = "/blackList/queryBlackList")
     public String queryAllBlackList(String passportId, Integer pageNo, Model model) {
-        try{
+        try {
             if (null == pageNo)
                 pageNo = 1;
             Page page = blackListManager.getBlackList(passportId, pageNo, 10);
-            model.addAttribute("passportId",passportId);
+            model.addAttribute("passportId", passportId);
             model.addAttribute("page", page);
-        }catch(Exception e){
-            log.error("查询失败",e);
+        } catch (Exception e) {
+            log.error("查询失败", e);
         }
         return "/pages/admin/blacklist/blacklist_list.jsp";
     }
 
     /**
      * 新增黑名单
+     *
      * @param passportId_input
      * @param expire_time
      * @return
      */
     @RequestMapping(value = "/blackList/addBlackList")
     @ResponseBody
-    public String addBlackList(String passportId_input,long expire_time){
+    public String addBlackList(String passportId_input, long expire_time) {
         JSONObject json = new JSONObject();
-        try{
+        try {
             AccountSearchParam tmp = new AccountSearchParam();
             tmp.setUserName(passportId_input);
             AccountDetailInfo accountDetail = accountAdminManager.getAccountDetailInfo(tmp);
-            if(accountDetail.getPassportId() == null){
+            if (accountDetail.getPassportId() == null) {
                 json.put("success", false);
-                json.put("message","没有此用户");
-            } else{
-                expire_time = System.currentTimeMillis()/1000 + expire_time * 60 ;
-                boolean flag = blackListManager.insertBlackList(passportId_input,expire_time);
-                if(flag){
+                json.put("message", "没有此用户");
+            } else {
+                expire_time = System.currentTimeMillis() / 1000 + expire_time * 60;
+                boolean flag = blackListManager.insertBlackList(passportId_input, expire_time);
+                if (flag) {
                     json.put("success", true);
                     json.put("message", "添加成功");
                 } else {
@@ -83,37 +85,44 @@ public class BlackListAdminController extends BaseController {
                     json.put("message", "黑名单中已有该用户！");
                 }
             }
-        }catch (Exception e){
-            log.error("新增失败",e);
+        } catch (Exception e) {
+            log.error("新增失败", e);
             json.put("success", false);
-            json.put("message","添加失败，请联系管理员！");
+            json.put("message", "添加失败，请联系管理员！");
         }
         return json.toString();
     }
 
     /**
      * 更新黑名单状态
+     *
      * @param passportId
      * @param status
      * @return
      */
     @RequestMapping("/blackList/updateBlackList")
     @ResponseBody
-    public String updateBlackListStatus(String id,boolean status){
+    public String updateBlackListStatus(String id, boolean status) {
         JSONObject json = new JSONObject();
-        try{
-        boolean flag = blackListManager.updateBlackListStatus(id,status);
-        if(flag){
-            json.put("success", true);
-            json.put("message", "修改成功");
-        } else{
+        try {
+            boolean tag = blackListManager.isExpire(id);
+            if (tag) {
+                json.put("success", false);
+                json.put("message", "此记录已过期，不可置为有效！");
+            } else {
+                boolean flag = blackListManager.updateBlackListStatus(id, status);
+                if (flag) {
+                    json.put("success", true);
+                    json.put("message", "修改成功");
+                } else {
+                    json.put("success", false);
+                    json.put("message", "修改失败，请联系管理员！");
+                }
+            }
+        } catch (Exception e) {
+            log.error("修改失败", e);
             json.put("success", false);
             json.put("message", "修改失败，请联系管理员！");
-        }
-        }catch(Exception e){
-            log.error("修改失败",e);
-            json.put("success", false);
-            json.put("message","修改失败，请联系管理员！");
         }
         return json.toString();
     }
