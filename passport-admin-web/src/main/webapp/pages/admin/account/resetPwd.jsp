@@ -78,7 +78,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default" onclick="submitResetForm()">重置密码</button>
+                            <button type="submit" class="btn btn-default" onclick="submitResetForm()">重置密码</button>
                         </div>
                     </div>
                 </form>
@@ -100,9 +100,10 @@
             return false;
         }
 //        document.forms["resetForm"].submit();
-        $.post('/admin/resetPassword', {passportId: passportId}, function (data) {
+//        $.post('/admin/resetPassword', {passportId: passportId}, function (data) {
 //            alert(data.statusText);
-        }, 'json');
+
+//        }, 'json');
         showMsg();
     }
 
