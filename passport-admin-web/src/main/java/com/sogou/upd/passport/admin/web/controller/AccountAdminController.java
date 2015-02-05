@@ -87,6 +87,7 @@ public class AccountAdminController extends BaseController {
 //                return CommonConstant.NO_OPERATE_POWER;
 //            }
 
+
             if (!checkUserOrIpInWhiteList(operator, userIp)) {
                 logger.warn("resetPwd user hasn't power operate! userIp:" + userIp);
                 return CommonConstant.NO_OPERATE_POWER;

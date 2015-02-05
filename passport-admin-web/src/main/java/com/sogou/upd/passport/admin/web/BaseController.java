@@ -33,6 +33,9 @@ public class BaseController {
     //操作人员：韩旭
     private static final String OPERATOR_HANXU = "hanxu200946@sogou-inc.com";
 
+    // 操作人 林琳 特殊处理
+    private static final String OPERATOR_LINLIN = "linlin201945@sogou-inc.com";
+
     /**
      * 判断是否是服务端签名
      */
@@ -126,14 +129,18 @@ public class BaseController {
      * @return
      */
     protected boolean checkUserOrIpInWhiteList(String userName, String userIp) {
-        if (!Strings.isNullOrEmpty(userName) && userName.equals(OPERATOR_HANXU)) {
-            boolean checkIp = IPUtil.checkIpForOperator(userIp);
-            if (checkIp) {
-                return true;
+        //林琳 特殊处理
+        if (!Strings.isNullOrEmpty(userName) && userName.equals(OPERATOR_LINLIN)) {
+            return true;
+        } else {
+            if (!Strings.isNullOrEmpty(userName) && userName.equals(OPERATOR_HANXU)) {
+                boolean checkIp = IPUtil.checkIpForOperator(userIp);
+                if (checkIp) {
+                    return true;
+                }
             }
+            return operateManager.checkUserOrIpInWhiteList(userName, userIp);
         }
-        return operateManager.checkUserOrIpInWhiteList(userName, userIp);
     }
-
 
 }

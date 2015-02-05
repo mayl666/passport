@@ -29,7 +29,7 @@ public class IPUtil {
 
     /**
      * vpn 链接后 电信 分配网段
-     */
+     */                                                    //10.129.212.207
     private static final String VPN_IP_RANAGE_CTCC = "10.129.212.10-10.129.215.240";
 
     /**
