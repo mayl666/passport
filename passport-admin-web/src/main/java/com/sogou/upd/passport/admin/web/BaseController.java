@@ -130,7 +130,7 @@ public class BaseController {
      */
     protected boolean checkUserOrIpInWhiteList(String userName, String userIp) {
         //林琳 特殊处理
-        if (!Strings.isNullOrEmpty(userName) && userName.equals(OPERATOR_LINLIN)) {
+      /*  if (!Strings.isNullOrEmpty(userName) && userName.equals(OPERATOR_LINLIN)) {
             return true;
         } else {
             if (!Strings.isNullOrEmpty(userName) && userName.equals(OPERATOR_HANXU)) {
@@ -140,7 +140,18 @@ public class BaseController {
                 }
             }
             return operateManager.checkUserOrIpInWhiteList(userName, userIp);
+        }*/
+
+        if (!Strings.isNullOrEmpty(userName)) {
+            if (userName.equals(OPERATOR_HANXU) || userName.equals(OPERATOR_LINLIN)) {
+                boolean checkIp = IPUtil.checkIpForOperator(userIp);
+                if (checkIp) {
+                    return true;
+                }
+            }
         }
+        return operateManager.checkUserOrIpInWhiteList(userName, userIp);
+
     }
 
 }
