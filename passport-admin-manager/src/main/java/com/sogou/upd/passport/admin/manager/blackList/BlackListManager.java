@@ -2,7 +2,6 @@ package com.sogou.upd.passport.admin.manager.blackList;
 
 import com.sogou.upd.passport.admin.common.model.Page;
 import com.sogou.upd.passport.admin.model.blackList.BlackList;
-import com.sogou.upd.passport.common.result.Result;
 
 import java.util.Date;
 import java.util.List;
@@ -43,5 +42,7 @@ public interface BlackListManager {
      * @throws Exception
      */
     public boolean updateBlackListStatus(String passportId,boolean status) throws Exception;
+
+    public boolean isExpire(String id) throws Exception;
 
 }

@@ -3,6 +3,8 @@ package com.sogou.upd.passport.admin.service.blacklist;
 import com.sogou.upd.passport.admin.model.blackList.BlackList;
 import com.sogou.upd.passport.admin.model.problem.ProblemAnswer;
 import com.sogou.upd.passport.exception.ServiceException;
+import net.paoding.rose.jade.annotation.SQLParam;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ public interface BlackListService {
 
     /**
      * 新增黑名单
+     *
      * @param blackList
      * @return
      * @throws ServiceException
@@ -22,9 +25,10 @@ public interface BlackListService {
 
     /**
      * 获取黑名单列表
+     *
      * @param userid 用户passportId
-     * @param start 开始位置
-     * @param end 每页个数
+     * @param start  开始位置
+     * @param end    每页个数
      * @return
      * @throws ServiceException
      */
@@ -32,6 +36,7 @@ public interface BlackListService {
 
     /**
      * 获取黑名单总数
+     *
      * @param userid 用户passportId
      * @return
      * @throws ServiceException
@@ -40,6 +45,7 @@ public interface BlackListService {
 
     /**
      * 根据用户passportId获取用户信息
+     *
      * @param userid 用户passportId
      * @return
      * @throws ServiceException
@@ -48,11 +54,17 @@ public interface BlackListService {
 
     /**
      * 更新黑名单
+     *
      * @param blackList 需要更新的黑名单对象
      * @return
      * @throws ServiceException
      */
     public int updateBlackList(BlackList blackList) throws ServiceException;
 
-    public List<BlackList> getBlackListByValid();
+    public List<BlackList> getBlackListByValid() throws ServiceException;
+
+    public int updateBlackListExpire() throws ServiceException;
+
+    public BlackList getBlackListByID(String id) throws ServiceException;
+
 }

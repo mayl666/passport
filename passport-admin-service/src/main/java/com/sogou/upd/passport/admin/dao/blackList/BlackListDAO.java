@@ -63,6 +63,14 @@ public interface BlackListDAO {
             )
     public int updateBlackList(@SQLParam("module_user_blacklist") BlackList BlackList) throws DataAccessException;
 
+    @SQL(
+            "update " +
+                    TABLE_NAME +
+                    "set status = 0 " +
+                    "where UNIX_TIMESTAMP(NOW())> expire_time"
+    )
+    public int updateBlackListExpire() throws DataAccessException;
+
     @SQL("select " +
             ALL_FIELD +
             " from " +
@@ -85,6 +93,15 @@ public interface BlackListDAO {
             + "#if(:userid != null){and userid = :userid }"
     )
     public BlackList getBlackListByUserID(@SQLParam("userid") String userid) throws DataAccessException;
+
+    @SQL("select " +
+            ALL_FIELD +
+            " from " +
+            TABLE_NAME +
+            " where 1 = 1 "
+            + "#if(:id != null){and id = :id}"
+    )
+    public BlackList getBlackListByID(@SQLParam("id") String id) throws DataAccessException;
 
     @SQL("select " +
             ALL_FIELD +
