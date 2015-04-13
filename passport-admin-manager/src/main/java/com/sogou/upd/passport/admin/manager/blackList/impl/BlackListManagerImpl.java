@@ -47,7 +47,7 @@ public class BlackListManagerImpl implements BlackListManager {
             blackList.setAccount_type(accounttype);
             blackList.setUpdate_time(null);
             blackList.setExpire_time(expire_time);
-            redisUtils.sadd(CommonConstant.CACHE_KEY_BLACKLIST, blackList.getUserid() + "_" + blackList.getExpire_time());
+            redisUtils.sadd(CommonConstant.CACHE_KEY_BLACKLIST, blackList.getUserid() + "^" + blackList.getExpire_time());
             blackListService.insertBlackList(blackList);
             return true;
         }
@@ -75,7 +75,7 @@ public class BlackListManagerImpl implements BlackListManager {
             redisUtils.delete(CommonConstant.CACHE_KEY_BLACKLIST);
             List<BlackList> list = blackListService.getBlackListByValid();
             for (BlackList temp : list) {
-                redisUtils.sadd(CommonConstant.CACHE_KEY_BLACKLIST, temp.getUserid() + "_" + temp.getExpire_time());
+                redisUtils.sadd(CommonConstant.CACHE_KEY_BLACKLIST, temp.getUserid() + "^" + temp.getExpire_time());
             }
             return true;
         } else
