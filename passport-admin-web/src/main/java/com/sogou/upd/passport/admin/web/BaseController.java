@@ -36,6 +36,9 @@ public class BaseController {
     // 操作人 林琳 特殊处理
     private static final String OPERATOR_LINLIN = "linlin201945@sogou-inc.com";
 
+    //魏云龙
+    private static final String OPERATOR_WEIYUNLONG = "weiyunlong@sogou-inc.com";
+
     /**
      * 判断是否是服务端签名
      */
@@ -143,7 +146,7 @@ public class BaseController {
         }*/
 
         if (!Strings.isNullOrEmpty(userName)) {
-            if (userName.equals(OPERATOR_HANXU) || userName.equals(OPERATOR_LINLIN)) {
+            if (userName.equals(OPERATOR_HANXU) || userName.equals(OPERATOR_LINLIN) || userName.equals(OPERATOR_WEIYUNLONG)) {
                 boolean checkIp = IPUtil.checkIpForOperator(userIp);
                 if (checkIp) {
                     return true;
