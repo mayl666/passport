@@ -135,9 +135,8 @@ iframe#main { margin:0; padding:0; }
                                     <span class="button button-main"><button type="button" onclick="onDisplayAddFrame();" class="button">新增</button></span>
                                 </td>
                             </tr>
-                        <table>
+                        </table>
                     </form>
-
 
                     <hr>
 				</div><!-- pageCanvasInt End -->
@@ -204,12 +203,9 @@ iframe#main { margin:0; padding:0; }
 
     <script type="text/javascript">
 
-
-
         function onQueryProblemSubmit(){
             jQuery("#queryProblemForm").submit();
         }
-
 
         function onProblemPage(pageNum){
             if(pageNum<=0){

@@ -96,7 +96,6 @@ public class BlackListAdminController extends BaseController {
     /**
      * 更新黑名单状态
      *
-     * @param passportId
      * @param status
      * @return
      */
