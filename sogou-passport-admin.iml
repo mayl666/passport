@@ -9,11 +9,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-main-common:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.hadoop:libthrift:0.5.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.facebook:fb303-if:1.0-20110126" level="project" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-main-service:1.0" level="project" />
-    <orderEntry type="library" name="Maven: sogou-passport:passport-oauth2:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-mongodb:1.5.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.8.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:2.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.ning:async-http-client:1.7.18" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.thrift:libfb303:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:3.2.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:3.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
@@ -65,14 +67,14 @@
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-props:3.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-core:3.4.0" level="project" />
-    <orderEntry type="module" module-name="passport-main-common" />
-    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:1.0.3.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-tx:3.1.4.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.6.6" level="project" />
-    <orderEntry type="library" name="Maven: redis.clients:jedis:2.1.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.5" level="project" />
+    <orderEntry type="library" name="Maven: sogou-passport:passport-main-common:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:1.3.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:3.2.13.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: redis.clients:jedis:2.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-mongodb:1.5.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.8.1.RELEASE" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:jcl-over-slf4j:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:2.13.0" level="project" />
     <orderEntry type="library" name="Maven: com.sohu:sendcloud:1.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.6.2" level="project" />
@@ -86,11 +88,12 @@
     <orderEntry type="library" name="Maven: antlr:antlr:2.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.struts:struts-taglib:1.3.8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.struts:struts-tiles:1.3.8" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.2.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:fluent-hc:4.2.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.4" level="project" />
     <orderEntry type="library" name="Maven: com.ning:async-http-client:1.7.18" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty:3.6.6.Final" level="project" />
     <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.8" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.3" level="project" />
     <orderEntry type="library" name="Maven: xmlpull:xmlpull:1.1.3.1" level="project" />
@@ -98,6 +101,8 @@
     <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-core:3.0.0-RC1" level="project" />
     <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-jvm:3.0.0-RC1" level="project" />
     <orderEntry type="library" name="Maven: org.patchca:patchca:0.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpasyncclient:4.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.amqp:spring-rabbit:1.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.amqp:spring-amqp:1.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.rabbitmq:amqp-client:2.8.4" level="project" />
@@ -107,8 +112,8 @@
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.0.CR2" level="project" />
     <orderEntry type="library" name="Maven: org.perf4j:perf4j:0.9.16" level="project" />
     <orderEntry type="library" name="Maven: de.bitzeche.logback:logback-scribe:1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.9.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.thrift:libfb303:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.hadoop:libthrift:0.5.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.facebook:fb303-if:1.0-20110126" level="project" />
     <orderEntry type="library" name="Maven: com.sogou.passport:logback-kafka:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kafka:kafka_2.9.2:0.8.0" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.9.2" level="project" />
@@ -118,7 +123,11 @@
     <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.0.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.yammer.metrics:metrics-core:2.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.yammer.metrics:metrics-annotation:2.2.0" level="project" />
-    <orderEntry type="module" module-name="passport-main-service" />
+    <orderEntry type="library" name="Maven: com.netflix.hystrix:hystrix-core:1.3.20" level="project" />
+    <orderEntry type="library" name="Maven: com.netflix.archaius:archaius-core:0.4.1" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex:rxjava:1.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.netflix.hystrix:hystrix-metrics-event-stream:1.3.20" level="project" />
+    <orderEntry type="library" name="Maven: sogou-passport:passport-main-service:1.0" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.17" level="project" />
     <orderEntry type="library" name="Maven: c3p0:c3p0:0.9.1.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:3.2.6.RELEASE" level="project" />
@@ -130,6 +139,7 @@
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.14" level="project" />
     <orderEntry type="library" name="Maven: ognl:ognl:2.7.3" level="project" />
     <orderEntry type="library" name="Maven: jboss:javassist:3.7.ga" level="project" />
+    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: classworlds:classworlds:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.netflix.curator:curator-recipes:1.3.3" level="project" />
     <orderEntry type="library" name="Maven: com.netflix.curator:curator-framework:1.3.3" level="project" />
@@ -137,7 +147,7 @@
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.5" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache:xercesImpl:2.9.1" level="project" />
-    <orderEntry type="module" module-name="passport-oauth2" />
+    <orderEntry type="library" name="Maven: sogou-passport:passport-oauth2:1.0" level="project" />
   </component>
 </module>
 

@@ -271,8 +271,8 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                             result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED));
                         }
                     } else {
-                        result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
-                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                        result.setCode(ErrorUtil.INVALID_ACCOUNT);
+                        result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.INVALID_ACCOUNT));
                     }
                 } else {
                     result.setCode(ErrorUtil.ERR_CODE_PHONE_UNBIND_FAILED);
@@ -320,8 +320,8 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                     saveOperateLog(operateHistoryLog);
                 }
             } else {
-                result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
-                result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                result.setCode(ErrorUtil.INVALID_ACCOUNT);
+                result.setMessage(ErrorUtil.getERR_CODE_MSG_MAP().get(ErrorUtil.INVALID_ACCOUNT));
                 return result;
             }
         } catch (Exception e) {
@@ -358,8 +358,8 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                                     }
                                 } else {
                                     failed.add(mobile);
-                                    result.setCode(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT);
-                                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.ERR_CODE_ACCOUNT_NOTHASACCOUNT));
+                                    result.setCode(ErrorUtil.INVALID_ACCOUNT);
+                                    result.setMessage(ErrorUtil.ERR_CODE_MSG_MAP.get(ErrorUtil.INVALID_ACCOUNT));
                                 }
                             } else {
                                 failed.add(mobile);
