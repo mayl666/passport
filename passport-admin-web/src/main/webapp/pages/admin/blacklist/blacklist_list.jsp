@@ -282,7 +282,7 @@ iframe#main { margin:0; padding:0; }
                                     }
                                 });
                     },
-                    取消: function() {
+                    "取消": function() {
                         $( this ).dialog( "close" );
                     }
                 }
