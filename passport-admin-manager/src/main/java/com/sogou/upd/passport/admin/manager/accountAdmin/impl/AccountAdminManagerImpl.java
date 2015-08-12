@@ -17,6 +17,7 @@ import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.ErrorUtil;
 import com.sogou.upd.passport.common.utils.PhoneUtil;
 import com.sogou.upd.passport.common.utils.ProvinceAndCityUtil;
+import com.sogou.upd.passport.common.utils.RedisUtils;
 import com.sogou.upd.passport.model.account.Account;
 import com.sogou.upd.passport.model.account.AccountInfo;
 import com.sogou.upd.passport.model.operatelog.OperateHistoryLog;
@@ -61,6 +62,9 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
 
     @Autowired
     private OperateHistoryLogService operateHistoryLogService;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
 
     private static final String KEY_SPLITTER = "|";
@@ -211,6 +215,8 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                     result.setSuccess(true);
                     result.setMessage(MessageUtil.RESET_PP_SUCCESS);
                     result.setDefaultModel("newPassword", newPassword);
+                    String key = "SP.PASSPORTID:SOGOULEAKLIST_" + account.getPassportId();
+                    redisUtils.delete(key);
                 }
             } else {
                 result.setCode(ErrorUtil.INVALID_ACCOUNT);
