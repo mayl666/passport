@@ -63,10 +63,6 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     @Autowired
     private OperateHistoryLogService operateHistoryLogService;
 
-    @Autowired
-    private RedisUtils redisUtils;
-
-
     private static final String KEY_SPLITTER = "|";
 
     private static final String VALUE_SPLITTER = ":";
@@ -215,8 +211,6 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                     result.setSuccess(true);
                     result.setMessage(MessageUtil.RESET_PP_SUCCESS);
                     result.setDefaultModel("newPassword", newPassword);
-                    String key = "SP.PASSPORTID:SOGOULEAKLIST_" + account.getPassportId();
-                    redisUtils.delete(key);
                 }
             } else {
                 result.setCode(ErrorUtil.INVALID_ACCOUNT);
