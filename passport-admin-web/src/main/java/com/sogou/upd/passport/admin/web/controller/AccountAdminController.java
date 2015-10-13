@@ -376,7 +376,7 @@ public class AccountAdminController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/handle/leak", method = RequestMethod.GET)
-    @ResponseBody
+   // @ResponseBody
     public String handleLeak(HttpServletRequest request) {
         String leakUserPassportIds = request.getParameter("id");
         if(Strings.isNullOrEmpty(leakUserPassportIds)){
