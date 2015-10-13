@@ -72,5 +72,6 @@ public final class CommonConstant {
      */
     public static final String CACHE_KEY_BLACKLIST = "BLACKLIST";
 
+    public static final String ACCOUNT_UNFREEZED = "解除限制成功";
 
 }
