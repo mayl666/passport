@@ -43,6 +43,9 @@ public class AccountAdminController extends BaseController {
     @Autowired
     private AccountAdminManager accountAdminManager;
 
+    @Autowired
+    private HttpServletRequest request;
+
     /**
      * 用户账号信息查询
      * <p/>
@@ -376,9 +379,9 @@ public class AccountAdminController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/handle/leak", method = RequestMethod.GET)
-   // @ResponseBody
-    public String handleLeak(HttpServletRequest request) {
-        String leakUserPassportIds = request.getParameter("id");
+    @ResponseBody
+    public String handleLeak(@RequestParam("id") String leakUserPassportIds) {
+      //  String leakUserPassportIds = request.getParameter("id");
         if(Strings.isNullOrEmpty(leakUserPassportIds)){
             return "请求参数错误";
         }
