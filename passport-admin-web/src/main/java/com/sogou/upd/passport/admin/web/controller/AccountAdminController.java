@@ -372,13 +372,16 @@ public class AccountAdminController extends BaseController {
     /**
      *
      * 解除限制
-     * @param leakUserPassportIds
      * @param request
      * @return
      */
     @RequestMapping(value = "/handle/leak", method = RequestMethod.GET)
     @ResponseBody
-    public String handleLeak(@RequestParam("id") String leakUserPassportIds, HttpServletRequest request) {
+    public String handleLeak(HttpServletRequest request) {
+        String leakUserPassportIds = request.getParameter("id");
+        if(Strings.isNullOrEmpty(leakUserPassportIds)){
+            return "请求参数错误";
+        }
         String result = " ";
         try {
             //检测操作权限
