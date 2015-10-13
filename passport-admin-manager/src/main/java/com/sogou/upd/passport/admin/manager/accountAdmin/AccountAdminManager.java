@@ -78,5 +78,11 @@ public interface AccountAdminManager {
      */
     public Result deleteRegMobiles(List<String> regMobileList);
 
+    /**
+     *
+     * @param passportIds
+     * @return
+     */
+    public String deleteRestriction(List<String> passportIds);
 
 }

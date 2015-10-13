@@ -368,4 +368,44 @@ public class AccountAdminController extends BaseController {
         }
         return "/pages/admin/account/accountAdmin.jsp";
     }
+
+    /**
+     *
+     * 解除限制
+     * @param leakUserPassportIds
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/handle/leak", method = RequestMethod.GET)
+    @ResponseBody
+    public String handleLeak(@RequestParam("id") String leakUserPassportIds, HttpServletRequest request) {
+        String result = " ";
+        try {
+            //检测操作权限
+            //操作者ip
+            String userIp = IPUtil.getIP(request);
+            //操作者
+            String operator = RequestUtils.getPassportEmail(request);
+            if (!checkUserOrIpInWhiteList(operator, userIp)) {
+                logger.warn(" handleLeak user hasn't power operate! userIp:" + userIp);
+                result = CommonConstant.NO_OPERATE_POWER;
+                return result;
+            }
+            //提取PassportId
+            List<String> passportIds = Lists.newArrayList();
+            String[] leakUsers = StringUtils.split(leakUserPassportIds, CommonConstant.COMMON_STRING_SPLIT);
+            if (leakUsers.length > 0) {
+                for (String leakUser : leakUsers) {
+                    if (!Strings.isNullOrEmpty(leakUser)) {
+                        passportIds.add(leakUser.trim());
+                    }
+                }
+            }
+            result = accountAdminManager.deleteRestriction(passportIds);
+        } catch (Exception e) {
+            logger.error("handleLeak error");
+        }
+        return result;
+    }
+
 }

@@ -72,6 +72,24 @@ public final class CommonConstant {
      */
     public static final String CACHE_KEY_BLACKLIST = "BLACKLIST";
 
-    public static final String ACCOUNT_UNFREEZED = "解除限制成功";
+    /**
+     * 账号信息不存在
+     */
+    public static final String ACCOUNT_NONEXISTANT = "用户账号信息不存在";
+
+    /**
+     * 账号信息不在列表中
+     */
+    public static final String ACCOUNT_NOTIN_RESTRICTION = "用户账号信息不在限制列表中";
+
+    /**
+     * 账号信息解除限制成功
+     */
+    public static final String ACCOUNT_UNFREEZED = "用户账号信息成功解除限制";
+
+    /**
+     * Redis 中泄露账号信息的key前缀
+     */
+    public static final String LEAK_PREKEY = "SP.PASSPORTID:SOGOULEAKLIST_";
 
 }

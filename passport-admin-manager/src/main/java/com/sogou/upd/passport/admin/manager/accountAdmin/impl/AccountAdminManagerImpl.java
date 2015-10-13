@@ -9,15 +9,14 @@ import com.sogou.upd.passport.admin.common.utils.UuidUtil;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.form.AccountSearchParam;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
+import com.sogou.upd.passport.common.CacheConstant;
 import com.sogou.upd.passport.common.lang.StringUtil;
 import com.sogou.upd.passport.common.parameter.AccountDomainEnum;
+import com.sogou.upd.passport.common.parameter.AccountStatusEnum;
 import com.sogou.upd.passport.common.parameter.OperateLogEnum;
 import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
-import com.sogou.upd.passport.common.utils.ErrorUtil;
-import com.sogou.upd.passport.common.utils.PhoneUtil;
-import com.sogou.upd.passport.common.utils.ProvinceAndCityUtil;
-import com.sogou.upd.passport.common.utils.RedisUtils;
+import com.sogou.upd.passport.common.utils.*;
 import com.sogou.upd.passport.model.account.Account;
 import com.sogou.upd.passport.model.account.AccountInfo;
 import com.sogou.upd.passport.model.operatelog.OperateHistoryLog;
@@ -62,6 +61,12 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
 
     @Autowired
     private OperateHistoryLogService operateHistoryLogService;
+
+    @Autowired
+    private RedisUtils redisUtils;
+
+    @Autowired
+    private DBShardRedisUtils dbShardRedisUtils;
 
     private static final String KEY_SPLITTER = "|";
 
@@ -419,6 +424,77 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
         result.getModels().put("failed", failDelMobiles);
         result.setSuccess(true);
         result.setMessage(CommonConstant.UN_BIND_SUCCESS);
+        return result;
+    }
+
+
+    @Override
+    public String deleteRestriction(List<String> passportIds) {
+        String result = "";
+        Account account;
+        String cacheAccountKey;
+        String leakCacheKey;
+        String leakCacheValue;
+        String leakKeyPre = CommonConstant.LEAK_PREKEY;
+
+        List<String> nonExistAccount = Lists.newArrayList();
+        List<String> leakInRedis = Lists.newArrayList();
+        List<String> leakInDb = Lists.newArrayList();
+        List<String> noInLeakList = Lists.newArrayList();
+        List<String> successList = Lists.newArrayList();
+
+        int flag;
+
+        try {
+            if (!CollectionUtils.isEmpty(passportIds)) {
+                for (String passportId : passportIds) {
+                    account = accountService.queryAccountByPassportId(passportId);
+                    if (null == account) {
+                        nonExistAccount.add(passportId);
+                        continue;
+                    }
+
+                    leakCacheKey = leakKeyPre + passportId;
+                    leakCacheValue =   redisUtils.get(leakCacheKey);
+                    if(!Strings.isNullOrEmpty(leakCacheValue)){
+                        redisUtils.delete(leakCacheKey);
+                        leakInRedis.add(passportId);
+                        successList.add(passportId);
+                        continue;
+                    }
+
+                    flag = account.getFlag();
+                    cacheAccountKey = CacheConstant.CACHE_PREFIX_PASSPORT_ACCOUNT + passportId;
+                    if(3 == flag){
+                        account.setFlag(AccountStatusEnum.REGULAR.getValue());
+                        dbShardRedisUtils.delete(cacheAccountKey);
+                        accountService.updateState(account,1);
+                        leakInDb.add(passportId);
+                        successList.add(passportId);
+                        continue;
+                    }
+
+                    nonExistAccount.add(passportId);
+                }
+
+                if(!successList.isEmpty()){
+                    result = result + StringUtils.join(successList,',');
+                    result = result + CommonConstant.ACCOUNT_UNFREEZED + "\n";
+                }
+
+                if(!noInLeakList.isEmpty()){
+                    result = result + StringUtils.join(noInLeakList,',');
+                    result = result + CommonConstant.ACCOUNT_NOTIN_RESTRICTION + "\n";
+                }
+                if(!nonExistAccount.isEmpty()){
+                    result = result + StringUtils.join(nonExistAccount,',');
+                    result = result + CommonConstant.ACCOUNT_NONEXISTANT + "\n";
+                }
+            }
+        } catch (Exception e) {
+            logger.error("deleteRestriction error");
+            return "解除失败";
+        }
         return result;
     }
 
