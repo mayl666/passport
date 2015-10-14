@@ -431,6 +431,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     @Override
     public String deleteRestriction(List<String> passportIds) {
         String result = "";
+        String printPassportIds = "PassportIds are: \n";
         Account account;
         String cacheAccountKey;
         String leakCacheKey;
@@ -448,6 +449,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
         try {
             if (!CollectionUtils.isEmpty(passportIds)) {
                 for (String passportId : passportIds) {
+                    printPassportIds = printPassportIds + passportId + "\n";
                     account = accountService.queryAccountByPassportId(passportId);
                     if (null == account) {
                         nonExistAccount.add(passportId);
@@ -477,6 +479,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                     nonExistAccount.add(passportId);
                 }
 
+                result += printPassportIds + "处理结果如下：\n";
                 if(!successList.isEmpty()){
                     result = result + StringUtils.join(successList,',');
                     result = result + CommonConstant.ACCOUNT_UNFREEZED + "\n";
