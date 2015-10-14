@@ -143,9 +143,9 @@ public class BlackListAdminController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/handle/leak", method = RequestMethod.GET)
+    @RequestMapping(value = "/handle/leak", method = RequestMethod.POST)
     @ResponseBody
-    public String handleLeak(@RequestParam("id") String leakUserPassportIds, HttpServletRequest request) {
+    public String handleLeak(String leakUserPassportIds, HttpServletRequest request) {
         //  String leakUserPassportIds = request.getParameter("id");
         if(Strings.isNullOrEmpty(leakUserPassportIds)){
             return "请求参数错误";
