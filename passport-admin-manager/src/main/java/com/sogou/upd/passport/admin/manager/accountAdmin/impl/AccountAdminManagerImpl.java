@@ -476,10 +476,11 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
                         continue;
                     }
 
-                    nonExistAccount.add(passportId);
+                    noInLeakList.add(passportId);
                 }
 
                 result += printPassportIds + "处理结果如下：\n";
+
                 if(!successList.isEmpty()){
                     result = result + StringUtils.join(successList,',');
                     result = result + CommonConstant.ACCOUNT_UNFREEZED + "\n";
