@@ -1,19 +1,30 @@
 package com.sogou.upd.passport.admin.web.controller;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.sogou.upd.passport.admin.common.CommonConstant;
 import com.sogou.upd.passport.admin.common.model.Page;
+import com.sogou.upd.passport.admin.common.utils.IPUtil;
+import com.sogou.upd.passport.admin.common.utils.RequestUtils;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.blackList.BlackListManager;
 import com.sogou.upd.passport.admin.manager.form.AccountSearchParam;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.admin.web.BaseController;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -126,4 +137,45 @@ public class BlackListAdminController extends BaseController {
         return json.toString();
     }
 
+    /**
+     *
+     * 解除限制
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/handle/leak", method = RequestMethod.GET)
+    @ResponseBody
+    public String handleLeak(@RequestParam("id") String leakUserPassportIds, HttpServletRequest request) {
+        //  String leakUserPassportIds = request.getParameter("id");
+        if(Strings.isNullOrEmpty(leakUserPassportIds)){
+            return "请求参数错误";
+        }
+        String result = " ";
+        try {
+            //检测操作权限
+            //操作者ip
+            String userIp = IPUtil.getIP(request);
+            //操作者
+            String operator = RequestUtils.getPassportEmail(request);
+            if (!checkUserOrIpInWhiteList(operator, userIp)) {
+                logger.warn(" handleLeak user hasn't power operate! userIp:" + userIp);
+                result = CommonConstant.NO_OPERATE_POWER;
+                return result;
+            }
+            //提取PassportId
+            List<String> passportIds = Lists.newArrayList();
+            String[] leakUsers = StringUtils.split(leakUserPassportIds, CommonConstant.COMMON_STRING_SPLIT);
+            if (leakUsers.length > 0) {
+                for (String leakUser : leakUsers) {
+                    if (!Strings.isNullOrEmpty(leakUser)) {
+                        passportIds.add(leakUser.trim());
+                    }
+                }
+            }
+            result = accountAdminManager.deleteRestriction(passportIds);
+        } catch (Exception e) {
+            logger.error("handleLeak error");
+        }
+        return result;
+    }
 }
