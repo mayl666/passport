@@ -15,8 +15,8 @@
     </bean>
     <bean id="cacheConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:usePool="true">
-        <property name="hostName" value="10.12.139.205"/>
-        <property name="port" value="6379"/>
+        <property name="hostName" value="a.redis.sogou-op.org"/>
+        <property name="port" value="1509"/>
         <!--<property name="password" value="${redis.pass}"/>-->
         <!--<property name="timeout" value="${redis.timeout}"/>-->
         <!--<property name="database" value="${redis.default.db}"></property>-->
@@ -29,12 +29,12 @@
     </bean>
 
     <bean id="jedisShardInfo_204" class="redis.clients.jedis.JedisShardInfo">
-        <constructor-arg index="0" value="10.12.139.204"/>
-        <constructor-arg index="1" value="6379" type="int"/>
+        <constructor-arg index="0" value="a.redis.sogou-op.org"/>
+        <constructor-arg index="1" value="1509" type="int"/>
     </bean>
     <bean id="jedisShardInfo_205" class="redis.clients.jedis.JedisShardInfo">
-        <constructor-arg index="0" value="10.12.139.205"/>
-        <constructor-arg index="1" value="6379" type="int"/>
+        <constructor-arg index="0" value="a.redis.sogou-op.org"/>
+        <constructor-arg index="1" value="1509" type="int"/>
     </bean>
     <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
         <constructor-arg index="0" ref="cachePoolConfig"/>
@@ -84,8 +84,8 @@
     </bean>
     <bean id="tokenConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:usePool="true">
-        <property name="hostName" value="10.12.139.205"/>
-        <property name="port" value="6379"/>
+        <property name="hostName" value="a.redis.sogou-op.org"/>
+        <property name="port" value="1509"/>
         <!--<property name="password" value="${redis.pass}"/>-->
         <!--<property name="timeout" value="${redis.timeout}"/>-->
         <!--<property name="database" value="${redis.default.db}"></property>-->
@@ -107,8 +107,8 @@
     </bean>
     <bean id="dbConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:usePool="true">
-        <property name="hostName" value="10.12.139.205"/>
-        <property name="port" value="6379"/>
+        <property name="hostName" value="a.redis.sogou-op.org"/>
+        <property name="port" value="1509"/>
         <!--<property name="password" value="${redis.pass}"/>-->
         <!--<property name="timeout" value="${redis.timeout}"/>-->
         <!--<property name="database" value="${redis.default.db}"></property>-->
