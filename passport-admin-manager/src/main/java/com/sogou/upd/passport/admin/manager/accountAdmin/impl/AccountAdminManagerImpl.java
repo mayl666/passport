@@ -126,9 +126,9 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
     }
 
     @Override
-    public boolean resetPassword(Account account, String password, boolean needMD5) {
+    public boolean resetPassword(String sohuPassportId,Account account, String password, boolean needMD5) {
         try {
-            return accountService.resetPassword(account, password, needMD5);
+            return accountService.resetPassword(sohuPassportId,account, password, needMD5);
         } catch (Exception e) {
             logger.error("resetPassword fail,userId:" + account.getPassportId(), e);
             return false;
@@ -211,7 +211,7 @@ public class AccountAdminManagerImpl implements AccountAdminManager {
             if (account != null) {
                 //重置密码
                 String newPassword = UuidUtil.generatePassword();
-                boolean resetResult = accountService.resetPassword(account, newPassword, needMD5);
+                boolean resetResult = accountService.resetPassword(operateHistoryLog.getOperate_user(),account, newPassword, needMD5);
                 if (resetResult) {
                     result.setSuccess(true);
                     result.setMessage(MessageUtil.RESET_PP_SUCCESS);

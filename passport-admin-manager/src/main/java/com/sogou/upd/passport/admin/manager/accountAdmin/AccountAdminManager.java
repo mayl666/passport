@@ -22,7 +22,7 @@ public interface AccountAdminManager {
 
     public boolean updateState(Account account, int newState);
 
-    public boolean resetPassword(Account account, String password, boolean needMD5);
+    public boolean resetPassword(String sohuPassportId,Account account, String password, boolean needMD5);
 
 
     /**
