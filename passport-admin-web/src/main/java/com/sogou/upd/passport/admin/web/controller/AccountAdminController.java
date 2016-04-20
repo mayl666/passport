@@ -6,17 +6,23 @@ import com.google.common.collect.Lists;
 import com.sogou.upd.passport.admin.common.CommonConstant;
 import com.sogou.upd.passport.admin.common.utils.IPUtil;
 import com.sogou.upd.passport.admin.common.utils.RequestUtils;
+import com.sogou.upd.passport.admin.common.utils.UuidUtil;
 import com.sogou.upd.passport.admin.manager.accountAdmin.AccountAdminManager;
 import com.sogou.upd.passport.admin.manager.form.AccountSearchParam;
 import com.sogou.upd.passport.admin.manager.model.AccountDetailInfo;
 import com.sogou.upd.passport.admin.web.BaseController;
 import com.sogou.upd.passport.admin.web.util.UserOperationLogUtil;
 import com.sogou.upd.passport.common.model.useroperationlog.UserOperationLog;
+import com.sogou.upd.passport.common.parameter.AccountDomainEnum;
 import com.sogou.upd.passport.common.result.APIResultSupport;
 import com.sogou.upd.passport.common.result.Result;
 import com.sogou.upd.passport.common.utils.ErrorUtil;
+import com.sogou.upd.passport.dao.account.AccountDAO;
+import com.sogou.upd.passport.dao.account.AccountInfoDAO;
 import com.sogou.upd.passport.model.account.Account;
+import com.sogou.upd.passport.model.account.AccountInfo;
 import com.sogou.upd.passport.model.operatelog.OperateHistoryLog;
+import com.sogou.upd.passport.service.account.AccountService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +32,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -39,9 +46,17 @@ public class AccountAdminController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountAdminController.class);
 
-
     @Autowired
     private AccountAdminManager accountAdminManager;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private AccountDAO accountDAO;
+
+    @Autowired
+    private AccountInfoDAO accountInfoDAO;
 //
 //    @Autowired
 //    private HttpServletRequest request;
@@ -67,6 +82,59 @@ public class AccountAdminController extends BaseController {
         return "/pages/admin/account/accountAdmin.jsp";
     }
 
+    @RequestMapping(value = "/initsohu", method = RequestMethod.GET)
+    @ResponseBody
+    public String initSohuAccount(HttpServletRequest request, Model model, @RequestParam("sohuId") String sohuId) {
+        try {
+            //操作者ip
+            String userIp = IPUtil.getIP(request);
+            //操作者
+            String operator = RequestUtils.getPassportEmail(request);
+
+            if (!checkUserOrIpInWhiteList(operator, userIp)) {
+                logger.warn("resetPwd user hasn't power operate! userIp:" + userIp);
+                return CommonConstant.NO_OPERATE_POWER;
+            }
+
+            OperateHistoryLog operateHistoryLog = buildOperateHistoryLog(request, sohuId);
+
+            AccountDomainEnum accountDomain = AccountDomainEnum.getAccountDomain(sohuId);
+            if (AccountDomainEnum.SOHU != accountDomain) {
+                return "not a sohu account.";
+            }
+
+            Account account = accountService.queryAccountByPassportId(sohuId);
+            if (account != null) {
+                return "account already exist";
+            }
+
+            Account newSohuAccount = new Account();
+            newSohuAccount.setPasswordtype(5);
+            newSohuAccount.setPassportId(sohuId);
+            newSohuAccount.setFlag(1);
+            newSohuAccount.setAccountType(9);
+
+            String newPwd = UuidUtil.generatePassword();
+            newSohuAccount.setPassword(newPwd);
+
+            if (accountDAO.insertAccount(sohuId, newSohuAccount) > 0) {
+                AccountInfo accountInfo = new AccountInfo();
+                accountInfo.setPassportId(sohuId);
+                accountInfoDAO.insertAccountInfo(sohuId, accountInfo);
+            } else {
+                return "init account failed";
+            }
+
+            UserOperationLog userOperationLog = new UserOperationLog(sohuId, StringUtils.EMPTY, ErrorUtil.SUCCESS, userIp);
+            userOperationLog.putOtherMessage("operator", operator);
+            UserOperationLogUtil.log(userOperationLog);
+
+            return "init success, new password: " + newPwd;
+        } catch (Exception e) {
+            logger.error("exception", e);
+            return "execption occures";
+        }
+    }
 
     /**
      * 重置密码
@@ -318,6 +386,17 @@ public class AccountAdminController extends BaseController {
             //TODO 安全起见 增加手机号白名单限制，只是处理在白名单之内的手机号
             //TODO 安全起见 增加操作人IP白名单限制，待提供开发测试同学IP
 
+            //操作者ip
+            String userIp = IPUtil.getIP(request);
+            //操作者
+             String operator = RequestUtils.getPassportEmail(request);
+
+             if (!checkUserOrIpInWhiteList(operator, userIp)) {
+                 logger.warn("resetPwd user hasn't power operate! userIp:" + userIp);
+                 model.addAttribute("msg", CommonConstant.NO_OPERATE_POWER);
+                 return "/pages/admin/account/deleteRegMobiles.jsp";
+             }
+
             List<String> mobileList = Lists.newArrayList();
             String[] mobileArrays = StringUtils.split(mobiles, CommonConstant.COMMON_STRING_SPLIT_RETURN);
             if (mobileArrays.length > 0) {
@@ -336,8 +415,8 @@ public class AccountAdminController extends BaseController {
             model.addAttribute("msg", CommonConstant.DONE_UN_BIND_MOBILE);
             model.addAttribute("failed", failUnBind);
 
-            UserOperationLog userOperationLog = new UserOperationLog(StringUtils.EMPTY, StringUtils.EMPTY, result.getCode(), IPUtil.getIP(request));
-            userOperationLog.putOtherMessage("operator", RequestUtils.getPassportEmail(request));
+            UserOperationLog userOperationLog = new UserOperationLog(StringUtils.EMPTY, StringUtils.EMPTY, result.getCode(), userIp);
+            userOperationLog.putOtherMessage("operator", operator);
             userOperationLog.putOtherMessage("deleteMobiles", mobileList.toString());
             UserOperationLogUtil.log(userOperationLog);
 
@@ -347,6 +426,41 @@ public class AccountAdminController extends BaseController {
         return "/pages/admin/account/deleteRegMobiles.jsp";
     }
 
+    /**
+     * 删除账号，仅供开发和测试同学使用，不对外开放
+     *
+     * @param passportid
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/deleteAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteAccount(HttpServletRequest request, @RequestParam("passportid") String passportid) {
+        try {
+            //操作者ip
+            String userIp = IPUtil.getIP(request);
+            //操作者
+            String operator = RequestUtils.getPassportEmail(request);
+
+            if (!checkUserOrIpInWhiteList(operator, userIp)) {
+                logger.warn("deleteAccount user hasn't power operate! userIp:" + userIp);
+                return CommonConstant.NO_OPERATE_POWER;
+            }
+
+            if (!accountService.deleteAccountByPassportId(passportid)) {
+                return "delete account failed";
+            }
+
+            UserOperationLog userOperationLog = new UserOperationLog(passportid, StringUtils.EMPTY, ErrorUtil.SUCCESS, userIp);
+            userOperationLog.putOtherMessage("operator", operator);
+            UserOperationLogUtil.log(userOperationLog);
+            return "delete account success";
+        }
+        catch (Exception e) {
+            logger.error("deleteAccount error.", e);
+            return "execption occures";
+        }
+    }
 
     /**
      * 解除封禁
@@ -371,7 +485,4 @@ public class AccountAdminController extends BaseController {
         }
         return "/pages/admin/account/accountAdmin.jsp";
     }
-
-
-
 }
